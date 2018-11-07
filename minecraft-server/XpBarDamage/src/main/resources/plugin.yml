@@ -1,0 +1,5 @@
+name: ExperienceBarDamageIndicator
+version: 1.0.0
+description: Use the player's experience bar to show them the damage their last attack dealt
+author: George Bakewell
+main: io.github.theonlygusti.xpbardmg.Plugin
