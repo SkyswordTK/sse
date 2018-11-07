@@ -1,0 +1,5 @@
+name: ShowDamageAsLevel
+version: 1.0.0
+description: Sets the player level to the damage of their last attack
+author: George Bakewell
+main: io.github.theonlygusti.dmgindicator.ShowDamageAsLevel
