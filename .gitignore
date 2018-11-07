@@ -7,3 +7,6 @@
 
 # I don't know if server/src will ever exist, but I don't want to track it if it does
 /minecraft-server/server/src/
+
+# GitHub repository should have Paperclip.jar for when people downloading the repository want to test it out easily
+!/minecraft-server/server/Paperclip.jar
