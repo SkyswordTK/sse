@@ -1,0 +1,9 @@
+# The majority of ./minecraft-server are maven build artifacts and spigot/paper server junk
+/minecraft-server/*/*
+
+# Only track relevant plugin sources
+!/minecraft-server/*/src/
+!/minecraft-server/*/pom.xml
+
+# I don't know if server/src will ever exist, but I don't want to track it if it does
+/minecraft-server/server/src/
