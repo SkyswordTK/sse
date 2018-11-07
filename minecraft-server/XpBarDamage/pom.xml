@@ -77,12 +77,12 @@
       <plugin>
         <!-- copy jarfiles straight to ../server/plugins so we can test
              the plugin without having to move them ourselves -->
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-jar-plugin</artifactId>
-  <version>2.3.1</version>
-  <configuration>
-    <outputDirectory>${basedir}/../server/plugins</outputDirectory>
-  </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <outputDirectory>${basedir}/../server/plugins</outputDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>
