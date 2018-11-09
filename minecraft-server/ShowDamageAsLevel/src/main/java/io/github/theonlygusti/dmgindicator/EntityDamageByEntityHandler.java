@@ -1,5 +1,6 @@
 package io.github.theonlygusti.dmgindicator;
 
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,12 +13,22 @@ public class EntityDamageByEntityHandler implements Listener {
   // damage dealt to the player (after other plugins have set it).
   @EventHandler(priority = EventPriority.LOWEST)
   public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-    // it only makes sense for players to be shown the damage of their last attack
     if (event.getDamager() instanceof Player) {
+      // it only makes sense for players to be shown the damage of their last attack
       Player player = (Player) event.getDamager();
       int damage = (int) event.getDamage();
 
       player.setLevel(damage);
+    } else if (event.getDamager() instanceof Arrow) {
+      // if a player damages another player with an arrow, event.getDamager is the arrow entity,
+      // but we still want the shooter to know how much damage their arrow dealt
+      Arrow arrow = (Arrow) event.getDamager();
+      if (arrow.getShooter() instanceof Player) {
+        Player player = (Player) arrow.getShooter();
+        int damage = (int) event.getDamage();
+
+        player.setLevel(damage);
+      }
     }
   }
 }
