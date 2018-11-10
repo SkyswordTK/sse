@@ -1,3 +1,5 @@
+.DS_Store
+
 # The majority of ./minecraft-server are maven build artifacts and spigot/paper server junk
 /minecraft-server/*/*
 
@@ -10,3 +12,4 @@
 
 # GitHub repository should have Paperclip.jar for when people downloading the repository want to test it out easily
 !/minecraft-server/server/Paperclip.jar
+
