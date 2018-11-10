@@ -45,7 +45,7 @@ public class DoubleJumpCommander implements CommandExecutor {
           sender.sendMessage("§cThis command can only be used on players. Maybe you are looking for§r\n    §c§ldoublejump <player>§r");
         }
       } else {
-        sender.sendMessage("§cUsage: /doublejump [player]§r");
+        return false;
       }
 
       return true;
