@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class DoubleJump extends JavaPlugin {
   private static HashMap<Player, DoubleJumper> doubleJumpers = new HashMap<Player, DoubleJumper>();
+  private static HashMap<Player, Boolean> allowedFlight = new HashMap<Player, Boolean>();
 
   @Override
   public void onEnable() {
@@ -14,10 +15,12 @@ public final class DoubleJump extends JavaPlugin {
   }
 
   public static void set(Player player, DoubleJumper doubleJumper) {
+    allowedFlight.put(player, player.getAllowFlight());
     doubleJumpers.put(player, doubleJumper);
   }
 
   public static void unset(Player player) {
+    player.setAllowFlight(allowedFlight.get(player));
     doubleJumpers.remove(player);
   }
 

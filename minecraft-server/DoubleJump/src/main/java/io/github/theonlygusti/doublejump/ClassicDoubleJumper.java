@@ -12,11 +12,8 @@ public class ClassicDoubleJumper implements DoubleJumper {
     this.player = player;
   }
 
-  public void touchGround() {
+  public void landOnGround() {
     this.player.setAllowFlight(true);
-  }
-
-  public void beforeVelocity() {
   }
 
   public void setVelocity() {
