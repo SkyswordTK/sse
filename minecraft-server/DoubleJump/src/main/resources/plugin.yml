@@ -6,6 +6,6 @@ main: io.github.theonlygusti.doublejump.DoubleJump
 commands:
   doublejump:
     description: Toggles whether a player can or cannot double jump
-    permission: doublejumpcommand
+    permission: doublejump.command
     usage: "§cUsage: /<command> [player]§r"
     aliases: []
