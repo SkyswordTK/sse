@@ -1,0 +1,16 @@
+name: LitePerms
+version: 1.0.0
+description: A very simple permissions manager.
+author: George Bakewell
+main: io.github.theonlygusti.liteperms.LitePerms
+commands:
+  allow:
+    description: Give a player a permission
+    permission: op
+    usage: "§cUsage: /<command> <player> <permission>$r"
+    aliases: []
+  disallow:
+    description: Takes a permission from a player
+    permission: op
+    usage: "§cUsage: /<command> <player> <permission>$r"
+    aliases: []
