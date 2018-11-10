@@ -7,8 +7,9 @@
 !/minecraft-server/*/src/
 !/minecraft-server/*/pom.xml
 
-# I don't know if server/src will ever exist, but I don't want to track it if it does
+# I don't know if server/src or server/pom.xml will ever exist, but I don't want to track them if by chance they do
 /minecraft-server/server/src/
+/minecraft-server/server/pom.xml
 
 # GitHub repository should have Paperclip.jar for when people downloading the repository want to test it out easily
 !/minecraft-server/server/Paperclip.jar
