@@ -10,6 +10,7 @@ public final class DoubleJump extends JavaPlugin {
   @Override
   public void onEnable() {
     getServer().getPluginManager().registerEvents(new EventHandlers(), this);
+    this.getCommand("doublejump").setExecutor(new DoubleJumpCommander(this));
   }
 
   public static void set(Player player, DoubleJumper doubleJumper) {

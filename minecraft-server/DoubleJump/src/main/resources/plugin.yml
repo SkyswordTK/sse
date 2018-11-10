@@ -3,3 +3,9 @@ version: 1.0.0
 description: Allows players to jump fast to double jump
 author: George Bakewell
 main: io.github.theonlygusti.doublejump.DoubleJump
+commands:
+  doublejump:
+    description: Toggles whether a player can or cannot double jump
+    permission: doublejump.command
+    usage: "§cUsage: /<command> [player]§r"
+    aliases: []
