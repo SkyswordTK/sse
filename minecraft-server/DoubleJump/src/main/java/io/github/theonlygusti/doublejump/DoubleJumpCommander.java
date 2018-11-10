@@ -21,7 +21,6 @@ public class DoubleJumpCommander implements CommandExecutor {
 
           if (player == null) {
             sender.sendMessage("§cThe player " + args[0] + " was not found online.§r");
-            return false;
           }
 
           if (DoubleJump.get(player) == null) {
@@ -31,7 +30,6 @@ public class DoubleJumpCommander implements CommandExecutor {
             DoubleJump.unset(player);
             player.sendMessage("§c§oYou can no longer double jump.§r");
           }
-          return true;
       } else if (args.length == 0) {
         if (sender instanceof Player) {
           Player player = (Player) sender;
@@ -43,15 +41,14 @@ public class DoubleJumpCommander implements CommandExecutor {
             DoubleJump.unset(player);
             player.sendMessage("§c§oYou can no longer double jump.§r");
           }
-          return true;
         } else {
           sender.sendMessage("§cThis command can only be used on players. Maybe you are looking for§r\n    §c§ldoublejump <player>§r");
-          return false;
         }
       } else {
         sender.sendMessage("§cUsage: /doublejump [player]§r");
-        return false;
       }
+
+      return true;
     }
     return false;
   }
