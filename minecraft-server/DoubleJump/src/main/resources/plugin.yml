@@ -7,4 +7,5 @@ commands:
   doublejump:
     description: Toggles whether a player can or cannot double jump
     permission: doublejumpcommand
+    usage: "§cUsage: /<command> [player]§r"
     aliases: []
