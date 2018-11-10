@@ -16,9 +16,6 @@ public class ClassicDoubleJumper implements DoubleJumper {
     this.player.setAllowFlight(true);
   }
 
-  public void beforeVelocity() {
-  }
-
   public void setVelocity() {
     this.player.setVelocity(this.player.getLocation().getDirection());
   }

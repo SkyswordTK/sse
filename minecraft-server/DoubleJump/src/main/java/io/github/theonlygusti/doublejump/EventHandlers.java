@@ -16,7 +16,6 @@ public class EventHandlers implements Listener {
 
     if (doubleJumper != null) {
       event.setCancelled(true);
-      doubleJumper.beforeVelocity();
       doubleJumper.setVelocity();
       doubleJumper.afterVelocity();
       hasLandedOnGround.put(doubleJumper, false);
