@@ -2,7 +2,7 @@ name: SuperSmashKit
 version: 1.0.0
 description: Handles all kit mechanics.
 author: George Bakewell
-main: io.github.theonlygusti.supersmashkit.SuperSmashKit
+main: io.github.theonlygusti.supersmashkit.Plugin
 depend: [ LibsDisguises ]
 commands:
   kit:

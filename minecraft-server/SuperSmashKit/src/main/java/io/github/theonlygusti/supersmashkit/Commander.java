@@ -1,6 +1,6 @@
 package io.github.theonlygusti.supersmashkit;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashKit;
+import io.github.theonlygusti.supersmashkit.Plugin;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
@@ -11,9 +11,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class Commander implements CommandExecutor {
-  private final SuperSmashKit plugin;
+  private final Plugin plugin;
 
-  public Commander(SuperSmashKit plugin) {
+  public Commander(Plugin plugin) {
     this.plugin = plugin;
   }
 
