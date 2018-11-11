@@ -6,11 +6,11 @@ main: io.github.theonlygusti.liteperms.LitePerms
 commands:
   allow:
     description: Give a player a permission
-    permission: op
+    permission: minecraft.command.op
     usage: "§cUsage: /<command> <player> <permission>$r"
     aliases: []
   disallow:
     description: Takes a permission from a player
-    permission: op
+    permission: minecraft.command.op
     usage: "§cUsage: /<command> <player> <permission>$r"
     aliases: []
