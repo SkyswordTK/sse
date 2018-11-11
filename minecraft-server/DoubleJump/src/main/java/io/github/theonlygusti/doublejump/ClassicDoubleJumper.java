@@ -16,11 +16,9 @@ public class ClassicDoubleJumper implements DoubleJumper {
     this.player.setAllowFlight(true);
   }
 
-  public void setVelocity() {
+  public void doubleJump() {
     this.player.setVelocity(this.player.getLocation().getDirection());
-  }
 
-  public void afterVelocity() {
     this.player.setAllowFlight(false);
     for(Player p : Bukkit.getOnlinePlayers()){
       p.playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1.0f, 1.0f);
