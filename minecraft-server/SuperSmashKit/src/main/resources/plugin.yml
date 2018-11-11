@@ -1,0 +1,12 @@
+name: SuperSmashKit
+version: 1.0.0
+description: Handles all kit mechanics.
+author: George Bakewell
+main: io.github.theonlygusti.supersmashkit.SuperSmashKit
+depend: [ LibsDisguises ]
+commands:
+  kit:
+    description: Equips a kit
+    permission: supersmashkit.kit
+    usage: "§cUsage: /<command> $r"
+    aliases: []
