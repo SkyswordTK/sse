@@ -33,6 +33,12 @@
       <version>9.5.2</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>io.github.theonlygusti</groupId>
+      <artifactId>doublejump</artifactId>
+      <version>1.0.0</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <developers>
