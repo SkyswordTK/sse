@@ -50,4 +50,8 @@ public class SuperSmashController {
   public static boolean isKitted(Player player) {
     return playerKits.get(player) != null;
   }
+
+  public static SuperSmashKit get(Player player) {
+    return playerKits.get(player);
+  }
 }
