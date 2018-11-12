@@ -6,9 +6,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class EventHandlers implements Listener {
   private HashMap<DoubleJumper, Boolean> hasLandedOnGround = new HashMap<DoubleJumper, Boolean>();
+  private DoubleJump plugin;
+
+  public EventHandlers(DoubleJump plugin) {
+    this.plugin = plugin;
+  }
 
   @EventHandler
   public void onFlightAttempt(PlayerToggleFlightEvent event) {
@@ -16,7 +23,8 @@ public class EventHandlers implements Listener {
 
     if (doubleJumper != null) {
       event.setCancelled(true);
-      doubleJumper.doubleJump();
+      event.getPlayer().setVelocity(doubleJumper.getDoubleJumpVelocity());
+      doubleJumper.runDoubleJumpExtra();
       hasLandedOnGround.put(doubleJumper, false);
     }
   }

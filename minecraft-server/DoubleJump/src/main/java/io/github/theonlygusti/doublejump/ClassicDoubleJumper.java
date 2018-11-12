@@ -1,9 +1,11 @@
 package io.github.theonlygusti.doublejump;
 
 import io.github.theonlygusti.doublejump.DoubleJumper;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class ClassicDoubleJumper implements DoubleJumper {
   private Player player;
@@ -16,9 +18,11 @@ public class ClassicDoubleJumper implements DoubleJumper {
     this.player.setAllowFlight(true);
   }
 
-  public void doubleJump() {
-    this.player.setVelocity(this.player.getLocation().getDirection());
+  public Vector getDoubleJumpVelocity() {
+    return this.player.getLocation().getDirection();
+  }
 
+  public void runDoubleJumpExtra() {
     this.player.setAllowFlight(false);
     for(Player p : Bukkit.getOnlinePlayers()){
       p.playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1.0f, 1.0f);
