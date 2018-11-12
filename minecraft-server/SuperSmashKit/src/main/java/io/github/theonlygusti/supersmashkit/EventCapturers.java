@@ -1,6 +1,7 @@
 package io.github.theonlygusti.supersmashkit;
 
 import io.github.theonlygusti.supersmashkit.SuperSmashController;
+import io.github.theonlygusti.supersmashkit.SuperSmashKit;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -30,6 +31,8 @@ public class EventCapturers implements Listener {
 
     if (SuperSmashController.isKitted(player)) {
       if (event.getAnimationType() == PlayerAnimationType.ARM_SWING) {
+        SuperSmashKit kit = SuperSmashController.get(player);
+        kit.doPunch();
       }
     }
   }
@@ -41,7 +44,10 @@ public class EventCapturers implements Listener {
     if (SuperSmashController.isKitted(player)) {
       Action action = event.getAction();
 
+      // issue: event.getAction() is never RIGHT_CLICK_AIR if player's hand is empty
       if (action.equals(Action.RIGHT_CLICK_AIR) || action.equals(Action.RIGHT_CLICK_BLOCK)) {
+        SuperSmashKit kit = SuperSmashController.get(player);
+        kit.doRightClick();
       }
     }
   }

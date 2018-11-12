@@ -14,6 +14,8 @@ public interface SuperSmashKit extends DoubleJumper {
   public Disguise getDisguise();
   public List<ItemAbility> getItemAbilities();
   public Player getPlayer();
+  public void doPunch();
+  public void doRightClick();
   //public List<PassiveAbility> getPassives();
   //public ItemStack[] getArmorContents();
 }
