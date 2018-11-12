@@ -1,0 +1,17 @@
+name: SuperSmashKit
+version: 1.0.0
+description: Handles all kit mechanics.
+author: George Bakewell
+main: io.github.theonlygusti.supersmashkit.Plugin
+depend: [ LibsDisguises ]
+commands:
+  kit:
+    description: Equips a kit
+    permission: supersmashkit.kit
+    usage: "§cUsage: /<command> <name>§r"
+    aliases: []
+  dekit:
+    description: Unequips the kit that is currently equipped
+    permission: supersmashkit.dekit
+    usage: "§cUsage: /<command>§r"
+    aliases: []
