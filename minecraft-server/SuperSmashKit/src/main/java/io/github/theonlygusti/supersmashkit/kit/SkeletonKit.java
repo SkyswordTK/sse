@@ -19,7 +19,7 @@ public class SkeletonKit implements SuperSmashKit {
     this.player = player;
   }
 
-  public void doubleJump() {
+  public Vector getDoubleJumpVelocity() {
     // testing: horizontal double jump distance is about 6.334
     //          vertical double jump height is about 6.40872
     Location playerLocation = this.player.getLocation();
@@ -35,9 +35,11 @@ public class SkeletonKit implements SuperSmashKit {
 
     Vector velocity = pseudoDirection.multiply(0.9);
 
-    this.player.setVelocity(velocity);
+    return velocity;
+  }
 
-    for(Player p : Bukkit.getOnlinePlayers()){
+  public void runDoubleJumpExtra() {
+    for(Player p : Bukkit.getOnlinePlayers()) {
       p.playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1f, 1f);
     }
 
