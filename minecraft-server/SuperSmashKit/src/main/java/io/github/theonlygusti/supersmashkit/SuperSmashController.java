@@ -1,14 +1,13 @@
 package io.github.theonlygusti.supersmashkit;
 
 import io.github.theonlygusti.doublejump.DoubleJump;
-
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
+import io.github.theonlygusti.supersmashkit.SuperSmashKit;
 
 import java.util.HashMap;
 import java.util.function.Function;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashKit;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 
 import org.bukkit.entity.Player;
 
