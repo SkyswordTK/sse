@@ -34,6 +34,27 @@ public class Commander implements CommandExecutor {
 
         return true;
       }
+    } else if (cmd.getName().equals("dekit")) {
+      if (sender instanceof Player) {
+        if (args.length != 1) {
+          return false;
+        }
+
+        Player player = (Player) sender;
+
+        if (!SuperSmashController.isKitted(player)) {
+          sender.sendMessage("§cYou do not have a kit§r");
+          return true;
+        }
+
+        SuperSmashController.dekit(player);
+
+        return true;
+      } else {
+        sender.sendMessage("You must be a player to use this command.");
+
+        return true;
+      }
     }
     return false;
   }

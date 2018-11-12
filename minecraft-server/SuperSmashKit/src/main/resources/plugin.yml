@@ -8,5 +8,10 @@ commands:
   kit:
     description: Equips a kit
     permission: supersmashkit.kit
-    usage: "§cUsage: /<command> $r"
+    usage: "§cUsage: /<command> <name>$r"
+    aliases: []
+  dekit:
+    description: Unequips the kit that is currently equipped
+    permission: supersmashkit.dekit
+    usage: "§cUsage: /<command>$r"
     aliases: []
