@@ -11,7 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerAnimationType;
@@ -129,6 +131,19 @@ public class EventCapturers implements Listener {
       if (SuperSmashController.isKitted(player)) {
         event.setResult(Result.DENY);
         event.setCancelled(true);
+      }
+    }
+  }
+
+  @EventHandler(priority=EventPriority.HIGH)
+  public void onPlayerFall(EntityDamageEvent event) {
+    if (event.getEntity() instanceof Player) {
+      Player player = (Player) event.getEntity();
+
+      if (SuperSmashController.isKitted(player)) {
+        if (event.getCause() == DamageCause.FALL) {
+          event.setCancelled(true);
+        }
       }
     }
   }
