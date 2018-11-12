@@ -1,12 +1,12 @@
 package io.github.theonlygusti.supersmashkit.kit;
 
-import io.github.theonlygusti.supersmashkit.Plugin;
 import io.github.theonlygusti.supersmashkit.SuperSmashKit;
+
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -14,11 +14,9 @@ import org.bukkit.util.Vector;
 
 public class SkeletonKit implements SuperSmashKit {
   private Player player;
-  private Plugin plugin;
 
-  public SkeletonKit(Player player, Plugin plugin) {
+  public SkeletonKit(Player player) {
     this.player = player;
-    this.plugin = plugin;
   }
 
   public void doubleJump() {
@@ -39,7 +37,7 @@ public class SkeletonKit implements SuperSmashKit {
 
     this.player.setVelocity(velocity);
 
-    for(Player p : this.plugin.getServer().getOnlinePlayers()){
+    for(Player p : Bukkit.getOnlinePlayers()){
       p.playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1f, 1f);
     }
 

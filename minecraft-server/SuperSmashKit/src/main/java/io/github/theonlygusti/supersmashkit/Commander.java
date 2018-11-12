@@ -1,22 +1,14 @@
 package io.github.theonlygusti.supersmashkit;
 
-import io.github.theonlygusti.doublejump.DoubleJump;
-import io.github.theonlygusti.supersmashkit.Plugin;
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.Disguise;
+import io.github.theonlygusti.supersmashkit.SuperSmashController;
+
 import org.bukkit.entity.Player;
-
-import java.util.function.BiFunction;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class Commander implements CommandExecutor {
-  private final Plugin plugin;
-
-  public Commander(Plugin plugin) {
-    this.plugin = plugin;
+  public Commander() {
   }
 
   @Override
@@ -27,21 +19,14 @@ public class Commander implements CommandExecutor {
           return false;
         }
 
-        Player player = (Player) sender;
-        BiFunction<Player, Plugin, SuperSmashKit> kitConstructor = Plugin.kits.get(args[0]);
-
-        if (kitConstructor == null) {
+        if (!SuperSmashController.exists(args[0])) {
           sender.sendMessage("§cThat kit is not registered§r");
           return true;
         }
 
-        SuperSmashKit kit = kitConstructor.apply(player, this.plugin);
+        Player player = (Player) sender;
 
-        Disguise disguise = kit.getDisguise();
-        DisguiseAPI.disguiseToAll(player, disguise);
-        DisguiseAPI.setViewDisguiseToggled(player, false);
-
-        DoubleJump.set(player, kit);
+        SuperSmashController.enkit(player, args[0]);
 
         return true;
       } else {
