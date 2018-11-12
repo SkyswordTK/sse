@@ -27,6 +27,7 @@ public class Commander implements CommandExecutor {
         Player player = (Player) sender;
 
         SuperSmashController.enkit(player, args[0]);
+        sender.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
 
         return true;
       } else {
@@ -48,6 +49,7 @@ public class Commander implements CommandExecutor {
         }
 
         SuperSmashController.dekit(player);
+        sender.sendMessage("§cYou no longer have a kit§r");
 
         return true;
       } else {
