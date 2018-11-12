@@ -36,7 +36,7 @@ public class Commander implements CommandExecutor {
       }
     } else if (cmd.getName().equals("dekit")) {
       if (sender instanceof Player) {
-        if (args.length != 1) {
+        if (args.length != 0) {
           return false;
         }
 
