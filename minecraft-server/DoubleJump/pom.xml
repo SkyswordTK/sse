@@ -6,7 +6,7 @@
 
   <groupId>io.github.theonlygusti</groupId>
   <artifactId>doublejump</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 
   <name>Double Jump</name>
   <description>Allows players to jump fast to double jump</description>
