@@ -27,6 +27,7 @@ public class Commander implements CommandExecutor {
         Player player = (Player) sender;
 
         SuperSmashController.enkit(player, args[0]);
+        sender.sendMessage("§aYour kit has been applied.");
 
         return true;
       } else {
