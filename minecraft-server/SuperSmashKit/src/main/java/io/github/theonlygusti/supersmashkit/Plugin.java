@@ -10,6 +10,6 @@ public final class Plugin extends JavaPlugin {
   public void onEnable() {
     SuperSmashController.registerKit("skeleton", SkeletonKit::new);
     this.getCommand("kit").setExecutor(new Commander());
-    //this.getCommand("dekit").setExecutor(new Commander());
+    this.getCommand("dekit").setExecutor(new Commander());
   }
 }
