@@ -24,6 +24,17 @@ public class EventHandlers implements Listener {
     if (doubleJumper != null) {
       event.setCancelled(true);
       event.getPlayer().setVelocity(doubleJumper.getDoubleJumpVelocity());
+      BukkitTask checkOffGround = new BukkitRunnable() {
+        @Override
+        public void run() {
+          if (event.getPlayer().getLocation().getY() % 1 < DoubleJump.tripleJumpActivationHeight) {
+            event.getPlayer().setVelocity(doubleJumper.getDoubleJumpVelocity());
+            hasLandedOnGround.put(doubleJumper, false);
+          } else {
+            this.cancel();
+          }
+        }
+      }.runTaskTimer(this.plugin, 0L, 1L);
       doubleJumper.runDoubleJumpExtra();
       hasLandedOnGround.put(doubleJumper, false);
     }
