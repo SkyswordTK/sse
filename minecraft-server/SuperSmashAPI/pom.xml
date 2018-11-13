@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.theonlygusti</groupId>
-  <artifactId>supersmashkit</artifactId>
+  <artifactId>ssapi</artifactId>
   <version>1.0.0</version>
 
-  <name>Super Smash Kit</name>
-  <description>Handles all kit mechanics.</description>
+  <name>Super Smash API</name>
+  <description>Handles all game mechanics and provides an API for designing kits.</description>
   <url>https://github.com/theonlygusti/sse</url>
   <inceptionYear>2018</inceptionYear>
 

@@ -1,6 +1,6 @@
-package io.github.theonlygusti.supersmashkit.events;
+package io.github.theonlygusti.ssapi.events;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashController;
+import io.github.theonlygusti.ssapi.SuperSmashController;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

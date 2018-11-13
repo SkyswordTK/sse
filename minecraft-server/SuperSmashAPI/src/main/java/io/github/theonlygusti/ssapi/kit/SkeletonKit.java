@@ -1,7 +1,7 @@
-package io.github.theonlygusti.supersmashkit.kit;
+package io.github.theonlygusti.ssapi.kit;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashKit;
-import io.github.theonlygusti.supersmashkit.item.ItemAbility;
+import io.github.theonlygusti.ssapi.SuperSmashKit;
+import io.github.theonlygusti.ssapi.item.ItemAbility;
 
 import java.util.Arrays;
 import java.util.List;

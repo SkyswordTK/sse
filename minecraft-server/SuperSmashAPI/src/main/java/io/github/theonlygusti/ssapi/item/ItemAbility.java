@@ -1,6 +1,6 @@
-package io.github.theonlygusti.supersmashkit.item;
+package io.github.theonlygusti.ssapi.item;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashKit;
+import io.github.theonlygusti.ssapi.SuperSmashKit;
 
 import org.bukkit.Material;
 

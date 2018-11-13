@@ -1,18 +1,18 @@
-name: SuperSmashKit
+name: SuperSmashAPI
 version: 1.0.0
-description: Handles all kit mechanics.
+description: Handles all game mechanics and provides an API for designing kits.
 author: George Bakewell
 authors: [ Tobi ]
-main: io.github.theonlygusti.supersmashkit.Plugin
+main: io.github.theonlygusti.ssapi.Plugin
 depend: [ LibsDisguises ]
 commands:
   kit:
     description: Equips a kit
-    permission: supersmashkit.kit
+    permission: ssapi.kit
     usage: "§cUsage: /<command> <name>§r"
     aliases: []
   dekit:
     description: Unequips the kit that is currently equipped
-    permission: supersmashkit.dekit
+    permission: ssapi.dekit
     usage: "§cUsage: /<command>§r"
     aliases: []

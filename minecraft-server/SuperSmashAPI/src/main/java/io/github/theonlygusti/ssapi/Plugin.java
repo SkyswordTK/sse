@@ -1,11 +1,11 @@
-package io.github.theonlygusti.supersmashkit;
+package io.github.theonlygusti.ssapi;
 
-import io.github.theonlygusti.supersmashkit.SuperSmashController;
-import io.github.theonlygusti.supersmashkit.kit.SkeletonKit;
-import io.github.theonlygusti.supersmashkit.events.IllegalEvents;
-import io.github.theonlygusti.supersmashkit.events.KitEvents;
-import io.github.theonlygusti.supersmashkit.events.PlayerEvents;
-import io.github.theonlygusti.supersmashkit.item.ItemAbility;
+import io.github.theonlygusti.ssapi.SuperSmashController;
+import io.github.theonlygusti.ssapi.kit.SkeletonKit;
+import io.github.theonlygusti.ssapi.events.IllegalEvents;
+import io.github.theonlygusti.ssapi.events.KitEvents;
+import io.github.theonlygusti.ssapi.events.PlayerEvents;
+import io.github.theonlygusti.ssapi.item.ItemAbility;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;

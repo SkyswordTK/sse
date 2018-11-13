@@ -1,7 +1,7 @@
-package io.github.theonlygusti.supersmashkit;
+package io.github.theonlygusti.ssapi;
 
 import io.github.theonlygusti.doublejump.DoubleJumper;
-import io.github.theonlygusti.supersmashkit.item.ItemAbility;
+import io.github.theonlygusti.ssapi.item.ItemAbility;
 
 import java.util.List;
 
