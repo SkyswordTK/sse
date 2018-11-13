@@ -1,4 +1,4 @@
-package io.github.theonlygusti.ssapi.kit;
+package io.github.theonlygusti.kit;
 
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
@@ -15,8 +15,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class SkeletonKit implements SuperSmashKit {
@@ -35,7 +33,6 @@ public class SkeletonKit implements SuperSmashKit {
   private class BoneExplosion implements ItemAbility {
     private long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     private SkeletonKit owner;
-    private BukkitTask cooldownTask;
 
     public BoneExplosion(SkeletonKit owner) {
       this.owner = owner;
