@@ -2,14 +2,19 @@ package io.github.theonlygusti.supersmashkit;
 
 import io.github.theonlygusti.doublejump.DoubleJump;
 import io.github.theonlygusti.supersmashkit.SuperSmashKit;
+import io.github.theonlygusti.supersmashkit.item.ItemAbility;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class SuperSmashController {
   private static HashMap<String, Function<Player, SuperSmashKit>> kits = new HashMap<String, Function<Player, SuperSmashKit>>();
@@ -33,6 +38,17 @@ public class SuperSmashController {
     Disguise disguise = kit.getDisguise();
     DisguiseAPI.disguiseToAll(player, disguise);
     DisguiseAPI.setViewDisguiseToggled(player, false);
+    List<ItemAbility> itemAbilities = kit.getItemAbilities();
+    for (int i = 0; i < itemAbilities.size(); i++) {
+      ItemAbility itemAbility = itemAbilities.get(i);
+      ItemStack itemStack = new ItemStack(itemAbility.getMaterial());
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemMeta.setDisplayName("§e§l" + itemAbility.getTrigger() + "§r §f-§r " + "§a§l" + itemAbility.getName() + "§r");
+      itemMeta.setLore(Arrays.asList(itemAbility.getLore()));
+      itemStack.setItemMeta(itemMeta);
+      player.getInventory().setItem(i, itemStack);
+    }
     DoubleJump.set(player, kit);
     playerKits.put(player, kit);
   }

@@ -38,6 +38,10 @@ public class SkeletonKit implements SuperSmashKit {
       this.owner = owner;
     }
 
+    public String getTrigger() {
+      return "Right-Click";
+    }
+
     public String getName() {
       return "Bone Explosion";
     }
