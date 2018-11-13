@@ -29,15 +29,11 @@ public class SuperSmashController {
 
   public static void enkit(Player player, String kitId) {
     Function<Player, SuperSmashKit> kitConstructor = kits.get(kitId);
-
     SuperSmashKit kit = kitConstructor.apply(player);
-
     Disguise disguise = kit.getDisguise();
     DisguiseAPI.disguiseToAll(player, disguise);
     DisguiseAPI.setViewDisguiseToggled(player, false);
-
     DoubleJump.set(player, kit);
-
     playerKits.put(player, kit);
   }
 
