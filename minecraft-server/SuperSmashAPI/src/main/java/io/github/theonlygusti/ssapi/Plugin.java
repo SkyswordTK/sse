@@ -1,7 +1,6 @@
 package io.github.theonlygusti.ssapi;
 
 import io.github.theonlygusti.ssapi.SuperSmashController;
-import io.github.theonlygusti.ssapi.kit.SkeletonKit;
 import io.github.theonlygusti.ssapi.events.IllegalEvents;
 import io.github.theonlygusti.ssapi.events.KitEvents;
 import io.github.theonlygusti.ssapi.events.PlayerEvents;
@@ -17,8 +16,6 @@ public final class Plugin extends JavaPlugin {
 
   @Override
   public void onEnable() {
-    SuperSmashController.registerKit("skeleton", SkeletonKit::new);
-
     getServer().getPluginManager().registerEvents(new IllegalEvents(), this);
     getServer().getPluginManager().registerEvents(new KitEvents(), this);
     getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
