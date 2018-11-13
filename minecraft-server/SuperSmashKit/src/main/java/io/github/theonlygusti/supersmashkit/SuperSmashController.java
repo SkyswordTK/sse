@@ -16,9 +16,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import org.javatuples.Pair;
+
 public class SuperSmashController {
   private static HashMap<String, Function<Player, SuperSmashKit>> kits = new HashMap<String, Function<Player, SuperSmashKit>>();
   private static HashMap<Player, SuperSmashKit> playerKits = new HashMap<Player, SuperSmashKit>();
+  private static HashMap<Player, Pair<ItemStack[], ItemStack[]>> playerInventories = new HashMap<Player, Pair<ItemStack[], ItemStack[]>>();
 
   public static void registerKit(String id, Function<Player, SuperSmashKit> kitConstructor) {
     kits.put(id, kitConstructor);
@@ -39,6 +42,9 @@ public class SuperSmashController {
     DisguiseAPI.disguiseToAll(player, disguise);
     DisguiseAPI.setViewDisguiseToggled(player, false);
     List<ItemAbility> itemAbilities = kit.getItemAbilities();
+    // store the player inventory so it can be restored when they are dekitted
+    playerInventories.put(player, Pair.with(player.getInventory().getContents(), player.getInventory().getArmorContents()));
+    player.getInventory().clear();
     for (int i = 0; i < itemAbilities.size(); i++) {
       ItemAbility itemAbility = itemAbilities.get(i);
       ItemStack itemStack = new ItemStack(itemAbility.getMaterial());
@@ -55,6 +61,11 @@ public class SuperSmashController {
 
   public static void dekit(Player player) {
     DisguiseAPI.undisguiseToAll(player);
+    player.getInventory().clear();
+    Pair<ItemStack[], ItemStack[]> playerInventory = playerInventories.get(player);
+    player.getInventory().setContents(playerInventory.getValue0());
+    player.getInventory().setArmorContents(playerInventory.getValue1());
+    playerInventories.remove(player);
     DoubleJump.unset(player);
     playerKits.remove(player);
   }
