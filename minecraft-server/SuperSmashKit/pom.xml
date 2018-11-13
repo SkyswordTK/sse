@@ -98,14 +98,20 @@
         </configuration>
       </plugin>
       <plugin>
-        <!-- copy jarfiles straight to ../server/plugins so we can test
-             the plugin without having to move them ourselves -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.3.1</version>
-        <configuration>
-          <outputDirectory>${basedir}/../server/plugins</outputDirectory>
-        </configuration>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>deploy</phase>
+            <configuration>
+              <tasks>
+                <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar" todir="../server/plugins" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
