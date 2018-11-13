@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class IllegalEvents implements Listener {
@@ -64,6 +65,15 @@ public class IllegalEvents implements Listener {
         event.setResult(Result.DENY);
         event.setCancelled(true);
       }
+    }
+  }
+
+  @EventHandler(priority=EventPriority.HIGH)
+  public void cancelPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
+    Player player = (Player) event.getPlayer();
+
+    if (SuperSmashController.isKitted(player)) {
+      event.setCancelled(true);
     }
   }
 
