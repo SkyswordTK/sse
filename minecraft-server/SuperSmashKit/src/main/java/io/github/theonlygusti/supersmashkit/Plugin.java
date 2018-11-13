@@ -15,11 +15,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class Plugin extends JavaPlugin {
   private static BukkitTask itemAbilityCooldownTask;
 
-  protected static double round(double value, int precision) {
-    int scale = (int) Math.pow(10, precision);
-    return (double) Math.round(value * scale) / scale;
-  }
-
   @Override
   public void onEnable() {
     SuperSmashController.registerKit("skeleton", SkeletonKit::new);
@@ -34,6 +29,20 @@ public final class Plugin extends JavaPlugin {
     Plugin plugin = this;
 
     itemAbilityCooldownTask = new BukkitRunnable() {
+      private long tick = 50;
+
+      private double round(double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+      }
+
+      private String buildCooldownGraphic(String abilityName, long cooldownTime, long lastTimeUsed) {
+        long millisecondsSinceUsed = System.currentTimeMillis() - lastTimeUsed;
+        String blankProgressBar = "▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌";
+        String progressBar = "§a" + (new StringBuilder(blankProgressBar).insert((int) Math.round(millisecondsSinceUsed * 24L / cooldownTime), "§r§c").toString()) + "§r";
+        return "§f§l" + abilityName + "§r " + progressBar + " §r§f" + round(((double) cooldownTime - millisecondsSinceUsed)/1000, 1) + " Seconds";
+      }
+
       @Override
       public void run() {
         for(Player player : plugin.getServer().getOnlinePlayers()){
@@ -44,10 +53,10 @@ public final class Plugin extends JavaPlugin {
               ItemAbility heldItemAbility = kit.getHeldItemAbility();
 
               if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime()) {
-                long millisecondsSinceUsed = System.currentTimeMillis() - heldItemAbility.getLastTimeUsed();
-                String blankProgressBar = "▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌";
-                String progressBar = "§a" + (new StringBuilder(blankProgressBar).insert((int) Math.round(millisecondsSinceUsed * 24L / heldItemAbility.getCooldownTime()), "§r§c").toString()) + "§r";;
-                String actionBar = "§f§l" + heldItemAbility.getName() + "§r " + progressBar + " §r§f" + round(((double) heldItemAbility.getCooldownTime() - millisecondsSinceUsed)/1000, 1) + " Seconds";;
+                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), heldItemAbility.getLastTimeUsed());
+                player.sendActionBar(actionBar);
+              } else if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime() + tick) {
+                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), System.currentTimeMillis() - heldItemAbility.getCooldownTime());
                 player.sendActionBar(actionBar);
               }
             }
