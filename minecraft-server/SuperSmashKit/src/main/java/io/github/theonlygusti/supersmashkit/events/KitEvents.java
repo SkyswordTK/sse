@@ -65,6 +65,9 @@ public class KitEvents implements Listener {
     Player player = event.getPlayer();
 
     if (SuperSmashController.isKitted(player)) {
+      event.getPlayer().sendActionBar("§r");
+      SuperSmashKit kit = SuperSmashController.get(player);
+      kit.changeHeldItem(event.getPreviousSlot(), event.getNewSlot());
     }
   }
 }

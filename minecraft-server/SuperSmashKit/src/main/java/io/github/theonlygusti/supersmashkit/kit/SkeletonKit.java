@@ -15,6 +15,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class SkeletonKit implements SuperSmashKit {
@@ -33,6 +35,7 @@ public class SkeletonKit implements SuperSmashKit {
   private class BoneExplosion implements ItemAbility {
     private long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     private SkeletonKit owner;
+    private BukkitTask cooldownTask;
 
     public BoneExplosion(SkeletonKit owner) {
       this.owner = owner;
@@ -70,6 +73,12 @@ public class SkeletonKit implements SuperSmashKit {
       }
     }
 
+    public void select() {
+    }
+
+    public void deselect() {
+    }
+
     public long getCooldownTime() {
       return 10000L;
     }
@@ -86,10 +95,29 @@ public class SkeletonKit implements SuperSmashKit {
   public void doPunch() {
   }
 
-  public void doRightClick() {
+  public ItemAbility getHeldItemAbility() {
     int slot = this.player.getInventory().getHeldItemSlot();
     if (slot < this.getItemAbilities().size()) {
-      this.getItemAbilities().get(slot).rightClick();
+      return this.getItemAbilities().get(slot);
+    } else {
+      return null;
+    }
+  }
+
+  public void doRightClick() {
+    ItemAbility heldItemAbility = this.getHeldItemAbility();
+
+    if (heldItemAbility != null) {
+      heldItemAbility.rightClick();
+    }
+  }
+
+  public void changeHeldItem(int previousSlot, int newSlot) {
+    if (previousSlot < this.getItemAbilities().size()) {
+      this.getItemAbilities().get(previousSlot).deselect();
+    }
+    if (newSlot < this.getItemAbilities().size()) {
+      this.getItemAbilities().get(newSlot).select();
     }
   }
 

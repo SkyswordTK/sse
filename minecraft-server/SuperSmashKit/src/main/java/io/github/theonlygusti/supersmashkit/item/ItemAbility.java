@@ -18,5 +18,7 @@ public interface ItemAbility {
    */
   public long getCooldownTime();
   public long getLastTimeUsed();
+  public void select();
+  public void deselect();
 }
 
