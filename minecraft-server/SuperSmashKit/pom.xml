@@ -109,7 +109,7 @@
         <version>1.8</version>
         <executions>
           <execution>
-            <phase>deploy</phase>
+            <phase>install</phase>
             <configuration>
               <target>
                 <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar" todir="${project.basedir}/../server/plugins" />
