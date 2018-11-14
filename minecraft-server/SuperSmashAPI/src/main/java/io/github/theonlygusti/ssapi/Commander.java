@@ -85,7 +85,27 @@ public class Commander implements CommandExecutor {
           return true;
         }
       } else if (args.length == 1) {
-        return false;
+        if (sender.hasPermission("ssapi.dekitcmd.other")) {
+          Player target = this.plugin.getServer().getPlayerExact(args[0]);
+
+          if (target == null) {
+            sender.sendMessage("§cThe player with username " + args[0] + " could not be found on the server§r");
+            return true;
+          }
+
+          if (!SuperSmashController.isKitted(target)) {
+            sender.sendMessage("§c" + args[0] + " does not currently have a kit§r");
+            return true;
+          }
+
+          SuperSmashController.dekit(target);
+          sender.sendMessage("§6§l" + args[0] + " no longer has a kit§r");
+          target.sendMessage("§6§lYou no longer have a kit§r");
+          return true;
+        } else {
+          sender.sendMessage("§cYou do not have permission to take other players' kits with this command§r");
+          return true;
+        }
       } else {
         return false;
       }
