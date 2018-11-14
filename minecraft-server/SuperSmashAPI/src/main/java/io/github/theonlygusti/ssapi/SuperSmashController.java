@@ -82,6 +82,12 @@ public class SuperSmashController {
     player.getInventory().setContents(playerInventory.getValue0());
     player.getInventory().setArmorContents(playerInventory.getValue1());
     playerInventories.remove(player);
+    for (Passive passive : get(player).getPassives()) {
+      passive.stop();
+      passiveTasks.get(passive).cancel();
+      passiveTasks.remove(passive);
+      wasPassiveStarted.remove(passive);
+    }
     DoubleJump.unset(player);
     playerKits.remove(player);
   }
