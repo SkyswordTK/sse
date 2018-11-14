@@ -14,5 +14,5 @@ commands:
   dekit:
     description: Unequips the kit that is currently equipped
     permission: ssapi.dekitcmd
-    usage: "§cUsage: /<command>§r"
+    usage: "§cUsage: /<command> [player]§r"
     aliases: []
