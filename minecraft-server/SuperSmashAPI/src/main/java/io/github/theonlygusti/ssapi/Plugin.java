@@ -18,8 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class Plugin extends JavaPlugin {
   private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
-  private HashMap<Passive, Boolean> wasPassiveStarted = new HashMap<Passive, Boolean>();
-  private HashMap<Passive, BukkitTask> passiveTasks = new HashMap<Passive, BukkitTask>();
   private BukkitTask runPassivesTask;
 
   @Override
@@ -74,21 +72,15 @@ public final class Plugin extends JavaPlugin {
       public void run() {
         for(SuperSmashKit kit : SuperSmashController.getPlayerKits()){
           for (Passive passive : kit.getPassives()) {
-            Boolean wasStarted = wasPassiveStarted.get(passive);
-
-            if (wasStarted == null) {
-              wasPassiveStarted.put(passive, false);
-              wasStarted = false;
-            }
+            Boolean wasStarted = SuperSmashController.getWasPassiveStarted(passive);
 
             if (!wasStarted && passive.shouldStart()) {
-              passiveTasks.put(passive, passive.getRunnable().runTaskTimer(plugin, 0L, passive.getPeriod()));
-              wasPassiveStarted.put(passive, true);
+              SuperSmashController.startPassive(passive, plugin);
               wasStarted = true;
             }
 
             if (wasStarted && !passive.shouldStart()) {
-              wasPassiveStarted.put(passive, false);
+              SuperSmashController.toggleWasPassiveStarted(passive);
               wasStarted = false;
             }
           }
