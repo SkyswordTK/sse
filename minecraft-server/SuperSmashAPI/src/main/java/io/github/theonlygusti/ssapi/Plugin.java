@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Plugin extends JavaPlugin {
   private static BukkitTask itemAbilityCooldownTask;
+  private Commander commander;
 
   @Override
   public void onEnable() {
@@ -20,8 +21,9 @@ public final class Plugin extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new KitEvents(), this);
     getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
 
-    this.getCommand("kit").setExecutor(new Commander());
-    this.getCommand("dekit").setExecutor(new Commander());
+    commander = new Commander(this);
+    this.getCommand("kit").setExecutor(commander);
+    this.getCommand("dekit").setExecutor(commander);
 
     Plugin plugin = this;
 
