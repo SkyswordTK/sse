@@ -5,6 +5,9 @@ import io.github.theonlygusti.ssapi.events.IllegalEvents;
 import io.github.theonlygusti.ssapi.events.KitEvents;
 import io.github.theonlygusti.ssapi.events.PlayerEvents;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
+import io.github.theonlygusti.ssapi.passive.Passive;
+
+import java.util.HashMap;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
@@ -14,6 +17,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class Plugin extends JavaPlugin {
   private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
+  private HashMap<Passive, Boolean> wasPassiveStarted = new HashMap<Passive, Boolean>();
+  private BukkitTask runPassivesTask;
 
   @Override
   public void onEnable() {
@@ -63,6 +68,12 @@ public final class Plugin extends JavaPlugin {
             }
           }
         }
+      }
+    }.runTaskTimer(this, 0L, 1L);
+
+    runPassivesTask = new BukkitRunnable() {
+      @Override
+      public void run() {
       }
     }.runTaskTimer(this, 0L, 1L);
   }
