@@ -8,6 +8,7 @@ import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public final class Plugin extends JavaPlugin {
   private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
   private HashMap<Passive, Boolean> wasPassiveStarted = new HashMap<Passive, Boolean>();
+  private HashMap<Passive, BukkitTask> passiveTasks = new HashMap<Passive, BukkitTask>();
   private BukkitTask runPassivesTask;
 
   @Override
@@ -70,6 +72,27 @@ public final class Plugin extends JavaPlugin {
     runPassivesTask = new BukkitRunnable() {
       @Override
       public void run() {
+        for(SuperSmashKit kit : SuperSmashController.getPlayerKits()){
+          for (Passive passive : kit.getPassives()) {
+            Boolean wasStarted = wasPassiveStarted.get(passive);
+
+            if (wasStarted == null) {
+              wasPassiveStarted.put(passive, false);
+              wasStarted = false;
+            }
+
+            if (!wasStarted && passive.shouldStart()) {
+              passiveTasks.put(passive, passive.getRunnable().runTaskTimer(plugin, 0L, passive.getPeriod()));
+              wasPassiveStarted.put(passive, true);
+              wasStarted = true;
+            }
+
+            if (wasStarted && !passive.shouldStart()) {
+              wasPassiveStarted.put(passive, false);
+              wasStarted = false;
+            }
+          }
+        }
       }
     }.runTaskTimer(this, 0L, 1L);
   }
