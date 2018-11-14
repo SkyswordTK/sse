@@ -40,6 +40,10 @@ public class SuperSmashController {
     return new ArrayList<String>(kits.keySet());
   }
 
+  public static List<SuperSmashKit> getPlayerKits() {
+    return new ArrayList<SuperSmashKit>(playerKits.values());
+  }
+
   public static void enkit(Player player, String kitId) {
     if (isKitted(player)) {
       dekit(player);
