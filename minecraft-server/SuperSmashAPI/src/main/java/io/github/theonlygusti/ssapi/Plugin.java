@@ -51,20 +51,16 @@ public final class Plugin extends JavaPlugin {
 
       @Override
       public void run() {
-        for(Player player : plugin.getServer().getOnlinePlayers()){
-          if (SuperSmashController.isKitted(player)) {
-            SuperSmashKit kit = SuperSmashController.get(player);
+        for(SuperSmashKit kit : SuperSmashController.getPlayerKits()){
+          if (kit.getHeldItemAbility() != null) {
+            ItemAbility heldItemAbility = kit.getHeldItemAbility();
 
-            if (kit.getHeldItemAbility() != null) {
-              ItemAbility heldItemAbility = kit.getHeldItemAbility();
-
-              if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime()) {
-                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), heldItemAbility.getLastTimeUsed());
-                player.sendActionBar(actionBar);
-              } else if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime() + tick) {
-                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), System.currentTimeMillis() - heldItemAbility.getCooldownTime());
-                player.sendActionBar(actionBar);
-              }
+            if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime()) {
+              String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), heldItemAbility.getLastTimeUsed());
+              kit.getPlayer().sendActionBar(actionBar);
+            } else if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime() + tick) {
+              String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), System.currentTimeMillis() - heldItemAbility.getCooldownTime());
+              kit.getPlayer().sendActionBar(actionBar);
             }
           }
         }
