@@ -2,7 +2,7 @@ package io.github.theonlygusti.ssapi;
 
 import io.github.theonlygusti.doublejump.DoubleJumper;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
-import io.github.theonlygusti.ssapi.passive.PassiveAbility;
+import io.github.theonlygusti.ssapi.passive.Passive;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface SuperSmashKit extends DoubleJumper {
   public void doRightClick();
   public void changeHeldItem(int previousSlot, int newSlot);
   public ItemAbility getHeldItemAbility();
-  public List<PassiveAbility> getPassives();
+  public List<Passive> getPassives();
 }

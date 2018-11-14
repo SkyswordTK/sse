@@ -2,7 +2,7 @@ package io.github.theonlygusti.ssapi.passive;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-public interface PassiveAbility {
+public interface Passive {
   public String getName();
   public String getDescription();
   /**
