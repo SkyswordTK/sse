@@ -13,4 +13,9 @@ public interface Passive {
    * This is a toggle.
    */
   public Boolean shouldStart();
+  /**
+   * @return  The ticks of delay between successive executions of
+   *          this.getRunnable().
+   */
+  public long getPeriod();
 }
