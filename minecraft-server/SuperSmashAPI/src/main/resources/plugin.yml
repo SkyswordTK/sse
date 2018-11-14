@@ -9,7 +9,7 @@ commands:
   kit:
     description: Equips a kit
     permission: ssapi.kitcmd
-    usage: "§cUsage: /<command> <name>§r"
+    usage: "§cUsage: /<command> <name> [player]§r"
     aliases: []
   dekit:
     description: Unequips the kit that is currently equipped
