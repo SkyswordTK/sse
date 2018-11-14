@@ -46,7 +46,7 @@ public class Commander implements CommandExecutor {
           }
 
           SuperSmashController.dekit(player);
-          sender.sendMessage("§cYou no longer have a kit§r");
+          sender.sendMessage("§6§lYou no longer have a kit§r");
 
           return true;
         } else {
