@@ -21,4 +21,8 @@ public interface Passive {
    */
   public long getPeriod();
   public SuperSmashKit getOwner();
+  /**
+   * Called when dekitting.
+   */
+  public void stop();
 }
