@@ -5,6 +5,7 @@ import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -35,7 +36,14 @@ public class SuperSmashController {
     return kits.get(kitId) != null;
   }
 
+  public static List<String> getRegisteredKitNames() {
+    return new ArrayList<String>(kits.keySet());
+  }
+
   public static void enkit(Player player, String kitId) {
+    if (isKitted(player)) {
+      dekit(player);
+    }
     Function<Player, SuperSmashKit> kitConstructor = kits.get(kitId);
     SuperSmashKit kit = kitConstructor.apply(player);
     Disguise disguise = kit.getDisguise();

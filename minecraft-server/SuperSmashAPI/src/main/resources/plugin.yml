@@ -8,11 +8,11 @@ depend: [ LibsDisguises ]
 commands:
   kit:
     description: Equips a kit
-    permission: ssapi.kit
-    usage: "§cUsage: /<command> <name>§r"
+    permission: ssapi.kitcmd
+    usage: "§cUsage: /<command> <name> [player]§r"
     aliases: []
   dekit:
     description: Unequips the kit that is currently equipped
-    permission: ssapi.dekit
-    usage: "§cUsage: /<command>§r"
+    permission: ssapi.dekitcmd
+    usage: "§cUsage: /<command> [player]§r"
     aliases: []

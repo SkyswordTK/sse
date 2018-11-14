@@ -8,54 +8,106 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class Commander implements CommandExecutor {
-  public Commander() {
+  private Plugin plugin;
+
+  public Commander(Plugin plugin) {
+    this.plugin = plugin;
   }
 
   @Override
   public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     if (cmd.getName().equals("kit")) {
-      if (sender instanceof Player) {
-        if (args.length != 1) {
-          return false;
-        }
+      if (args.length == 1) {
+        if (sender instanceof Player) {
+          Player player = (Player) sender;
+          if (player.hasPermission("ssapi.kitcmd.self")) {
+            if (!SuperSmashController.exists(args[0])) {
+              player.sendMessage("§cThe §f§l"  + args[0] + "§r §ckit has not been registered§r");
+              return true;
+            }
+            
+            SuperSmashController.enkit(player, args[0]);
+            player.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
+            return true;
+          } else {
+            player.sendMessage("§cYou do not have permission to give yourself a kit with this command§r");
+            return true;
+          }
+        } else {
+          sender.sendMessage("You must be a player to use this command.");
 
-        if (!SuperSmashController.exists(args[0])) {
-          sender.sendMessage("§cThat kit is not registered§r");
           return true;
         }
+      } else if (args.length == 2) {
+        if (sender.hasPermission("ssapi.kitcmd.other")) {
+          if (!SuperSmashController.exists(args[0])) {
+            sender.sendMessage("§cThe §f§l"  + args[0] + "§r §ckit has not been registered§r");
+            return true;
+          }
 
-        Player player = (Player) sender;
+          Player target = this.plugin.getServer().getPlayerExact(args[1]);
 
-        SuperSmashController.enkit(player, args[0]);
-        sender.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
+          if (target == null) {
+            sender.sendMessage("§cThe player with username " + args[1] + " could not be found on the server§r");
+            return true;
+          }
 
-        return true;
+          SuperSmashController.enkit(target, args[0]);
+          sender.sendMessage("§r§e§l" + args[1] + "§r §ahas been given the §r§e§l" + args[0] + "§r §akit§r");
+          target.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
+          return true;
+        } else {
+          sender.sendMessage("§cYou do not have permission to give other players a kit with this command§r");
+          return true;
+        }
       } else {
-        sender.sendMessage("You must be a player to use this command.");
-
-        return true;
+        return false;
       }
     } else if (cmd.getName().equals("dekit")) {
-      if (sender instanceof Player) {
-        if (args.length != 0) {
-          return false;
-        }
+      if (args.length == 0) {
+        if (sender instanceof Player) {
+          Player player = (Player) sender;
+          if (player.hasPermission("ssapi.dekitcmd.self")) {
+            if (!SuperSmashController.isKitted(player)) {
+              sender.sendMessage("§cYou do not currently have a kit§r");
+              return true;
+            }
 
-        Player player = (Player) sender;
-
-        if (!SuperSmashController.isKitted(player)) {
-          sender.sendMessage("§cYou do not have a kit§r");
+            SuperSmashController.dekit(player);
+            sender.sendMessage("§6§lYou no longer have a kit§r");
+            return true;
+          } else {
+            sender.sendMessage("§cYou do not have permission to dekit yourself with this command§r");
+            return true;
+          }
+        } else {
+          sender.sendMessage("You must be a player to use this command.");
           return true;
         }
+      } else if (args.length == 1) {
+        if (sender.hasPermission("ssapi.dekitcmd.other")) {
+          Player target = this.plugin.getServer().getPlayerExact(args[0]);
 
-        SuperSmashController.dekit(player);
-        sender.sendMessage("§cYou no longer have a kit§r");
+          if (target == null) {
+            sender.sendMessage("§cThe player with username " + args[0] + " could not be found on the server§r");
+            return true;
+          }
 
-        return true;
+          if (!SuperSmashController.isKitted(target)) {
+            sender.sendMessage("§c" + args[0] + " does not currently have a kit§r");
+            return true;
+          }
+
+          SuperSmashController.dekit(target);
+          sender.sendMessage("§6§l" + args[0] + " no longer has a kit§r");
+          target.sendMessage("§6§lYou no longer have a kit§r");
+          return true;
+        } else {
+          sender.sendMessage("§cYou do not have permission to take other players' kits with this command§r");
+          return true;
+        }
       } else {
-        sender.sendMessage("You must be a player to use this command.");
-
-        return true;
+        return false;
       }
     }
     return false;
