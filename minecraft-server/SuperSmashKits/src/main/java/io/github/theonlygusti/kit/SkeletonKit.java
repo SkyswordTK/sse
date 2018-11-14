@@ -129,6 +129,9 @@ public class SkeletonKit implements SuperSmashKit {
     public long getPeriod() {
       return 20L;
     }
+
+    public void stop() {
+    }
   }
 
   public List<Passive> getPassives() {
