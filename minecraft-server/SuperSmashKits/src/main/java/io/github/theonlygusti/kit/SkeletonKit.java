@@ -16,15 +16,18 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class SkeletonKit implements SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
+  private Heal heal;
 
   public SkeletonKit(Player player) {
     this.player = player;
     this.boneExplosion = new BoneExplosion(this);
+    this.heal = new Heal(this);
   }
 
   public Player getPlayer() {
@@ -90,8 +93,46 @@ public class SkeletonKit implements SuperSmashKit {
     return Arrays.asList(this.boneExplosion);
   }
 
+  private class Heal implements Passive {
+    private SkeletonKit owner;
+
+    public Heal(SkeletonKit owner) {
+      this.owner = owner;
+    }
+
+    public BukkitRunnable getRunnable() {
+      Heal passive = this;
+      return new BukkitRunnable() {
+        @Override
+        public void run() {
+          passive.getOwner().getPlayer().sendMessage("§sHealing hearts§r");
+        }
+      };
+    }
+
+    public String getName() {
+      return "Heal";
+    }
+
+    public String getDescription() {
+      return "Skeleton regeneration";
+    }
+
+    public Boolean shouldStart() {
+      return true;
+    }
+
+    public SkeletonKit getOwner() {
+      return owner;
+    }
+
+    public long getPeriod() {
+      return 20L;
+    }
+  }
+
   public List<Passive> getPassives() {
-    return null;
+    return Arrays.asList(this.heal);
   }
 
   public void doPunch() {
