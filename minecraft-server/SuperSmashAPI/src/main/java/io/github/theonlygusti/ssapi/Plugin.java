@@ -25,6 +25,8 @@ public final class Plugin extends JavaPlugin {
     this.getCommand("kit").setExecutor(commander);
     this.getCommand("dekit").setExecutor(commander);
 
+    this.getCommand("kit").setTabCompleter(new KitCompleter());
+
     Plugin plugin = this;
 
     itemAbilityCooldownTask = new BukkitRunnable() {

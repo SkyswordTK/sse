@@ -2,6 +2,7 @@ package io.github.theonlygusti.kit;
 
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
+import io.github.theonlygusti.ssapi.passive.Passive;
 
 import java.util.Arrays;
 import java.util.List;
@@ -87,6 +88,10 @@ public class SkeletonKit implements SuperSmashKit {
 
   public List<ItemAbility> getItemAbilities() {
     return Arrays.asList(this.boneExplosion);
+  }
+
+  public List<Passive> getPassives() {
+    return null;
   }
 
   public void doPunch() {
