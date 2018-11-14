@@ -1,5 +1,7 @@
 package io.github.theonlygusti.ssapi.passive;
 
+import io.github.theonlygusti.ssapi.SuperSmashKit;
+
 import org.bukkit.scheduler.BukkitRunnable;
 
 public interface Passive {
@@ -18,4 +20,5 @@ public interface Passive {
    *          this.getRunnable().
    */
   public long getPeriod();
+  public SuperSmashKit getOwner();
 }
