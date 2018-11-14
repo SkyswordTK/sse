@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Plugin extends JavaPlugin {
-  private static BukkitTask itemAbilityCooldownTask;
+  private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
 
   @Override
