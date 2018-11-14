@@ -17,15 +17,19 @@ public class Commander implements CommandExecutor {
       if (sender instanceof Player) {
         Player player = (Player) sender;
         if (args.length == 1) {
-          if (!SuperSmashController.exists(args[0])) {
-            sender.sendMessage("§cThat kit is not registered§r");
+          if (player.hasPermission("ssapi.kitcmd.self")) {
+            if (!SuperSmashController.exists(args[0])) {
+              player.sendMessage("§cThe §f§l"  + args[0] + "§r §ckit has not been registered§r");
+              return true;
+            }
+            
+            SuperSmashController.enkit(player, args[0]);
+            player.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
+            return true;
+          } else {
+            player.sendMessage("§cYou do not have permission to give yourself a kit with this command§r");
             return true;
           }
-
-          SuperSmashController.enkit(player, args[0]);
-          sender.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
-
-          return true;
         } else {
           return false;
         }
