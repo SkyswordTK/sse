@@ -15,13 +15,12 @@ public class Commander implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
     if (cmd.getName().equals("kit")) {
       if (sender instanceof Player) {
+        Player player = (Player) sender;
         if (args.length == 1) {
           if (!SuperSmashController.exists(args[0])) {
             sender.sendMessage("§cThat kit is not registered§r");
             return true;
           }
-
-          Player player = (Player) sender;
 
           SuperSmashController.enkit(player, args[0]);
           sender.sendMessage("§aYou have been given the §r§e§l" + args[0] + "§r §akit§r");
@@ -37,9 +36,8 @@ public class Commander implements CommandExecutor {
       }
     } else if (cmd.getName().equals("dekit")) {
       if (sender instanceof Player) {
+        Player player = (Player) sender;
         if (args.length == 0) {
-          Player player = (Player) sender;
-
           if (!SuperSmashController.isKitted(player)) {
             sender.sendMessage("§cYou do not have a kit§r");
             return true;
