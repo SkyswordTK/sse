@@ -36,6 +36,9 @@ public class SuperSmashController {
   }
 
   public static void enkit(Player player, String kitId) {
+    if (isKitted(player)) {
+      dekit(player);
+    }
     Function<Player, SuperSmashKit> kitConstructor = kits.get(kitId);
     SuperSmashKit kit = kitConstructor.apply(player);
     Disguise disguise = kit.getDisguise();
