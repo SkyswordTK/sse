@@ -59,17 +59,6 @@
       <timezone>Europe/London</timezone>
     </developer>
   </developers>
-  
-  <contributors>
-    <contributor>
-      <name>Tobi</name>
-      <roles>
-        <role>Java Amateur Developer</role>
-        <role>A second role just to have more roles than George</role>
-      </roles>
-      <timezone>Europe/Berlin</timezone>
-    </contributor>
-  </contributors>
 
   <build>
     <!-- setting defaultGoal means that we can build with 'mvn',
