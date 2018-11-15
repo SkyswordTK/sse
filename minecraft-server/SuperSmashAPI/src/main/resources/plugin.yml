@@ -4,7 +4,7 @@ description: Handles all game mechanics and provides an API for designing kits.
 author: George Bakewell
 authors: [ Tobi ]
 main: io.github.theonlygusti.ssapi.Plugin
-depend: [ LibsDisguises ]
+depend: [ LibsDisguises, DoubleJump ]
 commands:
   kit:
     description: Equips a kit
