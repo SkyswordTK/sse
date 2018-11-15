@@ -5,6 +5,10 @@ import io.github.theonlygusti.ssapi.events.IllegalEvents;
 import io.github.theonlygusti.ssapi.events.KitEvents;
 import io.github.theonlygusti.ssapi.events.PlayerEvents;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
+import io.github.theonlygusti.ssapi.passive.Passive;
+
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
@@ -12,8 +16,9 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public final class Plugin extends JavaPlugin {
-  private static BukkitTask itemAbilityCooldownTask;
+  private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
+  private BukkitTask runPassivesTask;
 
   @Override
   public void onEnable() {
@@ -46,20 +51,37 @@ public final class Plugin extends JavaPlugin {
 
       @Override
       public void run() {
-        for(Player player : plugin.getServer().getOnlinePlayers()){
-          if (SuperSmashController.isKitted(player)) {
-            SuperSmashKit kit = SuperSmashController.get(player);
+        for(SuperSmashKit kit : SuperSmashController.getPlayerKits()){
+          if (kit.getHeldItemAbility() != null) {
+            ItemAbility heldItemAbility = kit.getHeldItemAbility();
 
-            if (kit.getHeldItemAbility() != null) {
-              ItemAbility heldItemAbility = kit.getHeldItemAbility();
+            if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime()) {
+              String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), heldItemAbility.getLastTimeUsed());
+              kit.getPlayer().sendActionBar(actionBar);
+            } else if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime() + tick) {
+              String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), System.currentTimeMillis() - heldItemAbility.getCooldownTime());
+              kit.getPlayer().sendActionBar(actionBar);
+            }
+          }
+        }
+      }
+    }.runTaskTimer(this, 0L, 1L);
 
-              if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime()) {
-                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), heldItemAbility.getLastTimeUsed());
-                player.sendActionBar(actionBar);
-              } else if (System.currentTimeMillis() < heldItemAbility.getLastTimeUsed() + heldItemAbility.getCooldownTime() + tick) {
-                String actionBar = buildCooldownGraphic(heldItemAbility.getName(), heldItemAbility.getCooldownTime(), System.currentTimeMillis() - heldItemAbility.getCooldownTime());
-                player.sendActionBar(actionBar);
-              }
+    runPassivesTask = new BukkitRunnable() {
+      @Override
+      public void run() {
+        for(SuperSmashKit kit : SuperSmashController.getPlayerKits()){
+          for (Passive passive : kit.getPassives()) {
+            Boolean wasStarted = SuperSmashController.getWasPassiveStarted(passive);
+
+            if (!wasStarted && passive.shouldStart()) {
+              SuperSmashController.startPassive(passive, plugin);
+              wasStarted = true;
+            }
+
+            if (wasStarted && !passive.shouldStart()) {
+              SuperSmashController.toggleWasPassiveStarted(passive);
+              wasStarted = false;
             }
           }
         }

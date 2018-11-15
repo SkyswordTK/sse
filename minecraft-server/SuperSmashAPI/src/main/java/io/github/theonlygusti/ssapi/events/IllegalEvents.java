@@ -12,7 +12,9 @@ import org.bukkit.event.Event.Result;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
@@ -84,6 +86,19 @@ public class IllegalEvents implements Listener {
 
       if (SuperSmashController.isKitted(player)) {
         if (event.getCause() == DamageCause.FALL) {
+          event.setCancelled(true);
+        }
+      }
+    }
+  }
+
+  @EventHandler(priority=EventPriority.HIGH)
+  public void onPlayerRegainHealth(EntityRegainHealthEvent event) {
+    if (event.getEntity() instanceof Player) {
+      Player player = (Player) event.getEntity();
+
+      if (SuperSmashController.isKitted(player)) {
+        if (event.getRegainReason() == RegainReason.SATIATED || event.getRegainReason() == RegainReason.REGEN) {
           event.setCancelled(true);
         }
       }
