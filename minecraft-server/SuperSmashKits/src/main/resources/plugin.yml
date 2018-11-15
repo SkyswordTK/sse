@@ -3,4 +3,4 @@ version: 1.0.0
 description: Uses the Super Smash API to implement individual kits.
 author: George Bakewell
 main: io.github.theonlygusti.kit.KitLoader
-depend: [ LibsDisguises, SuperSmashAPI ]
+depend: [ LibsDisguises, SuperSmashAPI, DoubleJump ]
