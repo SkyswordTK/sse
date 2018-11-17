@@ -1,24 +1,20 @@
 package io.github.theonlygusti.kit.item;
 
 import io.github.theonlygusti.ssapi.SuperSmashKit;
-import io.github.theonlygusti.ssapi.item.ItemAbility;
+import io.github.theonlygusti.ssapi.item.BowAbility;
 
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.event.entity.EntityShootBowEvent;
 
-import java.util.List;
-
-public abstract class OverchargeableBow implements ItemAbility {
+public abstract class OverchargeableBow implements BowAbility {
   protected BukkitTask overchargeTask;
   // MCP's decompiled 1.8.8 minecraft shows it takes 22 ticks to charge a bow.
   protected long ticksToFullyCharge = 22L;
@@ -56,7 +52,6 @@ public abstract class OverchargeableBow implements ItemAbility {
     }
   }
 
-  @Override
   public void rightClick() {
     if (this.overchargeTask != null) {
       this.overchargeTask.cancel();
