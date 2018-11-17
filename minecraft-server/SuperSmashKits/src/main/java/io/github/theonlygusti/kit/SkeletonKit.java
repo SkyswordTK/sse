@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -39,6 +40,9 @@ public class SkeletonKit implements SuperSmashKit {
     long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     public RopedArrow(SkeletonKit owner) {
       super(owner);
+    }
+
+    public void afterShootArrow(Arrow arrow) {
     }
 
     public void select() {
