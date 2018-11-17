@@ -8,6 +8,7 @@ import java.util.List;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 
 public interface SuperSmashKit extends DoubleJumper {
@@ -16,6 +17,7 @@ public interface SuperSmashKit extends DoubleJumper {
   public Player getPlayer();
   public void doPunch();
   public void doRightClick();
+  public void shootBow(Arrow arrow);
   public void changeHeldItem(int previousSlot, int newSlot);
   public ItemAbility getHeldItemAbility();
   public List<Passive> getPassives();
