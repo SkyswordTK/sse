@@ -67,7 +67,7 @@ public abstract class OverchargeableBow implements BowAbility {
         public void run() {
           if (clickCounter[0] < instance.getMaximumOverchargeClicks()) {
             for(Player p : Bukkit.getOnlinePlayers()){
-              p.playSound(instance.getOwner().getPlayer().getLocation(), Sound.CLICK, 1.0F, 1.0F + instance.getOwner().getPlayer().getExp());
+              p.playSound(instance.getOwner().getPlayer().getLocation(), Sound.BLOCK_COMPARATOR_CLICK, 1.0F, 1.0F + instance.getOwner().getPlayer().getExp());
             }
             instance.setPlayerExp(instance.getOwner().getPlayer(), instance.getOwner().getPlayer().getExp() + experienceAddedPerTick);
             instance.overchargeClicks++;
@@ -77,7 +77,7 @@ public abstract class OverchargeableBow implements BowAbility {
             return;
           }
         }
-      }.runTaskTimer(JavaPlugin.getPlugin(this.class), this.ticksToFullyCharge, this.getTicksBetweenClicks());
+      }.runTaskTimer(JavaPlugin.getProvidingPlugin(OverchargeableBow.class), this.ticksToFullyCharge, this.getTicksBetweenClicks());
     }
   }
 
