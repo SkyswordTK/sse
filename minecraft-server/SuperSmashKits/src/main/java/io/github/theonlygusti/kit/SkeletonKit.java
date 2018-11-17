@@ -137,6 +137,10 @@ public class SkeletonKit implements SuperSmashKit {
     }
   }
 
+  public void shootBow(Arrow arrow) {
+    this.ropedArrow.onShootArrow(arrow);
+  }
+
   public List<ItemAbility> getItemAbilities() {
     return Arrays.asList((ItemAbility) this.boneExplosion, (ItemAbility) this.ropedArrow);
   }
