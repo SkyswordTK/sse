@@ -15,9 +15,12 @@ public final class Plugin extends JavaPlugin {
   private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
   private BukkitTask runPassivesTask;
+  public static Plugin plugin;
 
   @Override
   public void onEnable() {
+    plugin = this;
+
     getServer().getPluginManager().registerEvents(new IllegalEvents(), this);
     getServer().getPluginManager().registerEvents(new KitEvents(), this);
     getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
