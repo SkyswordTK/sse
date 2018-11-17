@@ -1,5 +1,6 @@
 package io.github.theonlygusti.kit.item;
 
+import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.BowAbility;
 
@@ -8,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.Sound;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitTask;
@@ -77,7 +77,7 @@ public abstract class OverchargeableBow implements BowAbility {
             return;
           }
         }
-      }.runTaskTimer(JavaPlugin.getProvidingPlugin(OverchargeableBow.class), this.ticksToFullyCharge, this.getTicksBetweenClicks());
+      }.runTaskTimer(SuperSmashController.getPlugin(), this.ticksToFullyCharge, this.getTicksBetweenClicks());
     }
   }
 
