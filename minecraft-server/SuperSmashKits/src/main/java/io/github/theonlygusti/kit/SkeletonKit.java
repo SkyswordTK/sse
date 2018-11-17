@@ -24,11 +24,13 @@ import org.bukkit.util.Vector;
 public class SkeletonKit implements SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
+  private RopedArrow ropedArrow;
   private Heal heal;
 
   public SkeletonKit(Player player) {
     this.player = player;
     this.boneExplosion = new BoneExplosion(this);
+    this.ropedArrow = new RopedArrow(this);
     this.heal = new Heal(this);
   }
 
@@ -136,7 +138,7 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public List<ItemAbility> getItemAbilities() {
-    return Arrays.asList(this.boneExplosion);
+    return Arrays.asList((ItemAbility) this.boneExplosion, (ItemAbility) this.ropedArrow);
   }
 
   private class Heal implements Passive {
