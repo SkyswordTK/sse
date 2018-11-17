@@ -194,7 +194,7 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public Disguise getDisguise() {
-    MobDisguise skeletonDisguise = new MobDisguise(DisguiseType.SKELETON).setKeepDisguiseOnPlayerDeath(true);
+    MobDisguise skeletonDisguise = new MobDisguise(DisguiseType.SKELETON);
     return skeletonDisguise;
   }
 }
