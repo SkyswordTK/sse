@@ -182,9 +182,7 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public void runDoubleJumpExtra() {
-    for(Player p : Bukkit.getOnlinePlayers()) {
-      p.playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1f, 1f);
-    }
+    this.player.getWorld().playSound(this.player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 1f, 1f);
 
     this.player.setAllowFlight(false);
   }
