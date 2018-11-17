@@ -19,10 +19,10 @@ public abstract class OverchargeableBow implements BowAbility {
   // MCP's decompiled 1.8.8 minecraft shows it takes 22 ticks to charge a bow.
   protected long ticksToFullyCharge = 22L;
   protected int overchargeClicks = 0;
-  protected Player player;
+  protected SuperSmashKit owner;
 
-  public OverchargeableBow(Player player) {
-    this.player = player;
+  public OverchargeableBow(SuperSmashKit owner) {
+    this.owner = owner;
   }
 
   public abstract int getMaximumOverchargeClicks();
@@ -56,7 +56,7 @@ public abstract class OverchargeableBow implements BowAbility {
     if (this.overchargeTask != null) {
       this.overchargeTask.cancel();
     }
-    if (countItems(this.player.getInventory(), Material.ARROW) > 0) {
+    if (countItems(this.owner.getPlayer().getInventory(), Material.ARROW) > 0) {
       final float experienceAddedPerTick = 1.0F / this.getMaximumOverchargeClicks();
       OverchargeableBow instance = this;
       // because the BukkitRunnable is only allowed to reference
@@ -67,9 +67,9 @@ public abstract class OverchargeableBow implements BowAbility {
         public void run() {
           if (clickCounter[0] < instance.getMaximumOverchargeClicks()) {
             for(Player p : Bukkit.getOnlinePlayers()){
-              p.playSound(instance.player.getLocation(), Sound.CLICK, 1.0F, 1.0F + instance.player.getExp());
+              p.playSound(instance.getOwner().getPlayer().getLocation(), Sound.CLICK, 1.0F, 1.0F + instance.getOwner().getPlayer().getExp());
             }
-            instance.setPlayerExp(instance.player, instance.player.getExp() + experienceAddedPerTick);
+            instance.setPlayerExp(instance.getOwner().getPlayer(), instance.getOwner().getPlayer().getExp() + experienceAddedPerTick);
             instance.overchargeClicks++;
             clickCounter[0]++;
           } else {
@@ -85,7 +85,7 @@ public abstract class OverchargeableBow implements BowAbility {
     if (this.overchargeTask != null) {
       this.overchargeTask.cancel();
     }
-    this.setPlayerExp(this.player, 0.0F);
+    this.setPlayerExp(this.getOwner().getPlayer(), 0.0F);
     this.afterShootArrow(arrow);
     this.overchargeClicks = 0;
   }
@@ -96,7 +96,7 @@ public abstract class OverchargeableBow implements BowAbility {
     if (this.overchargeTask != null) {
       this.overchargeTask.cancel();
     }
-    this.setPlayerExp(this.player, 0.0F);
+    this.setPlayerExp(this.getOwner().getPlayer(), 0.0F);
     this.overchargeClicks = 0;
   }
 
