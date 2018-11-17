@@ -54,7 +54,7 @@ public class SuperSmashController {
     }
     Function<Player, SuperSmashKit> kitConstructor = kits.get(kitId);
     SuperSmashKit kit = kitConstructor.apply(player);
-    Disguise disguise = kit.getDisguise();
+    Disguise disguise = kit.getDisguise().setKeepDisguiseOnPlayerDeath(true);
     DisguiseAPI.disguiseToAll(player, disguise);
     DisguiseAPI.setViewDisguiseToggled(player, false);
     List<ItemAbility> itemAbilities = kit.getItemAbilities();
