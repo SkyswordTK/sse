@@ -3,6 +3,7 @@ package io.github.theonlygusti.kit;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
+import io.github.theonlygusti.kit.item.OverchargeableBow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,47 @@ public class SkeletonKit implements SuperSmashKit {
 
   public Player getPlayer() {
     return this.player;
+  }
+
+  private class RopedArrow extends OverchargeableBow {
+    long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
+    public RopedArrow(SkeletonKit owner) {
+      super(owner);
+    }
+
+    public void select() {
+    }
+
+    public void punch() {
+    }
+
+    public SkeletonKit getOwner() {
+      return (SkeletonKit) this.owner;
+    }
+
+    public String getName() {
+      return "Roped Arrow";
+    }
+
+    public String getLore() {
+      return "";
+    }
+
+    public long getCooldownTime() {
+      return 5000L;
+    }
+
+    public long getLastTimeUsed() {
+      return this.lastTimeUsed;
+    }
+
+    public long getTicksBetweenClicks() {
+      return 7;
+    }
+
+    public int getMaximumOverchargeClicks() {
+      return 5;
+    }
   }
 
   private class BoneExplosion implements ItemAbility {
