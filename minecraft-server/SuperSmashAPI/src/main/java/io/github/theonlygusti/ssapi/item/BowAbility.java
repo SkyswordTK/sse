@@ -1,6 +1,8 @@
 package io.github.theonlygusti.ssapi.item;
 
+import org.bukkit.entity.Arrow;
+
 public interface BowAbility {
-  public void onShootBow();
+  public void onShootArrow(Arrow arrow);
 }
 
