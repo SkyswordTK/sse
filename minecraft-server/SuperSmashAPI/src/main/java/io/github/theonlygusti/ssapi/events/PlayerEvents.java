@@ -29,4 +29,5 @@ public class PlayerEvents implements Listener {
       event.setKeepLevel(false);
       event.setKeepInventory(true);
     }
+  }
 }
