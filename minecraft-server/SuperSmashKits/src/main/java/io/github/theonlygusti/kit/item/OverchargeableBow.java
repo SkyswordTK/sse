@@ -53,6 +53,7 @@ public abstract class OverchargeableBow implements BowAbility {
   }
 
   public void rightClick() {
+    setPlayerExp(this.getOwner().getPlayer(), 0f);
     if (this.overchargeTask != null) {
       this.overchargeTask.cancel();
     }
