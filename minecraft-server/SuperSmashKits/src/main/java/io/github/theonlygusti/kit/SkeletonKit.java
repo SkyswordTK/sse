@@ -18,6 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -25,6 +26,7 @@ public class SkeletonKit implements SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
   private RopedArrow ropedArrow;
+  private ReplenishArrows replenishArrows;
   private Heal heal;
 
   public SkeletonKit(Player player) {
@@ -32,6 +34,7 @@ public class SkeletonKit implements SuperSmashKit {
     this.boneExplosion = new BoneExplosion(this);
     this.ropedArrow = new RopedArrow(this);
     this.heal = new Heal(this);
+    this.replenishArrows = new ReplenishArrows(this);
   }
 
   public Player getPlayer() {
@@ -145,6 +148,64 @@ public class SkeletonKit implements SuperSmashKit {
     return Arrays.asList((ItemAbility) this.boneExplosion, (ItemAbility) this.ropedArrow);
   }
 
+  private class ReplenishArrows implements Passive {
+    private SkeletonKit owner;
+    private int slot = 2;
+    private int maxArrows = 3;
+
+    public ReplenishArrows(SkeletonKit owner) {
+      this.owner = owner;
+    }
+
+    public SkeletonKit getOwner() {
+      return this.owner;
+    }
+
+    public long getPeriod() {
+      return 60L;
+    }
+
+    public void stop() {
+    }
+
+    public String getName() {
+      return "Quiver";
+    }
+
+    public String getDescription() {
+      return "Skeleton gets arrows";
+    }
+
+    public BukkitRunnable getRunnable() {
+      ReplenishArrows instance = this;
+      return new BukkitRunnable() {
+        @Override
+        public void run() {
+          if (instance.getOwner().getPlayer().isDead()) {
+            this.cancel();
+          } else {
+            ItemStack currentSlotContents = instance.getOwner().getPlayer().getInventory().getItem(instance.slot);
+            if (currentSlotContents == null || currentSlotContents.getAmount() < instance.maxArrows) {
+              ItemStack newSlotContents;
+              if (currentSlotContents == null) {
+                newSlotContents = new ItemStack(Material.ARROW);
+              } else {
+                int currentAmount = currentSlotContents.getAmount();
+                newSlotContents = new ItemStack(Material.ARROW, currentAmount + 1);
+              }
+              instance.getOwner().getPlayer().getInventory().setItem(instance.slot, newSlotContents);
+              instance.getOwner().getPlayer().playSound(instance.getOwner().getPlayer().getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.0F);
+            }
+          }
+        }
+      };
+    }
+
+    public Boolean shouldStart() {
+      return !this.getOwner().getPlayer().isDead();
+    }
+  }
+
   private class Heal implements Passive {
     private SkeletonKit owner;
     private float healthPerSecond = 0.25f;
@@ -158,12 +219,13 @@ public class SkeletonKit implements SuperSmashKit {
       return new BukkitRunnable() {
         @Override
         public void run() {
-          if (!passive.getOwner().getPlayer().isDead()) {
-            if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
-              passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
-            } else {
-              passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getMaxHealth());
-            }
+          if (passive.getOwner().getPlayer().isDead()) {
+            this.cancel();
+          }
+          if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
+            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
+          } else {
+            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getMaxHealth());
           }
         }
       };
@@ -178,7 +240,7 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public Boolean shouldStart() {
-      return true;
+      return !this.getOwner().getPlayer().isDead();
     }
 
     public SkeletonKit getOwner() {
@@ -194,7 +256,7 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public List<Passive> getPassives() {
-    return Arrays.asList(this.heal);
+    return Arrays.asList((Passive) this.heal, (Passive) this.replenishArrows);
   }
 
   public void doPunch() {
