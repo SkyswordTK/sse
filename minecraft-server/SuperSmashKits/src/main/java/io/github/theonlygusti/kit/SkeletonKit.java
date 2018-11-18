@@ -147,6 +147,7 @@ public class SkeletonKit implements SuperSmashKit {
 
   private class Heal implements Passive {
     private SkeletonKit owner;
+    private float healthPerSecond = 0.25f;
 
     public Heal(SkeletonKit owner) {
       this.owner = owner;
@@ -158,7 +159,11 @@ public class SkeletonKit implements SuperSmashKit {
         @Override
         public void run() {
           if (!passive.getOwner().getPlayer().isDead()) {
-            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + 0.25);
+            if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
+              passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
+            } else {
+              passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getMaxHealth());
+            }
           }
         }
       };
