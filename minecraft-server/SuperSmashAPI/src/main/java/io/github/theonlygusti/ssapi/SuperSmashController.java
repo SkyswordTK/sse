@@ -117,6 +117,10 @@ public class SuperSmashController {
     return wasStarted;
   }
 
+  public static Plugin getPlugin() {
+    return Plugin.plugin;
+  }
+
   public static void startPassive(Passive passive, Plugin plugin) {
     passiveTasks.put(passive, passive.getRunnable().runTaskTimer(plugin, 0L, passive.getPeriod()));
     wasPassiveStarted.put(passive, true);

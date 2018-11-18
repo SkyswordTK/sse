@@ -7,11 +7,7 @@ import io.github.theonlygusti.ssapi.events.PlayerEvents;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,9 +16,12 @@ public final class Plugin extends JavaPlugin {
   private Commander commander;
   private Querier querier;
   private BukkitTask runPassivesTask;
+  public static Plugin plugin;
 
   @Override
   public void onEnable() {
+    plugin = this;
+
     getServer().getPluginManager().registerEvents(new IllegalEvents(), this);
     getServer().getPluginManager().registerEvents(new KitEvents(), this);
     getServer().getPluginManager().registerEvents(new PlayerEvents(), this);

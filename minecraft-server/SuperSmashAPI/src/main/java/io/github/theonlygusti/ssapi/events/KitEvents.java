@@ -3,6 +3,7 @@ package io.github.theonlygusti.ssapi.events;
 import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,6 +49,9 @@ public class KitEvents implements Listener {
       Player player = (Player) event.getEntity();
 
       if (SuperSmashController.isKitted(player)) {
+        if (event.getProjectile() instanceof Arrow) {
+          SuperSmashController.get(player).shootBow((Arrow) event.getProjectile());
+        }
       }
     }
   }

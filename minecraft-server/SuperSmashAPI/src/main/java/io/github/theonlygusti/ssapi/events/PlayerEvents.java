@@ -4,6 +4,7 @@ import io.github.theonlygusti.ssapi.SuperSmashController;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 
@@ -19,6 +20,14 @@ public class PlayerEvents implements Listener {
   public void onPlayerKick(PlayerKickEvent event) {
     if (SuperSmashController.isKitted(event.getPlayer())) {
       SuperSmashController.dekit(event.getPlayer());
+    }
+  }
+
+  @EventHandler
+  public void onPlayerDeath(PlayerDeathEvent event) {
+    if (SuperSmashController.isKitted(event.getEntity())) {
+      event.setKeepLevel(false);
+      event.setKeepInventory(true);
     }
   }
 }

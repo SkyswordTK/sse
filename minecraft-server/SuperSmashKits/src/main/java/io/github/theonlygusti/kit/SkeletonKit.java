@@ -3,6 +3,7 @@ package io.github.theonlygusti.kit;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
+import io.github.theonlygusti.kit.item.OverchargeableBow;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -22,16 +24,62 @@ import org.bukkit.util.Vector;
 public class SkeletonKit implements SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
+  private RopedArrow ropedArrow;
   private Heal heal;
 
   public SkeletonKit(Player player) {
     this.player = player;
     this.boneExplosion = new BoneExplosion(this);
+    this.ropedArrow = new RopedArrow(this);
     this.heal = new Heal(this);
   }
 
   public Player getPlayer() {
     return this.player;
+  }
+
+  private class RopedArrow extends OverchargeableBow {
+    long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
+    public RopedArrow(SkeletonKit owner) {
+      super(owner);
+    }
+
+    public void afterShootArrow(Arrow arrow) {
+    }
+
+    public void select() {
+    }
+
+    public void punch() {
+    }
+
+    public SkeletonKit getOwner() {
+      return (SkeletonKit) this.owner;
+    }
+
+    public String getName() {
+      return "Roped Arrow";
+    }
+
+    public String getLore() {
+      return "";
+    }
+
+    public long getCooldownTime() {
+      return 5000L;
+    }
+
+    public long getLastTimeUsed() {
+      return this.lastTimeUsed;
+    }
+
+    public long getTicksBetweenClicks() {
+      return 7;
+    }
+
+    public int getMaximumOverchargeClicks() {
+      return 5;
+    }
   }
 
   private class BoneExplosion implements ItemAbility {
@@ -89,8 +137,12 @@ public class SkeletonKit implements SuperSmashKit {
     }
   }
 
+  public void shootBow(Arrow arrow) {
+    this.ropedArrow.onShootArrow(arrow);
+  }
+
   public List<ItemAbility> getItemAbilities() {
-    return Arrays.asList(this.boneExplosion);
+    return Arrays.asList((ItemAbility) this.boneExplosion, (ItemAbility) this.ropedArrow);
   }
 
   private class Heal implements Passive {
@@ -105,7 +157,9 @@ public class SkeletonKit implements SuperSmashKit {
       return new BukkitRunnable() {
         @Override
         public void run() {
-          passive.getOwner().getPlayer().sendMessage("§sHealing hearts§r");
+          if (!passive.getOwner().getPlayer().isDead()) {
+            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + 0.25);
+          }
         }
       };
     }
