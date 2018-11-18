@@ -32,6 +32,12 @@ public class SuperSmashController {
     kits.put(id, kitConstructor);
   }
 
+  public static List<Passive> getRunningPassives() {
+    List<Passive> passives = new ArrayList<>();
+    passives.addAll(passiveTasks.keySet());
+    return passives;
+  }
+
   public static void unregisterKit(String id) {
     kits.remove(id);
   }

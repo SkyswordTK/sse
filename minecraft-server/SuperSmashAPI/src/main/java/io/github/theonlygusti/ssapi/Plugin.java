@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public final class Plugin extends JavaPlugin {
   private BukkitTask itemAbilityCooldownTask;
   private Commander commander;
+  private Querier querier;
   private BukkitTask runPassivesTask;
   public static Plugin plugin;
 
@@ -28,6 +29,8 @@ public final class Plugin extends JavaPlugin {
     commander = new Commander(this);
     this.getCommand("kit").setExecutor(commander);
     this.getCommand("dekit").setExecutor(commander);
+    querier = new Querier(this);
+    this.getCommand("ssc").setExecutor(querier);
 
     this.getCommand("kit").setTabCompleter(new KitCompleter());
 
