@@ -16,3 +16,8 @@ commands:
     permission: ssapi.dekitcmd
     usage: "§cUsage: /<command> [player]§r"
     aliases: []
+  ssc:
+    description: Interact with the SuperSmashController
+    permission: ssapi.ssccmd
+    usage: "§cUsage: /<command> <subcommand> [...arguments]§r"
+    aliases: []
