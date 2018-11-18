@@ -7,7 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class DoubleJump extends JavaPlugin {
   private static HashMap<Player, DoubleJumper> doubleJumpers = new HashMap<Player, DoubleJumper>();
   private static HashMap<Player, Boolean> allowedFlight = new HashMap<Player, Boolean>();
-  public static double tripleJumpActivationHeight = 0.3;
+  public static double tripleJumpActivationHeight = 0.4;
+  // this is still too much, will need to change it to check for blocks above player
+  public static int checkOffGroundLimit = 1;
 
   @Override
   public void onEnable() {

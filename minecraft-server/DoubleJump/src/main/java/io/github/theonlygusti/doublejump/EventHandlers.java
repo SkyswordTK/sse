@@ -25,14 +25,23 @@ public class EventHandlers implements Listener {
       event.setCancelled(true);
       event.getPlayer().setVelocity(doubleJumper.getDoubleJumpVelocity());
       BukkitTask checkOffGround = new BukkitRunnable() {
+        // prevent triple jump checking propelling the player forwards when they are underneath
+        // a solid and stood on the ground.
+        int counter = 0;
+
         @Override
         public void run() {
+          if (counter > DoubleJump.checkOffGroundLimit) {
+            this.cancel();
+            return;
+          }
           if (event.getPlayer().getLocation().getY() % 1 < DoubleJump.tripleJumpActivationHeight) {
             event.getPlayer().setVelocity(doubleJumper.getDoubleJumpVelocity());
             hasLandedOnGround.put(doubleJumper, false);
           } else {
             this.cancel();
           }
+          counter++;
         }
       }.runTaskTimer(this.plugin, 0L, 1L);
       doubleJumper.runDoubleJumpExtra();
