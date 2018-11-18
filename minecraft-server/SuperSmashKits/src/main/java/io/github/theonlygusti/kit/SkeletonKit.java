@@ -157,7 +157,9 @@ public class SkeletonKit implements SuperSmashKit {
       return new BukkitRunnable() {
         @Override
         public void run() {
-          passive.getOwner().getPlayer().sendMessage("§sHealing hearts§r");
+          if (!passive.getOwner().getPlayer().isDead()) {
+            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + 0.25);
+          }
         }
       };
     }
