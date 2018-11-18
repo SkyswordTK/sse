@@ -221,8 +221,7 @@ public class SkeletonKit implements SuperSmashKit {
         public void run() {
           if (passive.getOwner().getPlayer().isDead()) {
             this.cancel();
-          }
-          if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
+          } else if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
             passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
           } else {
             passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getMaxHealth());
