@@ -457,4 +457,8 @@ public class SkeletonKit implements SuperSmashKit {
     });
     return skeletonDisguise;
   }
+
+  public int getArmorValue() {
+    return 6;
+  }
 }
