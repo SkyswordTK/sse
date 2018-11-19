@@ -1,5 +1,7 @@
 package io.github.theonlygusti.kit;
 
+import io.github.theonlygusti.effect.ItemExplosionEvent;
+import io.github.theonlygusti.effect.PlayableSound;
 import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
@@ -13,7 +15,6 @@ import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -93,8 +94,12 @@ public class SkeletonKit implements SuperSmashKit {
   private class BoneExplosion implements ItemAbility {
     private long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     private SkeletonKit owner;
-    private double range = 10;
-    private double knockbackMultiplier = 2.5;
+    private final double range = 10;
+    private final double knockbackMultiplier = 2.5;
+    private final PlayableSound sound = new PlayableSound(Sound.ENTITY_SKELETON_HURT, 2f, 1.2f);
+    private final int numberOfBonesToSpawn = 48;
+    private final ItemStack boneItemStack = new ItemStack(Material.BONE);
+    private final long boneLifespan = 40L;
 
     public BoneExplosion(SkeletonKit owner) {
       this.owner = owner;
@@ -148,7 +153,9 @@ public class SkeletonKit implements SuperSmashKit {
             }
           }
         }
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SKELETON_HURT, 2f, 1.2f);
+        (new ItemExplosionEvent(this.getOwner().getPlayer().getLocation().add(0, 0.5, 0),
+                                numberOfBonesToSpawn, 0.8, this.sound, this.boneItemStack,
+                                this.boneLifespan)).callEvent();
         this.lastTimeUsed = System.currentTimeMillis();
       }
     }
