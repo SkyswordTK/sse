@@ -80,7 +80,7 @@ public class SkeletonKit implements SuperSmashKit {
         Arrow arrow = (Arrow) event.getEntity();
         if (arrows.remove(arrow)) {
           Player shooter = this.getOwner().getPlayer();
-          Vector direction = shooter.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize();
+          Vector direction = arrow.getLocation().toVector().subtract(shooter.getLocation().toVector()).normalize();
           double mult = 0.4 + arrow.getVelocity().length() / 3d;
           Vector trajectory = direction.multiply(mult);
           trajectory.setY(trajectory.getY() + 0.6 * mult);
