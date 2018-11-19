@@ -15,6 +15,7 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -76,6 +77,7 @@ public class SuperSmashController {
       itemMeta.setLore(Arrays.asList(itemAbility.getLore()));
       itemStack.setItemMeta(itemMeta);
       player.getInventory().setItem(i, itemStack);
+      getPlugin().getServer().getPluginManager().registerEvents(itemAbility, getPlugin());
     }
     DoubleJump.set(player, kit);
     playerKits.put(player, kit);
@@ -96,6 +98,10 @@ public class SuperSmashController {
       passiveTasks.get(passive).cancel();
       passiveTasks.remove(passive);
       wasPassiveStarted.remove(passive);
+    }
+    SuperSmashKit kit = get(player);
+    for (ItemAbility itemAbility : kit.getItemAbilities()) {
+      HandlerList.unregisterAll(itemAbility);
     }
     DoubleJump.unset(player);
     playerKits.remove(player);
