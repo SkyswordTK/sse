@@ -3,8 +3,9 @@ package io.github.theonlygusti.ssapi.item;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 
 import org.bukkit.Material;
+import org.bukkit.event.Listener;
 
-public interface ItemAbility {
+public interface ItemAbility extends Listener {
   public String getTrigger();
   public String getName();
   public String getLore();
