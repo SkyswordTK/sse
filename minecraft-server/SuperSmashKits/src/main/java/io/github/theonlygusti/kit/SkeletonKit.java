@@ -26,6 +26,7 @@ public class SkeletonKit implements SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
   private RopedArrow ropedArrow;
+  private Barrage barrage;
   private ReplenishArrows replenishArrows;
   private Heal heal;
 
@@ -34,6 +35,7 @@ public class SkeletonKit implements SuperSmashKit {
     this.boneExplosion = new BoneExplosion(this);
     this.ropedArrow = new RopedArrow(this);
     this.heal = new Heal(this);
+    this.barrage = new Barrage(this);
     this.replenishArrows = new ReplenishArrows(this);
   }
 
@@ -48,6 +50,8 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public void afterShootArrow(Arrow arrow) {
+      this.getOwner().barrage.doBarrage(arrow, this.overchargeClicks);
+      this.overchargeClicks = 0;
     }
 
     public void select() {
@@ -137,6 +141,68 @@ public class SkeletonKit implements SuperSmashKit {
 
     public long getLastTimeUsed() {
       return this.lastTimeUsed;
+    }
+  }
+
+  private class Barrage implements Passive {
+    private SkeletonKit owner;
+    private int numberOfExtraArrows;
+    private Arrow tracer;
+    private Boolean shouldStart = false;
+
+    public Barrage(SkeletonKit owner) {
+      this.owner = owner;
+    }
+
+    public String getName() {
+      return "Barrage";
+    }
+
+    public String getDescription() {
+      return "Charge the bow to fire a volley of arrows";
+    }
+
+    public void doBarrage(Arrow tracer, int numberOfExtraArrows) {
+      this.numberOfExtraArrows = numberOfExtraArrows;
+      this.tracer = tracer;
+      this.shouldStart = true;
+    }
+
+    public void stop() {
+    }
+
+    public Long getPeriod() {
+      return 1L;
+    }
+
+    public Boolean shouldStart() {
+      return this.shouldStart;
+    }
+
+    public BukkitRunnable getRunnable() {
+      this.shouldStart = false;
+      Barrage instance = this;
+      int[] arrowCounter = new int[] {0};
+      Player player = instance.getOwner().getPlayer();
+      return new BukkitRunnable() {
+        @Override
+        public void run() {
+          if (arrowCounter[0] == instance.numberOfExtraArrows) {
+            this.cancel();
+            return;
+          }
+          double arrowSpeed = tracer.getVelocity().length();
+          Vector random = new Vector((Math.random()-0.5)/10, (Math.random()-0.5)/10, (Math.random()-0.5)/10);
+          Arrow arrow = (Arrow) player.launchProjectile(Arrow.class);
+          arrow.setVelocity(player.getLocation().getDirection().add(random).multiply(3));
+          player.getWorld().playSound(player.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0F, 1.0F);
+          arrowCounter[0]++;
+        }
+      };
+    }
+
+    public SkeletonKit getOwner() {
+      return this.owner;
     }
   }
 
@@ -255,7 +321,9 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public List<Passive> getPassives() {
-    return Arrays.asList((Passive) this.heal, (Passive) this.replenishArrows);
+    return Arrays.asList((Passive) this.heal,
+                         (Passive) this.replenishArrows,
+                         (Passive) this.barrage);
   }
 
   public void doPunch() {

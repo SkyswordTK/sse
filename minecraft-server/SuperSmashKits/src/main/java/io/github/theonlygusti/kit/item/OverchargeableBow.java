@@ -88,7 +88,6 @@ public abstract class OverchargeableBow implements BowAbility {
     }
     this.setPlayerExp(this.getOwner().getPlayer(), 0.0F);
     this.afterShootArrow(arrow);
-    this.overchargeClicks = 0;
   }
 
   public abstract void afterShootArrow(Arrow arrow);
