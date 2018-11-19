@@ -459,6 +459,6 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public int getArmorValue() {
-    return 6;
+    return 12;
   }
 }
