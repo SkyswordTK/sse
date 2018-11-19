@@ -90,6 +90,9 @@ public class SuperSmashController {
     playerInventories.remove(player);
     for (Passive passive : get(player).getPassives()) {
       passive.stop();
+      if (passiveTasks.get(passive) == null) {
+        continue;
+      }
       passiveTasks.get(passive).cancel();
       passiveTasks.remove(passive);
       wasPassiveStarted.remove(passive);
