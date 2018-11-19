@@ -26,8 +26,7 @@ public class PlayerEvents implements Listener {
   @EventHandler
   public void onPlayerDeath(PlayerDeathEvent event) {
     if (SuperSmashController.isKitted(event.getEntity())) {
-      event.setKeepLevel(false);
-      event.setKeepInventory(true);
+      SuperSmashController.dekit(event.getEntity());
     }
   }
 }
