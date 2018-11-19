@@ -1,5 +1,7 @@
 package io.github.theonlygusti.kit;
 
+import io.github.theonlygusti.effect.ItemExplosionEvent;
+import io.github.theonlygusti.effect.PlayableSound;
 import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
@@ -7,18 +9,21 @@ import io.github.theonlygusti.ssapi.passive.Passive;
 import io.github.theonlygusti.kit.item.OverchargeableBow;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -46,6 +51,8 @@ public class SkeletonKit implements SuperSmashKit {
 
   private class RopedArrow extends OverchargeableBow {
     long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
+    private HashSet<Arrow> arrows = new HashSet<Arrow>();
+
     public RopedArrow(SkeletonKit owner) {
       super(owner);
     }
@@ -59,6 +66,32 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public void punch() {
+      if (System.currentTimeMillis() - this.lastTimeUsed >= this.getCooldownTime()) {
+        Arrow arrow = player.launchProjectile(Arrow.class);
+        arrow.setVelocity(player.getLocation().getDirection().multiply(2.4));
+        this.arrows.add(arrow);
+        this.lastTimeUsed = System.currentTimeMillis();
+      }
+    }
+
+    @EventHandler
+    public void onRopedArrowLand(ProjectileHitEvent event) {
+      if (event.getEntity() instanceof Arrow) {
+        Arrow arrow = (Arrow) event.getEntity();
+        if (arrows.remove(arrow)) {
+          Player shooter = this.getOwner().getPlayer();
+          Vector direction = arrow.getLocation().toVector().subtract(shooter.getLocation().toVector()).normalize();
+          double mult = 0.4 + arrow.getVelocity().length() / 3d;
+          Vector trajectory = direction.multiply(mult);
+          trajectory.setY(trajectory.getY() + 0.6 * mult);
+          if (trajectory.getY() > 1.2 * mult)
+            trajectory.setY(1.2 * mult);
+          if (shooter.isOnGround())
+            trajectory.setY(trajectory.getY() + 0.2);
+          shooter.setVelocity(trajectory);
+          arrow.getWorld().playSound(arrow.getLocation(), Sound.ENTITY_ARROW_HIT, 2.5f, 0.5f);
+        }
+      }
     }
 
     public SkeletonKit getOwner() {
@@ -93,8 +126,12 @@ public class SkeletonKit implements SuperSmashKit {
   private class BoneExplosion implements ItemAbility {
     private long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     private SkeletonKit owner;
-    private double range = 10;
-    private double knockbackMultiplier = 2.5;
+    private final double range = 10;
+    private final double knockbackMultiplier = 2.5;
+    private final PlayableSound sound = new PlayableSound(Sound.ENTITY_SKELETON_HURT, 2f, 1.2f);
+    private final int numberOfBonesToSpawn = 48;
+    private final ItemStack boneItemStack = new ItemStack(Material.BONE);
+    private final long boneLifespan = 40L;
 
     public BoneExplosion(SkeletonKit owner) {
       this.owner = owner;
@@ -148,7 +185,9 @@ public class SkeletonKit implements SuperSmashKit {
             }
           }
         }
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SKELETON_HURT, 2f, 1.2f);
+        (new ItemExplosionEvent(this.getOwner().getPlayer().getLocation().add(0, 0.5, 0),
+                                numberOfBonesToSpawn, 0.8, this.sound, this.boneItemStack,
+                                this.boneLifespan)).callEvent();
         this.lastTimeUsed = System.currentTimeMillis();
       }
     }
@@ -351,6 +390,11 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public void doPunch() {
+    ItemAbility heldItemAbility = this.getHeldItemAbility();
+
+    if (heldItemAbility != null) {
+      heldItemAbility.punch();
+    }
   }
 
   public ItemAbility getHeldItemAbility() {
@@ -405,6 +449,16 @@ public class SkeletonKit implements SuperSmashKit {
 
   public Disguise getDisguise() {
     MobDisguise skeletonDisguise = new MobDisguise(DisguiseType.SKELETON);
+    skeletonDisguise.getWatcher().setArmor(new ItemStack[] {
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR)
+    });
     return skeletonDisguise;
+  }
+
+  public int getArmorValue() {
+    return 12;
   }
 }

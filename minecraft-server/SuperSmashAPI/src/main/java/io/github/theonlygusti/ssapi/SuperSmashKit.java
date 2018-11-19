@@ -21,4 +21,5 @@ public interface SuperSmashKit extends DoubleJumper {
   public void changeHeldItem(int previousSlot, int newSlot);
   public ItemAbility getHeldItemAbility();
   public List<Passive> getPassives();
+  public int getArmorValue();
 }

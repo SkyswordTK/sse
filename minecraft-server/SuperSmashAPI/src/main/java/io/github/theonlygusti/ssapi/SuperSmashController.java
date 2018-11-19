@@ -15,6 +15,8 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -76,9 +78,64 @@ public class SuperSmashController {
       itemMeta.setLore(Arrays.asList(itemAbility.getLore()));
       itemStack.setItemMeta(itemMeta);
       player.getInventory().setItem(i, itemStack);
+      getPlugin().getServer().getPluginManager().registerEvents(itemAbility, getPlugin());
     }
+    player.getInventory().setArmorContents(getArmor(new ItemStack[]{null, null, null, null}, kit.getArmorValue()));
     DoubleJump.set(player, kit);
     playerKits.put(player, kit);
+  }
+
+  private static ItemStack[] getArmor(ItemStack[] armorContents, int armorValueToAdd) {
+    if (armorValueToAdd >= 6 && armorContents[1] == null) {
+      ItemStack itemStack = new ItemStack(Material.IRON_CHESTPLATE);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 6);
+    } else if (armorValueToAdd >= 5 && armorContents[2] == null) {
+      ItemStack itemStack = new ItemStack(Material.IRON_LEGGINGS);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 5);
+    } else if (armorValueToAdd >= 5 && armorContents[1] == null) {
+      ItemStack itemStack = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 5);
+    } else if (armorValueToAdd >= 4 && armorContents[2] == null) {
+      ItemStack itemStack = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 4);
+    } else if (armorValueToAdd >= 2 && armorContents[0] == null) {
+      ItemStack itemStack = new ItemStack(Material.CHAINMAIL_HELMET);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 2);
+    } else if (armorValueToAdd >= 2 && armorContents[3] == null) {
+      ItemStack itemStack = new ItemStack(Material.IRON_BOOTS);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 2);
+    } else if (armorValueToAdd >= 1 && armorContents[3] == null) {
+      ItemStack itemStack = new ItemStack(Material.CHAINMAIL_BOOTS);
+      ItemMeta itemMeta = itemStack.getItemMeta();
+      itemMeta.setUnbreakable(true);
+      itemStack.setItemMeta(itemMeta);
+      armorContents[1] = itemStack;
+      return getArmor(armorContents, armorValueToAdd - 1);
+    } else return armorContents;
   }
 
   public static void dekit(Player player) {
@@ -96,6 +153,10 @@ public class SuperSmashController {
       passiveTasks.get(passive).cancel();
       passiveTasks.remove(passive);
       wasPassiveStarted.remove(passive);
+    }
+    SuperSmashKit kit = get(player);
+    for (ItemAbility itemAbility : kit.getItemAbilities()) {
+      HandlerList.unregisterAll(itemAbility);
     }
     DoubleJump.unset(player);
     playerKits.remove(player);

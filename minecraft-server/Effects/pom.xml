@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.github.theonlygusti</groupId>
-  <artifactId>kit</artifactId>
+  <artifactId>effect</artifactId>
   <version>1.0.0</version>
 
-  <name>Super Smash Kits</name>
-  <description>Uses the Super Smash API to implement individual kits.</description>
+  <name>Effects</name>
+  <description>A library of visual effects</description>
   <url>https://github.com/theonlygusti/sse</url>
   <inceptionYear>2018</inceptionYear>
 
@@ -25,30 +25,6 @@
       <groupId>com.destroystokyo.paper</groupId>
       <artifactId>paper-api</artifactId>
       <version>1.12.2-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>LibsDisguises</groupId>
-      <artifactId>LibsDisguises</artifactId>
-      <version>9.5.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.github.theonlygusti</groupId>
-      <artifactId>doublejump</artifactId>
-      <version>1.1.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.github.theonlygusti</groupId>
-      <artifactId>ssapi</artifactId>
-      <version>1.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.github.theonlygusti</groupId>
-      <artifactId>effect</artifactId>
-      <version>1.0.0</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -99,22 +75,14 @@
         </configuration>
       </plugin>
       <plugin>
+        <!-- copy jarfiles straight to ../server/plugins so we can test
+             the plugin without having to move them ourselves -->
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.8</version>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <configuration>
-              <target>
-                <copy file="${project.build.directory}/${project.artifactId}-${project.version}.jar" todir="${project.basedir}/../server/plugins" />
-              </target>
-            </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <outputDirectory>${basedir}/../server/plugins</outputDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>

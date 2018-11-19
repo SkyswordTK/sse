@@ -1,0 +1,5 @@
+name: Effects
+version: 1.0.0
+description: A library of visual effects
+author: George Bakewell
+main: io.github.theonlygusti.effect.Plugin
