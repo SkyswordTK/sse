@@ -405,6 +405,12 @@ public class SkeletonKit implements SuperSmashKit {
 
   public Disguise getDisguise() {
     MobDisguise skeletonDisguise = new MobDisguise(DisguiseType.SKELETON);
+    skeletonDisguise.getWatcher().setArmor(new ItemStack[] {
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR),
+      new ItemStack(Material.AIR)
+    });
     return skeletonDisguise;
   }
 }
