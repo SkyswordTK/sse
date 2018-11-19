@@ -9,6 +9,7 @@ import io.github.theonlygusti.ssapi.passive.Passive;
 import io.github.theonlygusti.kit.item.OverchargeableBow;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
@@ -20,6 +21,9 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -47,6 +51,8 @@ public class SkeletonKit implements SuperSmashKit {
 
   private class RopedArrow extends OverchargeableBow {
     long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
+    private HashSet<Arrow> arrows = new HashSet<Arrow>();
+
     public RopedArrow(SkeletonKit owner) {
       super(owner);
     }
@@ -60,6 +66,32 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public void punch() {
+      if (System.currentTimeMillis() - this.lastTimeUsed >= this.getCooldownTime()) {
+        Arrow arrow = player.launchProjectile(Arrow.class);
+        arrow.setVelocity(player.getLocation().getDirection().multiply(2.4));
+        this.arrows.add(arrow);
+        this.lastTimeUsed = System.currentTimeMillis();
+      }
+    }
+
+    @EventHandler
+    public void onRopedArrowLand(ProjectileHitEvent event) {
+      if (event.getEntity() instanceof Arrow) {
+        Arrow arrow = (Arrow) event.getEntity();
+        if (arrows.remove(arrow)) {
+          Player shooter = this.getOwner().getPlayer();
+          Vector direction = shooter.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize();
+          double mult = 0.4 + arrow.getVelocity().length() / 3d;
+          Vector trajectory = direction.multiply(mult);
+          trajectory.setY(trajectory.getY() + 0.6 * mult);
+          if (trajectory.getY() > 1.2 * mult)
+            trajectory.setY(1.2 * mult);
+          if (shooter.isOnGround())
+            trajectory.setY(trajectory.getY() + 0.2);
+          shooter.setVelocity(trajectory);
+          arrow.getWorld().playSound(arrow.getLocation(), Sound.ENTITY_ARROW_HIT, 2.5f, 0.5f);
+        }
+      }
     }
 
     public SkeletonKit getOwner() {
@@ -358,6 +390,11 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public void doPunch() {
+    ItemAbility heldItemAbility = this.getHeldItemAbility();
+
+    if (heldItemAbility != null) {
+      heldItemAbility.punch();
+    }
   }
 
   public ItemAbility getHeldItemAbility() {
