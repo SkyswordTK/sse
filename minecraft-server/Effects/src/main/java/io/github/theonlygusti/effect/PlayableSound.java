@@ -1,5 +1,6 @@
 package io.github.theonlygusti.effect;
 
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -23,6 +24,10 @@ public class PlayableSound {
 
   public void playFromPlayer(Player player) {
     player.getWorld().playSound(player.getLocation(), this.sound, this.volume, this.pitch);
+  }
+
+  public void playFromLocation(Location location) {
+    location.getWorld().playSound(location, this.sound, this.volume, this.pitch);
   }
 
   public void playToPlayer(Player player) {
