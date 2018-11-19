@@ -66,9 +66,12 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public void punch() {
-      Arrow arrow = player.launchProjectile(Arrow.class);
-      arrow.setVelocity(player.getLocation().getDirection().multiply(2.4));
-      this.arrows.add(arrow);
+      if (System.currentTimeMillis() - this.lastTimeUsed >= this.getCooldownTime()) {
+        Arrow arrow = player.launchProjectile(Arrow.class);
+        arrow.setVelocity(player.getLocation().getDirection().multiply(2.4));
+        this.arrows.add(arrow);
+        this.lastTimeUsed = System.currentTimeMillis();
+      }
     }
 
     @EventHandler
@@ -387,6 +390,11 @@ public class SkeletonKit implements SuperSmashKit {
   }
 
   public void doPunch() {
+    ItemAbility heldItemAbility = this.getHeldItemAbility();
+
+    if (heldItemAbility != null) {
+      heldItemAbility.punch();
+    }
   }
 
   public ItemAbility getHeldItemAbility() {
