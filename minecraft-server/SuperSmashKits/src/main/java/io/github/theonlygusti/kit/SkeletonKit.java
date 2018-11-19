@@ -161,7 +161,7 @@ public class SkeletonKit implements SuperSmashKit {
       return this.owner;
     }
 
-    public long getPeriod() {
+    public Long getPeriod() {
       return 60L;
     }
 
@@ -246,7 +246,7 @@ public class SkeletonKit implements SuperSmashKit {
       return owner;
     }
 
-    public long getPeriod() {
+    public Long getPeriod() {
       return 20L;
     }
 
