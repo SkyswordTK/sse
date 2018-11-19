@@ -3,7 +3,7 @@ package io.github.theonlygusti.ssapi;
 import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.events.IllegalEvents;
 import io.github.theonlygusti.ssapi.events.KitEvents;
-import io.github.theonlygusti.ssapi.events.PlayerEvents;
+import io.github.theonlygusti.ssapi.events.EntityEvents;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
 
@@ -24,7 +24,7 @@ public final class Plugin extends JavaPlugin {
 
     getServer().getPluginManager().registerEvents(new IllegalEvents(), this);
     getServer().getPluginManager().registerEvents(new KitEvents(), this);
-    getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+    getServer().getPluginManager().registerEvents(new EntityEvents(), this);
 
     commander = new Commander(this);
     this.getCommand("kit").setExecutor(commander);

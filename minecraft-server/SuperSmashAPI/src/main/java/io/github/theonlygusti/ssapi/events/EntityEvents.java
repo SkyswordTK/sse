@@ -8,7 +8,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 
-public class PlayerEvents implements Listener {
+public class EntityEvents implements Listener {
   @EventHandler
   public void onPlayerQuit(PlayerQuitEvent event) {
     if (SuperSmashController.isKitted(event.getPlayer())) {
