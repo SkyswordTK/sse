@@ -19,7 +19,7 @@ public interface Passive {
    * @return  The ticks of delay between successive executions of
    *          this.getRunnable().
    */
-  public long getPeriod();
+  public Long getPeriod();
   public SuperSmashKit getOwner();
   /**
    * Called when dekitting.
