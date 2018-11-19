@@ -1,5 +1,6 @@
 package io.github.theonlygusti.kit;
 
+import io.github.theonlygusti.ssapi.SuperSmashController;
 import io.github.theonlygusti.ssapi.SuperSmashKit;
 import io.github.theonlygusti.ssapi.item.ItemAbility;
 import io.github.theonlygusti.ssapi.passive.Passive;
@@ -92,6 +93,8 @@ public class SkeletonKit implements SuperSmashKit {
   private class BoneExplosion implements ItemAbility {
     private long lastTimeUsed = System.currentTimeMillis() - this.getCooldownTime();
     private SkeletonKit owner;
+    private double range = 10;
+    private double knockbackMultiplier = 2.5;
 
     public BoneExplosion(SkeletonKit owner) {
       this.owner = owner;
@@ -121,10 +124,31 @@ public class SkeletonKit implements SuperSmashKit {
     }
 
     public void rightClick() {
-      if (System.currentTimeMillis() - this.lastTimeUsed < this.getCooldownTime()) {
-        this.owner.getPlayer().sendMessage("The skill is not cooled down yet");
-      } else {
-        this.owner.getPlayer().sendMessage("You used the skill");
+      Player player = this.getOwner().getPlayer();
+      if (System.currentTimeMillis() - this.lastTimeUsed >= this.getCooldownTime()) {
+        for(Player other : this.getOwner().getPlayer().getWorld().getPlayers()){
+          if (!player.equals(other) && SuperSmashController.isKitted(other)) {
+            double distance = player.getLocation().distance(other.getLocation());
+            if (distance < range) {
+              // magic number galore, will fix
+              double damage = 6 * (1 - (distance / range));
+              double knockback = damage < 2 ? 2 : damage;
+              knockback = Math.log10(knockback) * knockbackMultiplier;
+              Vector trajectory = other.getLocation().toVector().subtract(player.getLocation().toVector()).setY(0).normalize();
+              trajectory.multiply(0.6 * knockback);
+              double speed = 0.2 + trajectory.length() * 0.8;
+              trajectory.normalize().multiply(speed).setY(Math.abs(0.2 * knockback));
+              if (trajectory.getY() > 0.4 + (0.04 * knockback)) {
+                trajectory.setY(0.4 + (0.04 * knockback));
+              }
+              if (other.isOnGround()) {
+                trajectory.setY(trajectory.getY() + 0.2);
+              }
+              other.setVelocity(trajectory);
+            }
+          }
+        }
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SKELETON_HURT, 2f, 1.2f);
         this.lastTimeUsed = System.currentTimeMillis();
       }
     }
