@@ -2,6 +2,7 @@
 
 # The majority of ./minecraft-server are maven build artifacts and spigot/paper server junk
 /minecraft-server/*/*
+*.cmd
 
 # Only track relevant plugin sources
 !/minecraft-server/*/src/

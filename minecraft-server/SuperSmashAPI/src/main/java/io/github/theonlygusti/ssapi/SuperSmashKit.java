@@ -437,7 +437,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
 ///////////////////  
   protected void init(Double initMaxHealth, Double initHealthRegenerationPerSecond, Double initAttackDamage, Double initKnockbackDealed, Double initKnockbackTaken, Double[] initResistances){
     //initialize the permanent values
-	Double initHealthRegenerationPerTick = (initHealthRegenerationPerSecond / 20);
+    Double initHealthRegenerationPerTick = (initHealthRegenerationPerSecond / 20);
     if (initMaxHealth > 0) {
       MaxHealth = initMaxHealth;
     }
@@ -695,7 +695,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
   private Vector takeKnockback(SuperSmashKit by, int DamageType, Vector v, String info) { //Info can be empty or can contain additions, for example an ability name
     Vector toApply = calculateKnockbackToBeTaken(DamageType,v);
     toApply = manipulateKnockbackTaking(by, intDamageTypeToString(DamageType), toApply, info);
-	applyKnockback(toApply);
+    applyKnockback(toApply);
     return toApply;
   }
   private Vector calculateKnockbackToBeInflicted(int DamageType, Vector v) {
@@ -713,7 +713,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
   protected Vector inflictKnockback(SuperSmashKit to, int DamageType, Vector v, String info) { //Info can be empty or can contain additions, for example an ability name
     Vector toInflict = manipulateKnockbackDealing(to, intDamageTypeToString(DamageType), v.clone(), info);
-	return to.takeKnockback(this, DamageType, calculateKnockbackToBeInflicted(DamageType,toInflict), info);
+    return to.takeKnockback(this, DamageType, calculateKnockbackToBeInflicted(DamageType,toInflict), info);
   }
   protected void applySelfVelocity(Vector v) { //Info can be empty or can contain additions, for example an ability name
     this.takeKnockback(this, 0, v, "");
@@ -737,8 +737,8 @@ public abstract class SuperSmashKit implements DoubleJumper {
   private void processEffectsOverTime() { //called by onTick
 
     for ( int i = 0 ; i < Effects.size() ; i++) {
-      if (Effects.get(i).Timer > 0) {
-        Effects.get(i).Timer = Effects.get(i).Timer - 1;
+      if (Effects.get(i).timer > 0) {
+        Effects.get(i).timer = Effects.get(i).timer - 1;
       }
     }
     
