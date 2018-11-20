@@ -28,19 +28,28 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class SkeletonKit implements SuperSmashKit {
+public class SkeletonKit extends SuperSmashKit {
   private Player player;
   private BoneExplosion boneExplosion;
   private RopedArrow ropedArrow;
   private Barrage barrage;
   private ReplenishArrows replenishArrows;
-  private Heal heal;
+  //private Heal heal;
+  //The Kit's stats to call init(...)
+  private static final Double[] resistances = {0.0,10.0,1.0,1.0,1.0,1.0};
+  private static final Double maxHealth = 20.0;
+  private static final Double healthRegenerationPerSecond = 0.25;
+  private static final Double meleeDamage = 5.0;
+  private static final Double knockbackDealed = 120.0;
+  private static final Double knockbackTaken = 130.0;
+
 
   public SkeletonKit(Player player) {
     this.player = player;
+    init(maxHealth, healthRegenerationPerSecond, meleeDamage, knockbackDealed, knockbackTaken, resistances);
     this.boneExplosion = new BoneExplosion(this);
     this.ropedArrow = new RopedArrow(this);
-    this.heal = new Heal(this);
+    //this.heal = new Heal(this);
     this.barrage = new Barrage(this);
     this.replenishArrows = new ReplenishArrows(this);
   }
@@ -335,6 +344,7 @@ public class SkeletonKit implements SuperSmashKit {
     }
   }
 
+  /*
   private class Heal implements Passive {
     private SkeletonKit owner;
     private float healthPerSecond = 0.25f;
@@ -381,10 +391,10 @@ public class SkeletonKit implements SuperSmashKit {
 
     public void stop() {
     }
-  }
+  } //  */
 
   public List<Passive> getPassives() {
-    return Arrays.asList((Passive) this.heal,
+    return Arrays.asList(/*(Passive) this.heal,*/
                          (Passive) this.replenishArrows,
                          (Passive) this.barrage);
   }
