@@ -159,6 +159,7 @@ public class SuperSmashController {
       HandlerList.unregisterAll(itemAbility);
     }
     DoubleJump.unset(player);
+	playerKits.get(player).preDekit();
     playerKits.remove(player);
   }
 
