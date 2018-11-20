@@ -33,8 +33,131 @@ import org.bukkit.scheduler.BukkitRunnable;
         this should already be coded in SuperSmashController.dekit() {... playerKits.get(player).preDekit(); ...} so its automatically happening on dekitting
         
     2. Handling Damage and Knockback as well as their modifiers:
-       -2.1: Inflicting Damage/Knockback:
+       -2.1: General Functions and Inflicting Damage/Knockback:
+           +DamageTypes:
+             -protected int getDamageTypeCount() //returns the amount of Damage Types
+             -protected int stringDamageTypeToInt(String DamageType) //Convert a String DamageType into the connected int; returns -1 if invalid
+             -protected String intDamageTypeToString(int DamageType) //Convert an int DamageType into the connected String; returns "None" if invalid; not needed, mainly used so in the kit the string representation can be used in overridable methods(see 2.3)
+           +Damage System
+             -protected Double getHealth() //returns the current Health, not to be confused with MaxHealth
+             -protected Double getHealthPercentage() //returns the percentage of Health compared to MaxHealth
+
+             -protected Double calculateResistance(int DamageType) //can be used to check the total Resistance considering a DamageType
+             -protected Double calculateResistance(String DamageType) //can be used to check the total Resistance considering a DamageType
+
+             -protected Double heal(Double amount) //increases your health
+             -protected void inflictSelfDamage(Double amount) //reduce your own Health
+
+             //if the damage type is melee and the amount is -1 it will grab the provided melee damage (AttackDamage)
+             -protected Double inflictDamage(SuperSmashKit to, int DamageType, Double amount, String info)  //Info can be empty or can contain additions, for example an ability name
+             -protected Double inflictDamage(SuperSmashKit to, String DamageType, Double amount, String info) //This will call the first one, but is more smooth to read(for example "True" instead of 0 as DamageType); Info can be empty or can contain additions, for example an ability name
+
+           +Knockback
+             -protected Vector inflictKnockback(SuperSmashKit to, String DamageType, Vector v, String info)  //Info can be empty or can contain additions, for example an ability name
+             -protected Vector inflictKnockback(SuperSmashKit to, int DamageType, Vector v, String info)  //Info can be empty or can contain additions, for example an ability name
+             -protected void applySelfVelocity(Vector v) //Info can be empty or can contain additions, for example an ability name
+
+           +Other
+             protected void spoofTouchingGround() // not coded yet
+
        -2.2: Adding/clearing Modifiers:
+           +Modifiers are used to change a value of your choice by +/- x.x or multiply them by a multiplier of your choice.
+           +There can be multiple modifiers at once of the same type!
+
+            protected Boolean addMaxHealthReductionMult(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearMaxHealthReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addMaxHealthIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult){
+            protected Boolean clearMaxHealthIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addMaxHealthMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
+            protected Boolean clearMaxHealthMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addGeneralInvulnerability(int DurationTicks) {
+            protected Boolean clearGeneralInvulnerability() { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addInvulnerability(SuperSmashKit by, String DamageType, int DurationTicks) {
+            protected Boolean addInvulnerability(SuperSmashKit by, int DamageType, int DurationTicks) {
+            protected Boolean clearInvulnerability(String DamageType) {
+            protected Boolean clearInvulnerability(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addHealthRegenerationReduction(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearHealthRegenerationReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addHealthRegenerationIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearHealthRegenerationIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addHealthRegenerationMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
+            protected Boolean clearHealthRegenerationMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addResistanceReduction(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addResistanceReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearResistanceReductions(String DamageType, Boolean preMult) {
+            protected Boolean clearResistanceReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addResistanceIncrease(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addResistanceIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearResistanceIncreases(String DamageType, Boolean preMult) {
+            protected Boolean clearResistanceIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addResistanceMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addResistanceMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearResistanceMultipliers(String DamageType) {
+            protected Boolean clearResistanceMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean disallowHealing(SuperSmashKit by, int DurationTicks) {
+            protected Boolean disableRegeneration(SuperSmashKit by, int DurationTicks ) {
+
+            protected Boolean addTakenDamageReduction(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addTakenDamageReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearTakenDamageReductions(String DamageType, Boolean preMult) {
+            protected Boolean clearTakenDamageReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addTakenDamageIncrease(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addTakenDamageIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearTakenDamageIncreases(String DamageType, Boolean preMult) {
+            protected Boolean clearTakenDamageIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addTakenDamageMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addTakenDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearTakenDamageMultiplier(String DamageType) {
+            protected Boolean clearTakenDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addInflictedDamageReduction(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addInflictedDamageReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearInflictedDamageReductions(String DamageType, Boolean preMult) {
+            protected Boolean clearInflictedDamageReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addInflictedDamageIncrease(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean addInflictedDamageIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearInflictedDamageIncreases(String DamageType, Boolean preMult) {
+            protected Boolean clearInflictedDamageIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addInflictedDamageMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addInflictedDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearInflictedDamageMultipliers(String DamageType) {
+            protected Boolean clearInflictedDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearKnockbackTakenMultipliers(String DamageType) {
+            protected Boolean clearKnockbackTakenMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean clearKnockbackTakenDirectionalMultipliers(String DamageType) {
+            protected Boolean clearKnockbackTakenDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearKnockbackDealedMultipliers(String DamageType) {
+            protected Boolean clearKnockbackDealedMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
+            protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean clearKnockbackDealedDirectionalMultipliers(String DamageType) {
+            protected Boolean clearKnockbackDealedDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+
        -2.3: Overwritable Functions for the actual kits:
              1.method      : manipulateDamageTaking is called before calling reduceHealth by takeDamage and represent the damage that was already merged with the proper Resistance
                declaration : public Double manipulateDamageTaking(SuperSmashKit by, String DamageType, Double amount, String info) 
@@ -280,7 +403,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
   
   protected String intDamageTypeToString(int DamageType) {
-    return DamageTypes[DamageType];
+    if ((DamageTypes.length <= DamageType)||(DamageType<0)) {
+      return "None";
+    }
+    else {
+      return DamageTypes[DamageType];
+    }
   }
   
   protected Double getHealth() {
@@ -587,6 +715,10 @@ public abstract class SuperSmashKit implements DoubleJumper {
     Vector toInflict = manipulateKnockbackDealing(to, intDamageTypeToString(DamageType), v.clone(), info);
 	return to.takeKnockback(this, DamageType, calculateKnockbackToBeInflicted(DamageType,toInflict), info);
   }
+  protected void applySelfVelocity(Vector v) { //Info can be empty or can contain additions, for example an ability name
+    this.takeKnockback(this, 0, v, "");
+  }
+
   
 /////////////////////////  
   protected Double heal(Double amount) {
