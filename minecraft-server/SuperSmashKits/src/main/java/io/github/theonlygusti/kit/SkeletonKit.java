@@ -34,8 +34,6 @@ public class SkeletonKit extends SuperSmashKit {
   private RopedArrow ropedArrow;
   private Barrage barrage;
   private ReplenishArrows replenishArrows;
-  //private Heal heal;
-  //The Kit's stats to call init(...)
   private static final Double[] resistances = {0.0,10.0,1.0,1.0,1.0,1.0};
   private static final Double maxHealth = 20.0;
   private static final Double healthRegenerationPerSecond = 0.25;
@@ -49,7 +47,6 @@ public class SkeletonKit extends SuperSmashKit {
     init(maxHealth, healthRegenerationPerSecond, meleeDamage, knockbackDealed, knockbackTaken, resistances);
     this.boneExplosion = new BoneExplosion(this);
     this.ropedArrow = new RopedArrow(this);
-    //this.heal = new Heal(this);
     this.barrage = new Barrage(this);
     this.replenishArrows = new ReplenishArrows(this);
   }
@@ -176,7 +173,6 @@ public class SkeletonKit extends SuperSmashKit {
           if (!player.equals(other) && SuperSmashController.isKitted(other)) {
             double distance = player.getLocation().distance(other.getLocation());
             if (distance < range) {
-              // magic number galore, will fix
               double damage = 6 * (1 - (distance / range));
               double knockback = damage < 2 ? 2 : damage;
               knockback = Math.log10(knockback) * knockbackMultiplier;
@@ -343,55 +339,6 @@ public class SkeletonKit extends SuperSmashKit {
       return !this.getOwner().getPlayer().isDead();
     }
   }
-
-  /*
-  private class Heal implements Passive {
-    private SkeletonKit owner;
-    private float healthPerSecond = 0.25f;
-
-    public Heal(SkeletonKit owner) {
-      this.owner = owner;
-    }
-
-    public BukkitRunnable getRunnable() {
-      Heal passive = this;
-      return new BukkitRunnable() {
-        @Override
-        public void run() {
-          if (passive.getOwner().getPlayer().isDead()) {
-            this.cancel();
-          } else if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getmaxHealth() - passive.healthPerSecond) {
-            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
-          } else {
-            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getmaxHealth());
-          }
-        }
-      };
-    }
-
-    public String getName() {
-      return "Heal";
-    }
-
-    public String getDescription() {
-      return "Skeleton regeneration";
-    }
-
-    public Boolean shouldStart() {
-      return !this.getOwner().getPlayer().isDead();
-    }
-
-    public SkeletonKit getOwner() {
-      return owner;
-    }
-
-    public Long getPeriod() {
-      return 20L;
-    }
-
-    public void stop() {
-    }
-  } //  */
 
   public List<Passive> getPassives() {
     return Arrays.asList(/*(Passive) this.heal,*/
