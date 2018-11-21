@@ -27,7 +27,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 /* About the Damage API:
     1. Initializing and Stopping the automatic background system:
        -to initialize an instanciated kit:
-        call protected void init(Double initMaxHealth, Double initHealthRegenerationPerTick, Double initAttackDamage, Double initKnockbackDealed, Double initKnockbackTaken, Double[] initResistances){...}
+        call protected void init(Double initmaxHealth, Double inithealthRegenerationPerTick, Double initattackDamage, Double initknockbackDealed, Double initknockbackTaken, Double[] initresistances){...}
         with the input beeing the base stats of the kit, from there the protected function (see 2.) should be able to handle any damage/knockback inflictions as well as stat modifiers!
        -to stop the background system which is working based on a BukkitRunnable, be sure to call preDekit(); before dekitting since otherwise the Runnable will keep going every tick -
         this should already be coded in SuperSmashController.dekit() {... playerKits.get(player).preDekit(); ...} so its automatically happening on dekitting
@@ -35,20 +35,20 @@ import org.bukkit.scheduler.BukkitRunnable;
     2. Handling Damage and Knockback as well as their modifiers:
        -2.1: General Functions and Inflicting Damage/Knockback:
            +DamageTypes:
-             -protected int getDamageTypeCount() //returns the amount of Damage Types
+             -protected int getdamageTypeCount() //returns the amount of Damage Types
              -protected int stringDamageTypeToInt(String DamageType) //Convert a String DamageType into the connected int; returns -1 if invalid
              -protected String intDamageTypeToString(int DamageType) //Convert an int DamageType into the connected String; returns "None" if invalid; not needed, mainly used so in the kit the string representation can be used in overridable methods(see 2.3)
            +Damage System
-             -protected Double getHealth() //returns the current Health, not to be confused with MaxHealth
-             -protected Double getHealthPercentage() //returns the percentage of Health compared to MaxHealth
+             -protected Double gethealth() //returns the current health, not to be confused with maxHealth
+             -protected Double gethealthPercentage() //returns the percentage of health compared to maxHealth
 
              -protected Double calculateResistance(int DamageType) //can be used to check the total Resistance considering a DamageType
              -protected Double calculateResistance(String DamageType) //can be used to check the total Resistance considering a DamageType
 
              -protected Double heal(Double amount) //increases your health
-             -protected void inflictSelfDamage(Double amount) //reduce your own Health
+             -protected void inflictSelfDamage(Double amount) //reduce your own health
 
-             //if the damage type is melee and the amount is -1 it will grab the provided melee damage (AttackDamage)
+             //if the damage type is melee and the amount is -1 it will grab the provided melee damage (attackDamage)
              -protected Double inflictDamage(SuperSmashKit to, int DamageType, Double amount, String info)  //Info can be empty or can contain additions, for example an ability name
              -protected Double inflictDamage(SuperSmashKit to, String DamageType, Double amount, String info) //This will call the first one, but is more smooth to read(for example "True" instead of 0 as DamageType); Info can be empty or can contain additions, for example an ability name
 
@@ -64,14 +64,14 @@ import org.bukkit.scheduler.BukkitRunnable;
            +Modifiers are used to change a value of your choice by +/- x.x or multiply them by a multiplier of your choice.
            +There can be multiple modifiers at once of the same type!
 
-            protected Boolean addMaxHealthReductionMult(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
-            protected Boolean clearMaxHealthReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addmaxHealthReductionMult(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearmaxHealthReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addMaxHealthIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult){
-            protected Boolean clearMaxHealthIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addmaxHealthIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult){
+            protected Boolean clearmaxHealthIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addMaxHealthMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
-            protected Boolean clearMaxHealthMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addmaxHealthMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
+            protected Boolean clearmaxHealthMultipliers() { //-1 Ticks shouldnt be cleared but currently are
 
             protected Boolean addGeneralInvulnerability(int DurationTicks) {
             protected Boolean clearGeneralInvulnerability() { //-1 Ticks shouldnt be cleared but currently are
@@ -81,14 +81,14 @@ import org.bukkit.scheduler.BukkitRunnable;
             protected Boolean clearInvulnerability(String DamageType) {
             protected Boolean clearInvulnerability(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addHealthRegenerationReduction(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
-            protected Boolean clearHealthRegenerationReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addhealthRegenerationReduction(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearhealthRegenerationReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addHealthRegenerationIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
-            protected Boolean clearHealthRegenerationIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addhealthRegenerationIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+            protected Boolean clearhealthRegenerationIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addHealthRegenerationMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
-            protected Boolean clearHealthRegenerationMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addhealthRegenerationMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
+            protected Boolean clearhealthRegenerationMultipliers() { //-1 Ticks shouldnt be cleared but currently are
 
             protected Boolean addResistanceReduction(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
             protected Boolean addResistanceReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
@@ -102,8 +102,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
             protected Boolean addResistanceMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
             protected Boolean addResistanceMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-            protected Boolean clearResistanceMultipliers(String DamageType) {
-            protected Boolean clearResistanceMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean clearresistanceMultipliers(String DamageType) {
+            protected Boolean clearresistanceMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
             protected Boolean disallowHealing(SuperSmashKit by, int DurationTicks) {
             protected Boolean disableRegeneration(SuperSmashKit by, int DurationTicks ) {
@@ -121,7 +121,7 @@ import org.bukkit.scheduler.BukkitRunnable;
             protected Boolean addTakenDamageMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
             protected Boolean addTakenDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
             protected Boolean clearTakenDamageMultiplier(String DamageType) {
-            protected Boolean clearTakenDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean cleartakenDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
             protected Boolean addInflictedDamageReduction(SuperSmashKit by, String DamageType, Double amount, int DurationTicks, Boolean preMult) {
             protected Boolean addInflictedDamageReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
@@ -135,31 +135,31 @@ import org.bukkit.scheduler.BukkitRunnable;
 
             protected Boolean addInflictedDamageMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
             protected Boolean addInflictedDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-            protected Boolean clearInflictedDamageMultipliers(String DamageType) {
-            protected Boolean clearInflictedDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean clearinflictedDamageMultipliers(String DamageType) {
+            protected Boolean clearinflictedDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
-            protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-            protected Boolean clearKnockbackTakenMultipliers(String DamageType) {
-            protected Boolean clearKnockbackTakenMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addknockbackTakenMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addknockbackTakenMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearknockbackTakenMultipliers(String DamageType) {
+            protected Boolean clearknockbackTakenMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
-            protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
-            protected Boolean clearKnockbackTakenDirectionalMultipliers(String DamageType) {
-            protected Boolean clearKnockbackTakenDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addknockbackTakenDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean addknockbackTakenDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean clearknockbackTakenDirectionalMultipliers(String DamageType) {
+            protected Boolean clearknockbackTakenDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
-            protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-            protected Boolean clearKnockbackDealedMultipliers(String DamageType) {
-            protected Boolean clearKnockbackDealedMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addknockbackDealedMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+            protected Boolean addknockbackDealedMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+            protected Boolean clearknockbackDealedMultipliers(String DamageType) {
+            protected Boolean clearknockbackDealedMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
-            protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
-            protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
-            protected Boolean clearKnockbackDealedDirectionalMultipliers(String DamageType) {
-            protected Boolean clearKnockbackDealedDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+            protected Boolean addknockbackDealedDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean addknockbackDealedDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+            protected Boolean clearknockbackDealedDirectionalMultipliers(String DamageType) {
+            protected Boolean clearknockbackDealedDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
 
        -2.3: Overwritable Functions for the actual kits:
-             1.method      : manipulateDamageTaking is called before calling reduceHealth by takeDamage and represent the damage that was already merged with the proper Resistance
+             1.method      : manipulateDamageTaking is called before calling reducehealth by takeDamage and represent the damage that was already merged with the proper Resistance
                declaration : public Double manipulateDamageTaking(SuperSmashKit by, String DamageType, Double amount, String info) 
                example     : lightning shield can check if the damage type is "Melee", if the shield is up , inflictDamage(by,...); inflictKnockback(by,...); return 0;
                return      : expects the damage that still should be taken (by your kit)
@@ -179,18 +179,18 @@ import org.bukkit.scheduler.BukkitRunnable;
                example     : +1 for each ravage stack if damage type is "Melee"
                return      : expects the Vector that should be handed to the knockback handling (of target kit)
   
-             5.method      : afterLosingHealth is called by takeDamage after it called reduceHealth
-               declaration : public void afterLosingHealth(SuperSmashKit by, String DamageType, Double lostHealth, String info)
+             5.method      : afterLosinghealth is called by takeDamage after it called reducehealth
+               declaration : public void afterLosinghealth(SuperSmashKit by, String DamageType, Double losthealth, String info)
                example     : new Passive: "Witches Curse" as witch passive, weakening consecutive melee hits by 0.5, up to 3 stacks per player, each decays after 3 seconds, applied to the player(generally less melee damage dealed to any mob for a short time)
                return      : void
   
              6.method      : preExecution is called by execution, to give the chance for a potential revive / afterlife passive
                declaration : public Double manipulateDamageDealing(SuperSmashKit to, String DamageType, Double amount, String info)
                example     : +1 for each ravage stack if damage type is "Melee"
-               return      : expects 0.0 or less to be dead, otherwise the Health amount to stay alive with, maybe a reviving passive or aftermath passive will be an idea(of your kit)
+               return      : expects 0.0 or less to be dead, otherwise the health amount to stay alive with, maybe a reviving passive or aftermath passive will be an idea(of your kit)
   
-    3. EffectsOverTime:
-       -EffectsOverTime are currently not completely implemented but provide a lot of potential of self and target affecting, ask me if you want something added
+    3. effectsOverTime:
+       -effectsOverTime are currently not completely implemented but provide a lot of potential of self and target affecting, ask me if you want something added
 
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,155 +210,155 @@ public abstract class SuperSmashKit implements DoubleJumper {
    
    //Constant will be created with the kit and should not be changed, thats what the modifiers(Increase,Reduction,Multiplier) are for
   //DamageTypes wont ever be changed by the program and only serve the purpose to add a new type easier(by simply adding it here)
-  //and allowing the initialization of the variables to be automatic from there, as well as giving the DamageTypeCount and allowing
+  //and allowing the initialization of the variables to be automatic from there, as well as giving the damageTypeCount and allowing
   //Strings to be used as DamageType in function calls instead of int, while the int = the index of the String in this array
   //Adding a DamageType here will allow you to immediatly apply damage of that type with an ability, but in order for Kits to have
-  //resistance against it, you will need to add the new damage type resistance in the kit initialization that ends up calling SuperSmashKit.init(...Double[] Resistances)
+  //resistance against it, you will need to add the new damage type resistance in the kit initialization that ends up calling SuperSmashKit.init(...Double[] resistances)
   private int taskID;
   protected Boolean SHOW_DEBUG_MESSAGES = false;
   protected Boolean DETAILED_DEBUG_MESSAGES = true;  //only matters while SHOW_DEBUG_MESSAGES == true  
   
   //not all DamageTypes need resistances, but the x resistances provided will be applied to the first x damage types
   protected static final String[] DamageTypes = { "True", "Melee", "Ability", "Projectile", "Explosion", "Fire", "Poison", "Wither" };
-  private int DamageTypeCount = getDamageTypeCount(); //is initialized automatically
-  private Double MaxHealth = 20.0;
-  private Double HealthRegenerationPerTick = 0.0;
+  private int damageTypeCount = getdamageTypeCount(); //is initialized automatically
+  private Double maxHealth = 20.0;
+  private Double healthRegenerationPerTick = 0.0;
 
-  private Double AttackDamage = 1.0;
-  private Double KnockbackDealed = 1.0; //with Attacks since Abilities have their own Kb values; 1 = 100% so default
-  private Double KnockbackTaken = 1.0;
+  private Double attackDamage = 1.0;
+  private Double knockbackDealed = 1.0; //with Attacks since Abilities have their own Kb values; 1 = 100% so default
+  private Double knockbackTaken = 1.0;
 
-  private Double[] Resistances = {0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
+  private Double[] resistances = {0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0};
 
 //Variables for private and public acess
-  private Double Health = 20.0;
-  private Double Hunger = 20.0;
+  private Double health = 20.0;
+  private Double hunger = 20.0;
   
 
-  private IntegerBoolean AllowRegeneration = new IntegerBoolean(0, true); //Can technically be a custom Effect
-  private IntegerBoolean AllowHealing = new IntegerBoolean(0, true);
+  private IntegerBoolean allowRegeneration = new IntegerBoolean(0, true); //Can technically be a custom Effect
+  private IntegerBoolean allowHealing = new IntegerBoolean(0, true);
 
-  private List<EffectOverTime> Effects = new ArrayList(0); //EffectsOverTime have a bool "removeOnTouchingGround" a String ID and SuperSmashKit by for a class to check if it applied it
+  private List<EffectOverTime> effects = new ArrayList(0); //effectsOverTime have a bool "removeOnTouchingGround" a String ID and SuperSmashKit by for a class to check if it applied it
 
-  private IntegerBoolean Invulnerable = new IntegerBoolean(0,false); //Will be caused to set true by applyGeneralInvulnerability(int Duration)
-  private IntegerBoolean[] Invulnerabilities = new IntegerBoolean[getDamageTypeCount()]; //Custom Damage types, length DamageTypeCount(DTC)
+  private IntegerBoolean invulnerable = new IntegerBoolean(0,false); //Will be caused to set true by applyGeneralInvulnerability(int Duration)
+  private IntegerBoolean[] invulnerabilities = new IntegerBoolean[getdamageTypeCount()]; //Custom Damage types, length damageTypeCount(DTC)
 
-  private List<IntegerDouble> MaxHealthIncreasesPreMult = new ArrayList(0);
-  private List<IntegerDouble> MaxHealthReductionsPreMult = new ArrayList(0);
-  private List<IntegerDouble> MaxHealthMultipliers = new ArrayList(0);
-  private List<IntegerDouble> MaxHealthIncreasesPostMult = new ArrayList(0);
-  private List<IntegerDouble> MaxHealthReductionsPostMult = new ArrayList(0);
+  private List<IntegerDouble> maxHealthIncreasesPreMult = new ArrayList(0);
+  private List<IntegerDouble> maxHealthReductionsPreMult = new ArrayList(0);
+  private List<IntegerDouble> maxHealthMultipliers = new ArrayList(0);
+  private List<IntegerDouble> maxHealthIncreasesPostMult = new ArrayList(0);
+  private List<IntegerDouble> maxHealthReductionsPostMult = new ArrayList(0);
 
-  private List<IntegerDouble> HealthRegenerationIncreasesPreMult = new ArrayList(0);
-  private List<IntegerDouble> HealthRegenerationReductionsPreMult = new ArrayList(0);
-  private List<IntegerDouble> HealthRegenerationMultipliers = new ArrayList(0);
-  private List<IntegerDouble> HealthRegenerationIncreasesPostMult = new ArrayList(0);
-  private List<IntegerDouble> HealthRegenerationReductionsPostMult = new ArrayList(0);
-
-
-  private List<IntegerDouble>[] ResistanceIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] ResistanceReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] ResistanceMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] ResistanceIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] ResistanceReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble> healthRegenerationIncreasesPreMult = new ArrayList(0);
+  private List<IntegerDouble> healthRegenerationReductionsPreMult = new ArrayList(0);
+  private List<IntegerDouble> healthRegenerationMultipliers = new ArrayList(0);
+  private List<IntegerDouble> healthRegenerationIncreasesPostMult = new ArrayList(0);
+  private List<IntegerDouble> healthRegenerationReductionsPostMult = new ArrayList(0);
 
 
-  private List<IntegerDouble>[] TakenDamageIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] TakenDamageReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] TakenDamageMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] TakenDamageIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] TakenDamageReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] resistanceIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] resistanceReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] resistanceMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] resistanceIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] resistanceReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
 
-  private List<IntegerDouble>[] InflictedDamageIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] InflictedDamageReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] InflictedDamageMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] InflictedDamageIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
-  private List<IntegerDouble>[] InflictedDamageReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
 
-  private List<IntegerDouble>[] KnockbackTakenMultipliers            = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Since TRUE Damage wont deal knockback, DamageType 0/True will be for general modifiers
-  private List<IntegerVector>[] KnockbackTakenDirectionalMultipliers = (ArrayList<IntegerVector>[])new ArrayList[DamageTypeCount]; 
+  private List<IntegerDouble>[] takenDamageIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] takenDamageReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] takenDamageMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] takenDamageIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] takenDamageReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
 
-  private List<IntegerDouble>[] KnockbackDealedMultipliers            = (ArrayList<IntegerDouble>[])new ArrayList[DamageTypeCount]; //Since TRUE Damage wont deal knockback, DamageType 0/True will be for general modifiers
-  private List<IntegerVector>[] KnockbackDealedDirectionalMultipliers = (ArrayList<IntegerVector>[])new ArrayList[DamageTypeCount]; 
+  private List<IntegerDouble>[] inflictedDamageIncreasesPreMult   = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] inflictedDamageReductionsPreMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] inflictedDamageMultipliers        = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] inflictedDamageIncreasesPostMult  = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+  private List<IntegerDouble>[] inflictedDamageReductionsPostMult = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Can be multiple ones at once List<>; Is for each Damage Type[]
+
+  private List<IntegerDouble>[] knockbackTakenMultipliers            = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Since TRUE Damage wont deal knockback, DamageType 0/True will be for general modifiers
+  private List<IntegerVector>[] knockbackTakenDirectionalMultipliers = (ArrayList<IntegerVector>[])new ArrayList[damageTypeCount]; 
+
+  private List<IntegerDouble>[] knockbackDealedMultipliers            = (ArrayList<IntegerDouble>[])new ArrayList[damageTypeCount]; //Since TRUE Damage wont deal knockback, DamageType 0/True will be for general modifiers
+  private List<IntegerVector>[] knockbackDealedDirectionalMultipliers = (ArrayList<IntegerVector>[])new ArrayList[damageTypeCount]; 
 
   
 /////Variables that allow/deny functions that cause over time effects/modifiers; All init true
   
-  protected IntegerBoolean Allow_applyMaxHealthReduction  = new IntegerBoolean(0, true);  //The Integer is the Timer until false becomes true again
-  protected IntegerBoolean Allow_clearMaxHealthReductions = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applymaxHealthReduction  = new IntegerBoolean(0, true);  //The Integer is the Timer until false becomes true again
+  protected IntegerBoolean allow_clearmaxHealthReductions = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyMaxHealthIncrease = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearMaxHealthIncreases = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applymaxHealthIncrease = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearmaxHealthIncreases = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyMaxHealthMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearMaxHealthMultipliers = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applymaxHealthMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearmaxHealthMultipliers = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyHealthRegenerationReduction = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearHealthRegenerationReductions = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyhealthRegenerationReduction = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearhealthRegenerationReductions = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyHealthRegenerationIncrease = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearHealthRegenerationIncreases = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyhealthRegenerationIncrease = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearhealthRegenerationIncreases = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyHealthRegenerationMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearHealthRegenerationMultipliers = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyhealthRegenerationMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearhealthRegenerationMultipliers = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyGeneralInvulnerability = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearGeneralInvulnerability = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyGeneralInvulnerability = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearGeneralInvulnerability = new IntegerBoolean(0, true);
 
-  protected IntegerBoolean Allow_applyInvulnerability = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearInvulnerabilities = new IntegerBoolean(0, true); 
-
-  
-  protected IntegerBoolean Allow_applyResistanceReduction = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearResistanceReductions = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyResistanceIncrease = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearResistanceIncreases = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyResistanceMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearResistanceMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyTakenDamageReduction = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearTakenDamageReductions = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyTakenDamageIncrease = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearTakenDamageIncreases = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyTakenDamageMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearTakenDamageMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyDealedDamageReduction = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearDealedDamageReductions = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyDealedDamageIncrease = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearDealedDamageIncreases = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyDealedDamageMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearDealedDamageMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyKnockbackTakenMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearKnockbackTakenMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyKnockbackTakenDirectionalMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearKnockbackTakenDirectionalMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyKnockbackDealedMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearKnockbackDealedMultipliers = new IntegerBoolean(0, true);
-
-  protected IntegerBoolean Allow_applyKnockbackDealedDirectionalMultiplier = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_clearKnockbackDealedDirectionalMultipliers = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyInvulnerability = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearinvulnerabilities = new IntegerBoolean(0, true); 
 
   
-  protected IntegerBoolean Allow_EffectRemove = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_EffectExists = new IntegerBoolean(0, true);
-  protected IntegerBoolean Allow_EffectApply = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_applyResistanceReduction = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearResistanceReductions = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyResistanceIncrease = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearResistanceIncreases = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyResistanceMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearresistanceMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyTakenDamageReduction = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearTakenDamageReductions = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyTakenDamageIncrease = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearTakenDamageIncreases = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyTakenDamageMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_cleartakenDamageMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyDealedDamageReduction = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearDealedDamageReductions = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyDealedDamageIncrease = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearDealedDamageIncreases = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyDealedDamageMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearDealedDamageMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyknockbackTakenMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearknockbackTakenMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyknockbackTakenDirectionalMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearknockbackTakenDirectionalMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyknockbackDealedMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearknockbackDealedMultipliers = new IntegerBoolean(0, true);
+
+  protected IntegerBoolean allow_applyknockbackDealedDirectionalMultiplier = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_clearknockbackDealedDirectionalMultipliers = new IntegerBoolean(0, true);
+
+  
+  protected IntegerBoolean allow_EffectRemove = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_EffectExists = new IntegerBoolean(0, true);
+  protected IntegerBoolean allow_EffectApply = new IntegerBoolean(0, true);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //VisualSupportWhileScrollingFast/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
   //FUNCTIONS To Override if needed:
-  //manipulateDamageTaking is called before calling reduceHealth
+  //manipulateDamageTaking is called before calling reducehealth
   //example: lightning shield can check if the damage type is "Melee", if yes, inflictDamage(by,...); inflictKnockback(by,...); return 0;
   public Double manipulateDamageTaking(SuperSmashKit by, String DamageType, Double amount, String info) {
     return amount;
@@ -376,7 +376,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
   //maybe you want to get an effect based on the amount of damage you took, or curse an opponent
   // example new Passive: "Witches Curse" as witch passive, weakening consecutive melee hits by 0.5, up to 3 stacks per player, each decays after 3 seconds, applied to the player(generally less melee damage dealed to any mob for a short time)
-  public void afterLosingHealth(SuperSmashKit by, String DamageType, Double lostHealth, String info) {
+  public void afterLosinghealth(SuperSmashKit by, String DamageType, Double losthealth, String info) {
   }
   //return 0.0 or less to be dead, maybe a reviving passive or aftermath passive will be an idea
   public Double preExecution(SuperSmashKit by, String DamageType, Double fatalDamageAmount, String info) {
@@ -388,13 +388,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
   //FUNCTIONS
   
-  protected int getDamageTypeCount(){
+  protected int getdamageTypeCount(){
     return DamageTypes.length;  
     }
 
   //Convert a String DamageType into the connected int; returns -1 if invalid
   protected int stringDamageTypeToInt(String DamageType) {
-    for ( int i = 0; i < getDamageTypeCount() ; i++ ) {
+    for ( int i = 0; i < getdamageTypeCount() ; i++ ) {
       if (DamageTypes[i] == DamageType) {
         return i;  
       } 
@@ -411,77 +411,77 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
   
-  protected Double getHealth() {
-    return Health;
+  protected Double gethealth() {
+    return health;
   }
   
-  protected Double getHealthPercentage() {
-    return (100/MaxHealth*Health);
+  protected Double gethealthPercentage() {
+    return (100/maxHealth*health);
   }
 
   
   private List<IntegerDouble>[] initHelp(List<IntegerDouble>[] toChange) {
-    for ( int i = 0 ; i < DamageTypeCount ; i++ ) {
+    for ( int i = 0 ; i < damageTypeCount ; i++ ) {
       toChange[i] = new ArrayList(0);
     }
     return toChange;
   }
  
  private List<IntegerVector>[] initHelp2(List<IntegerVector>[] toChange) {
-    for ( int i = 0 ; i < DamageTypeCount ; i++ ) {
+    for ( int i = 0 ; i < damageTypeCount ; i++ ) {
       toChange[i] = new ArrayList(0);
     }
     return toChange;
   }
   
 ///////////////////  
-  protected void init(Double initMaxHealth, Double initHealthRegenerationPerSecond, Double initAttackDamage, Double initKnockbackDealed, Double initKnockbackTaken, Double[] initResistances){
+  protected void init(Double initmaxHealth, Double inithealthRegenerationPerSecond, Double initattackDamage, Double initknockbackDealed, Double initknockbackTaken, Double[] initresistances){
     //initialize the permanent values
-    Double initHealthRegenerationPerTick = (initHealthRegenerationPerSecond / 20);
-    if (initMaxHealth > 0) {
-      MaxHealth = initMaxHealth;
+    Double inithealthRegenerationPerTick = (inithealthRegenerationPerSecond / 20);
+    if (initmaxHealth > 0) {
+      maxHealth = initmaxHealth;
     }
-    HealthRegenerationPerTick = initHealthRegenerationPerTick;
-    AttackDamage = initAttackDamage;
-    KnockbackDealed = initKnockbackDealed;
-    KnockbackTaken = initKnockbackTaken;
+    healthRegenerationPerTick = inithealthRegenerationPerTick;
+    attackDamage = initattackDamage;
+    knockbackDealed = initknockbackDealed;
+    knockbackTaken = initknockbackTaken;
     
-    Resistances = new Double[DamageTypeCount];
+    resistances = new Double[damageTypeCount];
     
-    for (int i = 0; i < initResistances.length; i++ ) {
-      Resistances[i] = initResistances[i];
+    for (int i = 0; i < initresistances.length; i++ ) {
+      resistances[i] = initresistances[i];
     }
       
     //initialize the rest of the kit  
-    Health = MaxHealth;
+    health = maxHealth;
   
-    for ( int i = 0 ; i < DamageTypeCount ; i++ ) {
-        Invulnerabilities[i] = new IntegerBoolean(0,false);
+    for ( int i = 0 ; i < damageTypeCount ; i++ ) {
+        invulnerabilities[i] = new IntegerBoolean(0,false);
     }
   
-    ResistanceIncreasesPreMult = initHelp(ResistanceIncreasesPreMult);
-    ResistanceReductionsPreMult = initHelp(ResistanceReductionsPreMult);
-    ResistanceMultipliers = initHelp(ResistanceMultipliers);
-    ResistanceIncreasesPostMult = initHelp(ResistanceIncreasesPostMult);
-    ResistanceReductionsPostMult = initHelp(ResistanceReductionsPostMult);
+    resistanceIncreasesPreMult = initHelp(resistanceIncreasesPreMult);
+    resistanceReductionsPreMult = initHelp(resistanceReductionsPreMult);
+    resistanceMultipliers = initHelp(resistanceMultipliers);
+    resistanceIncreasesPostMult = initHelp(resistanceIncreasesPostMult);
+    resistanceReductionsPostMult = initHelp(resistanceReductionsPostMult);
 
-    TakenDamageIncreasesPreMult = initHelp(TakenDamageIncreasesPreMult);
-    TakenDamageReductionsPreMult = initHelp(TakenDamageReductionsPreMult);
-    TakenDamageMultipliers = initHelp(TakenDamageMultipliers);
-    TakenDamageIncreasesPostMult = initHelp(TakenDamageIncreasesPostMult);
-    TakenDamageReductionsPostMult = initHelp(TakenDamageReductionsPostMult);
+    takenDamageIncreasesPreMult = initHelp(takenDamageIncreasesPreMult);
+    takenDamageReductionsPreMult = initHelp(takenDamageReductionsPreMult);
+    takenDamageMultipliers = initHelp(takenDamageMultipliers);
+    takenDamageIncreasesPostMult = initHelp(takenDamageIncreasesPostMult);
+    takenDamageReductionsPostMult = initHelp(takenDamageReductionsPostMult);
 
-    InflictedDamageIncreasesPreMult = initHelp(InflictedDamageIncreasesPreMult);
-    InflictedDamageReductionsPreMult = initHelp(InflictedDamageReductionsPreMult);
-    InflictedDamageMultipliers = initHelp(InflictedDamageMultipliers);
-    InflictedDamageIncreasesPostMult = initHelp(InflictedDamageIncreasesPostMult);
-    InflictedDamageReductionsPostMult = initHelp(InflictedDamageReductionsPostMult);
+    inflictedDamageIncreasesPreMult = initHelp(inflictedDamageIncreasesPreMult);
+    inflictedDamageReductionsPreMult = initHelp(inflictedDamageReductionsPreMult);
+    inflictedDamageMultipliers = initHelp(inflictedDamageMultipliers);
+    inflictedDamageIncreasesPostMult = initHelp(inflictedDamageIncreasesPostMult);
+    inflictedDamageReductionsPostMult = initHelp(inflictedDamageReductionsPostMult);
 
-    KnockbackTakenMultipliers = initHelp(KnockbackTakenMultipliers);
-    KnockbackTakenDirectionalMultipliers = initHelp2(KnockbackTakenDirectionalMultipliers);
+    knockbackTakenMultipliers = initHelp(knockbackTakenMultipliers);
+    knockbackTakenDirectionalMultipliers = initHelp2(knockbackTakenDirectionalMultipliers);
     
-    KnockbackDealedMultipliers = initHelp(KnockbackDealedMultipliers);
-    KnockbackDealedDirectionalMultipliers = initHelp2(KnockbackDealedDirectionalMultipliers);
+    knockbackDealedMultipliers = initHelp(knockbackDealedMultipliers);
+    knockbackDealedDirectionalMultipliers = initHelp2(knockbackDealedDirectionalMultipliers);
 
     
     getPlayer().sendMessage("init");
@@ -500,29 +500,29 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
   
   protected Double calculateResistance(int DamageType) {
-    Double ToReturn = Resistances[DamageType];
+    Double ToReturn = resistances[DamageType];
     //apply all modifiers
     
-    for ( int i = 0 ; i < ResistanceIncreasesPreMult[DamageType].size() ; i++ ) {
-      ToReturn = ToReturn + ResistanceIncreasesPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < resistanceIncreasesPreMult[DamageType].size() ; i++ ) {
+      ToReturn = ToReturn + resistanceIncreasesPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < ResistanceReductionsPreMult[DamageType].size() ; i++ ) {
-      ToReturn = ToReturn - ResistanceReductionsPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < resistanceReductionsPreMult[DamageType].size() ; i++ ) {
+      ToReturn = ToReturn - resistanceReductionsPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < ResistanceMultipliers[DamageType].size() ; i++ ) {
-      ToReturn = ToReturn * ResistanceMultipliers[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < resistanceMultipliers[DamageType].size() ; i++ ) {
+      ToReturn = ToReturn * resistanceMultipliers[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < ResistanceIncreasesPostMult[DamageType].size() ; i++ ) {
-      ToReturn = ToReturn + ResistanceIncreasesPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < resistanceIncreasesPostMult[DamageType].size() ; i++ ) {
+      ToReturn = ToReturn + resistanceIncreasesPostMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < ResistanceReductionsPostMult[DamageType].size() ; i++ ) {
-      ToReturn = ToReturn - ResistanceReductionsPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < resistanceReductionsPostMult[DamageType].size() ; i++ ) {
+      ToReturn = ToReturn - resistanceReductionsPostMult[DamageType].get(i).DoubleValue;
     }
 
     return ToReturn;
   }
   
-  private Double calculateDamageWithResistances(int DamageType, Double amount) {
+  private Double calculateDamageWithresistances(int DamageType, Double amount) {
     Double resis = calculateResistance(DamageType);
     getPlayer().sendMessage("Resistance:" + Double.toString(resis));
     getPlayer().sendMessage("Damage    :" + Double.toString(amount));
@@ -535,20 +535,20 @@ public abstract class SuperSmashKit implements DoubleJumper {
   private Double calculateDamageToBeTaken(int DamageType, Double amount) {     
     //apply all modifiers
     
-    for ( int i = 0 ; i < TakenDamageIncreasesPreMult[DamageType].size() ; i++ ) {
-      amount = amount + TakenDamageIncreasesPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < takenDamageIncreasesPreMult[DamageType].size() ; i++ ) {
+      amount = amount + takenDamageIncreasesPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < TakenDamageReductionsPreMult[DamageType].size() ; i++ ) {
-      amount = amount - TakenDamageReductionsPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < takenDamageReductionsPreMult[DamageType].size() ; i++ ) {
+      amount = amount - takenDamageReductionsPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < TakenDamageMultipliers[DamageType].size() ; i++ ) {
-      amount = amount * TakenDamageMultipliers[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < takenDamageMultipliers[DamageType].size() ; i++ ) {
+      amount = amount * takenDamageMultipliers[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < TakenDamageIncreasesPostMult[DamageType].size() ; i++ ) {
-      amount = amount + TakenDamageIncreasesPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < takenDamageIncreasesPostMult[DamageType].size() ; i++ ) {
+      amount = amount + takenDamageIncreasesPostMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < TakenDamageReductionsPostMult[DamageType].size() ; i++ ) {
-      amount = amount - TakenDamageReductionsPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < takenDamageReductionsPostMult[DamageType].size() ; i++ ) {
+      amount = amount - takenDamageReductionsPostMult[DamageType].get(i).DoubleValue;
     }
 
     return amount;
@@ -557,26 +557,26 @@ public abstract class SuperSmashKit implements DoubleJumper {
   private Double calculateDamageToBeInflicted(int DamageType, Double amount) {
     //apply all modifiers
     
-    for ( int i = 0 ; i < InflictedDamageIncreasesPreMult[DamageType].size() ; i++ ) {
-      amount = amount + InflictedDamageIncreasesPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < inflictedDamageIncreasesPreMult[DamageType].size() ; i++ ) {
+      amount = amount + inflictedDamageIncreasesPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < InflictedDamageReductionsPreMult[DamageType].size() ; i++ ) {
-      amount = amount - InflictedDamageReductionsPreMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < inflictedDamageReductionsPreMult[DamageType].size() ; i++ ) {
+      amount = amount - inflictedDamageReductionsPreMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < InflictedDamageMultipliers[DamageType].size() ; i++ ) {
-      amount = amount * InflictedDamageMultipliers[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < inflictedDamageMultipliers[DamageType].size() ; i++ ) {
+      amount = amount * inflictedDamageMultipliers[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < InflictedDamageIncreasesPostMult[DamageType].size() ; i++ ) {
-      amount = amount + InflictedDamageIncreasesPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < inflictedDamageIncreasesPostMult[DamageType].size() ; i++ ) {
+      amount = amount + inflictedDamageIncreasesPostMult[DamageType].get(i).DoubleValue;
     }
-    for ( int i = 0 ; i < InflictedDamageReductionsPostMult[DamageType].size() ; i++ ) {
-      amount = amount - InflictedDamageReductionsPostMult[DamageType].get(i).DoubleValue;
+    for ( int i = 0 ; i < inflictedDamageReductionsPostMult[DamageType].size() ; i++ ) {
+      amount = amount - inflictedDamageReductionsPostMult[DamageType].get(i).DoubleValue;
     }
 
     return amount;
   }
   
-  //Is called by reduceHealth on fatal damage
+  //Is called by reducehealth on fatal damage
   private void execution(SuperSmashKit by, int DamageType, Double amount, String info) {
     Double isStillAlive = preExecution(by, intDamageTypeToString(DamageType), amount, info);
     if (isStillAlive <= 0.0) {
@@ -585,23 +585,23 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
     else {
       //Death was somehow prevented
-      Health = isStillAlive;
+      health = isStillAlive;
     }
   }
   
-  //Reduces Health and triggers the Execution function on death,
-  //will return the Health that was left on death instead of the damage that was passed
-  private Double reduceHealth(SuperSmashKit by, int DamageType, Double amount, String info) {
+  //Reduces health and triggers the Execution function on death,
+  //will return the health that was left on death instead of the damage that was passed
+  private Double reducehealth(SuperSmashKit by, int DamageType, Double amount, String info) {
     Double ToReturn = 0.0; //Init the value that will be returned
     
     //if the damage is not lethal
-    if (Health >= amount) {
-      Health = Health - amount;  //reduce the health
+    if (health >= amount) {
+      health = health - amount;  //reduce the health
       ToReturn = amount;         //return the amount of damage dealed
     }
     else {  //if the damage is lethal
-      ToReturn = Health; //return the amount of health left as damage dealed
-      Health = 0.0;      //reduce the health
+      ToReturn = health; //return the amount of health left as damage dealed
+      health = 0.0;      //reduce the health
       execution(by, DamageType, ToReturn, info);
     }
     
@@ -609,17 +609,17 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return ToReturn; 
   }
     
-  private Double IncreaseHealth(Double amount) {
+  private Double Increasehealth(Double amount) {
     Double ToReturn = 0.0; //Init the value that will be returned
     
     //if the healing will not overheal
-    if (Health + amount <= MaxHealth) {
-      Health = Health + amount;  //increase the health
+    if (health + amount <= maxHealth) {
+      health = health + amount;  //increase the health
       ToReturn = amount;         //return the amount of health healed
     }
     else {  //if the healing would overheal
-      ToReturn = MaxHealth - Health; //return the amount of health healed
-      Health = MaxHealth;      //increase the health
+      ToReturn = maxHealth - health; //return the amount of health healed
+      health = maxHealth;      //increase the health
     }
      
     refresh();
@@ -628,7 +628,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
   
 ///////////////////////// 
   protected void inflictSelfDamage(Double amount) {
-    reduceHealth(this, stringDamageTypeToInt("True"), amount, "");
+    reducehealth(this, stringDamageTypeToInt("True"), amount, "");
   }
 
   private Double takeDamage(SuperSmashKit by, int DamageType, Double amount, String info) { //Info can be empty or can contain additions, for example an ability name
@@ -638,15 +638,15 @@ public abstract class SuperSmashKit implements DoubleJumper {
     //Nothing happens if amount <= 0
     if (amount > 0.0) {
       //Check if invulnerable or invulnerable to that damage type
-      if ((Invulnerable.BooleanValue)||(Invulnerabilities[DamageType].BooleanValue)) {
+      if ((invulnerable.BooleanValue)||(invulnerabilities[DamageType].BooleanValue)) {
         //Nothing happens, ToReturn is already 0 
       }
       else {
         //calculate the damage, reduce the health and return the actually dealed damage
-        dmgToBeTaken = calculateDamageWithResistances(DamageType, calculateDamageToBeTaken(DamageType, amount));
+        dmgToBeTaken = calculateDamageWithresistances(DamageType, calculateDamageToBeTaken(DamageType, amount));
         dmgToBeTaken = manipulateDamageTaking(by, intDamageTypeToString(DamageType), dmgToBeTaken, info);
-        dmgTaken = reduceHealth(by, DamageType, dmgToBeTaken, info);
-        afterLosingHealth(by, intDamageTypeToString(DamageType), dmgTaken, info);
+        dmgTaken = reducehealth(by, DamageType, dmgToBeTaken, info);
+        afterLosinghealth(by, intDamageTypeToString(DamageType), dmgTaken, info);
       }
     }
     
@@ -662,7 +662,7 @@ public abstract class SuperSmashKit implements DoubleJumper {
     
     //if the damage type is melee and the amount is -1 it will grab the provided melee damage
     if ((DamageType == 1)&&(amount == -1.0)) {
-      amount = AttackDamage;
+      amount = attackDamage;
     }
     
     //Nothing happens if amount <= 0
@@ -684,11 +684,11 @@ public abstract class SuperSmashKit implements DoubleJumper {
   
   private Vector calculateKnockbackToBeTaken(int DamageType, Vector v) {
     Vector ToReturn = v.clone();
-    for ( int i = 0 ; i<KnockbackTakenMultipliers[DamageType].size() ; i++) {
-      ToReturn.multiply(KnockbackTakenMultipliers[DamageType].get(i).DoubleValue);
+    for ( int i = 0 ; i<knockbackTakenMultipliers[DamageType].size() ; i++) {
+      ToReturn.multiply(knockbackTakenMultipliers[DamageType].get(i).DoubleValue);
     }
-    for ( int i = 0 ; i<KnockbackTakenDirectionalMultipliers[DamageType].size() ; i++) {
-      ToReturn.multiply(KnockbackTakenDirectionalMultipliers[DamageType].get(i).VectorValue);
+    for ( int i = 0 ; i<knockbackTakenDirectionalMultipliers[DamageType].size() ; i++) {
+      ToReturn.multiply(knockbackTakenDirectionalMultipliers[DamageType].get(i).VectorValue);
     }
     return ToReturn;
   }
@@ -700,11 +700,11 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
   private Vector calculateKnockbackToBeInflicted(int DamageType, Vector v) {
     Vector ToReturn = v.clone();
-    for ( int i = 0 ; i<KnockbackDealedMultipliers[DamageType].size() ; i++) {
-      ToReturn.multiply(KnockbackDealedMultipliers[DamageType].get(i).DoubleValue);
+    for ( int i = 0 ; i<knockbackDealedMultipliers[DamageType].size() ; i++) {
+      ToReturn.multiply(knockbackDealedMultipliers[DamageType].get(i).DoubleValue);
     }
-    for ( int i = 0 ; i<KnockbackDealedDirectionalMultipliers[DamageType].size() ; i++) {
-      ToReturn.multiply(KnockbackDealedDirectionalMultipliers[DamageType].get(i).VectorValue);
+    for ( int i = 0 ; i<knockbackDealedDirectionalMultipliers[DamageType].size() ; i++) {
+      ToReturn.multiply(knockbackDealedDirectionalMultipliers[DamageType].get(i).VectorValue);
     }
     return ToReturn;
   }
@@ -724,25 +724,25 @@ public abstract class SuperSmashKit implements DoubleJumper {
   protected Double heal(Double amount) {
     Double ToReturn = 0.0;
     //if healing is not disabled
-    if (AllowHealing.BooleanValue) {
-      ToReturn = IncreaseHealth(amount);
+    if (allowHealing.BooleanValue) {
+      ToReturn = Increasehealth(amount);
     }   
       
     return ToReturn;
   }
 
-  private void onEffectOverTimeExpire() {   //called by processEffectsOverTime;  for example a custom damage over time effect that denys regeneration
-    //No Effects that do something on Expiring yet
+  private void onEffectOverTimeExpire() {   //called by processeffectsOverTime;  for example a custom damage over time effect that denys regeneration
+    //No effects that do something on Expiring yet
   }
-  private void processEffectsOverTime() { //called by onTick
+  private void processeffectsOverTime() { //called by onTick
 
-    for ( int i = 0 ; i < Effects.size() ; i++) {
-      if (Effects.get(i).timer > 0) {
-        Effects.get(i).timer = Effects.get(i).timer - 1;
+    for ( int i = 0 ; i < effects.size() ; i++) {
+      if (effects.get(i).timer > 0) {
+        effects.get(i).timer = effects.get(i).timer - 1;
       }
     }
     
-    //No EffectsOverTime declared yet
+    //No effectsOverTime declared yet
   }
   private List<IntegerDouble> processModifiersHelp(List<IntegerDouble> toChangeTicks) {
     List<IntegerDouble> toReturn = new ArrayList(0);
@@ -782,554 +782,554 @@ public abstract class SuperSmashKit implements DoubleJumper {
    }
   private void processModifiers() { //Reduce all Tick based modifiers by 1 Tick, remove the ones that reach 0; -1 means permanent; -2 means permanent until cleared
     
-    //getPlayer().sendMessage("Invulnerable");
-    if  (Invulnerable.BooleanValue) {  //If Invulnerable = true
-      if (Invulnerable.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Invulnerable.IntegerValue = Invulnerable.IntegerValue -1;
+    //getPlayer().sendMessage("invulnerable");
+    if  (invulnerable.BooleanValue) {  //If invulnerable = true
+      if (invulnerable.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        invulnerable.IntegerValue = invulnerable.IntegerValue -1;
       }     
-      if (Invulnerable.IntegerValue == 0) {//if the timer expired
-        Invulnerable.BooleanValue = false;  //set Invulnerable to false
+      if (invulnerable.IntegerValue == 0) {//if the timer expired
+        invulnerable.BooleanValue = false;  //set invulnerable to false
       }
     }
 
-    //getPlayer().sendMessage("Invulnerabilities");
-    for ( int i = 0 ; i < DamageTypeCount ; i++) {
-      if (Invulnerabilities[i].BooleanValue) {
-        if (Invulnerabilities[i].IntegerValue > 0) {
-          Invulnerabilities[i].IntegerValue = Invulnerabilities[i].IntegerValue - 1;
+    //getPlayer().sendMessage("invulnerabilities");
+    for ( int i = 0 ; i < damageTypeCount ; i++) {
+      if (invulnerabilities[i].BooleanValue) {
+        if (invulnerabilities[i].IntegerValue > 0) {
+          invulnerabilities[i].IntegerValue = invulnerabilities[i].IntegerValue - 1;
         }
-        if (Invulnerabilities[i].IntegerValue == 0) {
-          Invulnerabilities[i].BooleanValue = false;
+        if (invulnerabilities[i].IntegerValue == 0) {
+          invulnerabilities[i].BooleanValue = false;
         }
       }
     }
     
     
     //getPlayer().sendMessage("processModifiersHelp");
-    MaxHealthIncreasesPreMult = processModifiersHelp(MaxHealthIncreasesPreMult);
-    MaxHealthReductionsPreMult = processModifiersHelp(MaxHealthReductionsPreMult);
-    MaxHealthMultipliers = processModifiersHelp(MaxHealthMultipliers);
-    MaxHealthIncreasesPostMult = processModifiersHelp(MaxHealthIncreasesPostMult);
-    MaxHealthReductionsPostMult = processModifiersHelp(MaxHealthReductionsPostMult);
+    maxHealthIncreasesPreMult = processModifiersHelp(maxHealthIncreasesPreMult);
+    maxHealthReductionsPreMult = processModifiersHelp(maxHealthReductionsPreMult);
+    maxHealthMultipliers = processModifiersHelp(maxHealthMultipliers);
+    maxHealthIncreasesPostMult = processModifiersHelp(maxHealthIncreasesPostMult);
+    maxHealthReductionsPostMult = processModifiersHelp(maxHealthReductionsPostMult);
 
-    HealthRegenerationIncreasesPreMult = processModifiersHelp(HealthRegenerationIncreasesPreMult);
-    HealthRegenerationReductionsPreMult = processModifiersHelp(HealthRegenerationReductionsPreMult);
-    HealthRegenerationMultipliers = processModifiersHelp(HealthRegenerationMultipliers);
-    HealthRegenerationIncreasesPostMult = processModifiersHelp(HealthRegenerationIncreasesPostMult);
-    HealthRegenerationReductionsPostMult = processModifiersHelp(HealthRegenerationReductionsPostMult);
+    healthRegenerationIncreasesPreMult = processModifiersHelp(healthRegenerationIncreasesPreMult);
+    healthRegenerationReductionsPreMult = processModifiersHelp(healthRegenerationReductionsPreMult);
+    healthRegenerationMultipliers = processModifiersHelp(healthRegenerationMultipliers);
+    healthRegenerationIncreasesPostMult = processModifiersHelp(healthRegenerationIncreasesPostMult);
+    healthRegenerationReductionsPostMult = processModifiersHelp(healthRegenerationReductionsPostMult);
 
-    for ( int i = 0 ; i<ResistanceIncreasesPreMult.length ; i++ ) {
-      ResistanceIncreasesPreMult[i] = processModifiersHelp(ResistanceIncreasesPreMult[i]);
+    for ( int i = 0 ; i<resistanceIncreasesPreMult.length ; i++ ) {
+      resistanceIncreasesPreMult[i] = processModifiersHelp(resistanceIncreasesPreMult[i]);
     }
-    for ( int i = 0 ; i<ResistanceReductionsPreMult.length ; i++ ) {
-      ResistanceReductionsPreMult[i] = processModifiersHelp(ResistanceReductionsPreMult[i]);
+    for ( int i = 0 ; i<resistanceReductionsPreMult.length ; i++ ) {
+      resistanceReductionsPreMult[i] = processModifiersHelp(resistanceReductionsPreMult[i]);
     }
-    for ( int i = 0 ; i<ResistanceMultipliers.length ; i++ ) {
-      ResistanceMultipliers[i] = processModifiersHelp(ResistanceMultipliers[i]);
+    for ( int i = 0 ; i<resistanceMultipliers.length ; i++ ) {
+      resistanceMultipliers[i] = processModifiersHelp(resistanceMultipliers[i]);
     }
-    for ( int i = 0 ; i<ResistanceIncreasesPostMult.length ; i++ ) {
-      ResistanceIncreasesPostMult[i] = processModifiersHelp(ResistanceIncreasesPostMult[i]);
+    for ( int i = 0 ; i<resistanceIncreasesPostMult.length ; i++ ) {
+      resistanceIncreasesPostMult[i] = processModifiersHelp(resistanceIncreasesPostMult[i]);
     }
-    for ( int i = 0 ; i<ResistanceReductionsPostMult.length ; i++ ) {
-      ResistanceReductionsPostMult[i] = processModifiersHelp(ResistanceReductionsPostMult[i]);
-    }
-
-    for ( int i = 0 ; i<TakenDamageIncreasesPreMult.length ; i++ ) {
-      TakenDamageIncreasesPreMult[i] = processModifiersHelp(TakenDamageIncreasesPreMult[i]);
-    }
-    for ( int i = 0 ; i<TakenDamageReductionsPreMult.length ; i++ ) {
-      TakenDamageReductionsPreMult[i] = processModifiersHelp(TakenDamageReductionsPreMult[i]);
-    }
-    for ( int i = 0 ; i<TakenDamageMultipliers.length ; i++ ) {
-      TakenDamageMultipliers[i] = processModifiersHelp(TakenDamageMultipliers[i]);
-    }
-    for ( int i = 0 ; i<TakenDamageIncreasesPostMult.length ; i++ ) {
-      TakenDamageIncreasesPostMult[i] = processModifiersHelp(TakenDamageIncreasesPostMult[i]);
-    }
-    for ( int i = 0 ; i<TakenDamageReductionsPostMult.length ; i++ ) {
-      TakenDamageReductionsPostMult[i] = processModifiersHelp(TakenDamageReductionsPostMult[i]);
+    for ( int i = 0 ; i<resistanceReductionsPostMult.length ; i++ ) {
+      resistanceReductionsPostMult[i] = processModifiersHelp(resistanceReductionsPostMult[i]);
     }
 
-    for ( int i = 0 ; i<InflictedDamageIncreasesPreMult.length ; i++ ) {
-      InflictedDamageIncreasesPreMult[i] = processModifiersHelp(InflictedDamageIncreasesPreMult[i]);
+    for ( int i = 0 ; i<takenDamageIncreasesPreMult.length ; i++ ) {
+      takenDamageIncreasesPreMult[i] = processModifiersHelp(takenDamageIncreasesPreMult[i]);
     }
-    for ( int i = 0 ; i<InflictedDamageReductionsPreMult.length ; i++ ) {
-      InflictedDamageReductionsPreMult[i] = processModifiersHelp(InflictedDamageReductionsPreMult[i]);
+    for ( int i = 0 ; i<takenDamageReductionsPreMult.length ; i++ ) {
+      takenDamageReductionsPreMult[i] = processModifiersHelp(takenDamageReductionsPreMult[i]);
     }
-    for ( int i = 0 ; i<InflictedDamageMultipliers.length ; i++ ) {
-      InflictedDamageMultipliers[i] = processModifiersHelp(InflictedDamageMultipliers[i]);
+    for ( int i = 0 ; i<takenDamageMultipliers.length ; i++ ) {
+      takenDamageMultipliers[i] = processModifiersHelp(takenDamageMultipliers[i]);
     }
-    for ( int i = 0 ; i<InflictedDamageIncreasesPostMult.length ; i++ ) {
-      InflictedDamageIncreasesPostMult[i] = processModifiersHelp(InflictedDamageIncreasesPostMult[i]);
+    for ( int i = 0 ; i<takenDamageIncreasesPostMult.length ; i++ ) {
+      takenDamageIncreasesPostMult[i] = processModifiersHelp(takenDamageIncreasesPostMult[i]);
     }
-    for ( int i = 0 ; i<InflictedDamageReductionsPostMult.length ; i++ ) {
-      InflictedDamageReductionsPostMult[i] = processModifiersHelp(InflictedDamageReductionsPostMult[i]);
-    }
-
-    for ( int i = 0 ; i<KnockbackTakenMultipliers.length ; i++ ) {
-      KnockbackTakenMultipliers[i] = processModifiersHelp(KnockbackTakenMultipliers[i]);
-    }
-    for ( int i = 0 ; i<KnockbackTakenDirectionalMultipliers.length ; i++ ) {
-      KnockbackTakenDirectionalMultipliers[i] = processModifiersHelp2(KnockbackTakenDirectionalMultipliers[i]);
+    for ( int i = 0 ; i<takenDamageReductionsPostMult.length ; i++ ) {
+      takenDamageReductionsPostMult[i] = processModifiersHelp(takenDamageReductionsPostMult[i]);
     }
 
-    for ( int i = 0 ; i<KnockbackDealedMultipliers.length ; i++ ) {
-      KnockbackDealedMultipliers[i] = processModifiersHelp(KnockbackDealedMultipliers[i]);
+    for ( int i = 0 ; i<inflictedDamageIncreasesPreMult.length ; i++ ) {
+      inflictedDamageIncreasesPreMult[i] = processModifiersHelp(inflictedDamageIncreasesPreMult[i]);
     }
-    for ( int i = 0 ; i<KnockbackDealedDirectionalMultipliers.length ; i++ ) {
-      KnockbackDealedDirectionalMultipliers[i] = processModifiersHelp2(KnockbackDealedDirectionalMultipliers[i]);
+    for ( int i = 0 ; i<inflictedDamageReductionsPreMult.length ; i++ ) {
+      inflictedDamageReductionsPreMult[i] = processModifiersHelp(inflictedDamageReductionsPreMult[i]);
+    }
+    for ( int i = 0 ; i<inflictedDamageMultipliers.length ; i++ ) {
+      inflictedDamageMultipliers[i] = processModifiersHelp(inflictedDamageMultipliers[i]);
+    }
+    for ( int i = 0 ; i<inflictedDamageIncreasesPostMult.length ; i++ ) {
+      inflictedDamageIncreasesPostMult[i] = processModifiersHelp(inflictedDamageIncreasesPostMult[i]);
+    }
+    for ( int i = 0 ; i<inflictedDamageReductionsPostMult.length ; i++ ) {
+      inflictedDamageReductionsPostMult[i] = processModifiersHelp(inflictedDamageReductionsPostMult[i]);
+    }
+
+    for ( int i = 0 ; i<knockbackTakenMultipliers.length ; i++ ) {
+      knockbackTakenMultipliers[i] = processModifiersHelp(knockbackTakenMultipliers[i]);
+    }
+    for ( int i = 0 ; i<knockbackTakenDirectionalMultipliers.length ; i++ ) {
+      knockbackTakenDirectionalMultipliers[i] = processModifiersHelp2(knockbackTakenDirectionalMultipliers[i]);
+    }
+
+    for ( int i = 0 ; i<knockbackDealedMultipliers.length ; i++ ) {
+      knockbackDealedMultipliers[i] = processModifiersHelp(knockbackDealedMultipliers[i]);
+    }
+    for ( int i = 0 ; i<knockbackDealedDirectionalMultipliers.length ; i++ ) {
+      knockbackDealedDirectionalMultipliers[i] = processModifiersHelp2(knockbackDealedDirectionalMultipliers[i]);
     }
     
   }
   
-  private void processFunctionBlockades() { //If Allow_... vars are set to false and the tick count is not negative, process their ticks!
+  private void processFunctionBlockades() { //If allow_... vars are set to false and the tick count is not negative, process their ticks!
   
-    if  (! Allow_applyMaxHealthReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyMaxHealthReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyMaxHealthReduction.IntegerValue = Allow_applyMaxHealthReduction.IntegerValue -1;
+    if  (! allow_applymaxHealthReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applymaxHealthReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applymaxHealthReduction.IntegerValue = allow_applymaxHealthReduction.IntegerValue -1;
       }     
-      if (Allow_applyMaxHealthReduction.IntegerValue == 0) {//if the timer expired
-        Allow_applyMaxHealthReduction.BooleanValue = true;  //allow the function again
+      if (allow_applymaxHealthReduction.IntegerValue == 0) {//if the timer expired
+        allow_applymaxHealthReduction.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearMaxHealthReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearMaxHealthReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearMaxHealthReductions.IntegerValue = Allow_clearMaxHealthReductions.IntegerValue -1;
+    if  (! allow_clearmaxHealthReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearmaxHealthReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearmaxHealthReductions.IntegerValue = allow_clearmaxHealthReductions.IntegerValue -1;
       }     
-      if (Allow_clearMaxHealthReductions.IntegerValue == 0) {//if the timer expired
-        Allow_clearMaxHealthReductions.BooleanValue = true;  //allow the function again
+      if (allow_clearmaxHealthReductions.IntegerValue == 0) {//if the timer expired
+        allow_clearmaxHealthReductions.BooleanValue = true;  //allow the function again
       }
     }
  
-    if  (! Allow_applyMaxHealthIncrease.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyMaxHealthIncrease.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyMaxHealthIncrease.IntegerValue = Allow_applyMaxHealthIncrease.IntegerValue -1;
+    if  (! allow_applymaxHealthIncrease.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applymaxHealthIncrease.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applymaxHealthIncrease.IntegerValue = allow_applymaxHealthIncrease.IntegerValue -1;
       }     
-      if (Allow_applyMaxHealthIncrease.IntegerValue == 0) {//if the timer expired
-        Allow_applyMaxHealthIncrease.BooleanValue = true;  //allow the function again
+      if (allow_applymaxHealthIncrease.IntegerValue == 0) {//if the timer expired
+        allow_applymaxHealthIncrease.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearMaxHealthIncreases.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearMaxHealthIncreases.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearMaxHealthIncreases.IntegerValue = Allow_clearMaxHealthIncreases.IntegerValue -1;
+    if  (! allow_clearmaxHealthIncreases.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearmaxHealthIncreases.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearmaxHealthIncreases.IntegerValue = allow_clearmaxHealthIncreases.IntegerValue -1;
       }     
-      if (Allow_clearMaxHealthIncreases.IntegerValue      == 0) {//if the timer expired
-        Allow_clearMaxHealthIncreases.BooleanValue = true;  //allow the function again
+      if (allow_clearmaxHealthIncreases.IntegerValue      == 0) {//if the timer expired
+        allow_clearmaxHealthIncreases.BooleanValue = true;  //allow the function again
       }
     }
   
-    if  (! Allow_applyMaxHealthMultiplier.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyMaxHealthMultiplier.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyMaxHealthMultiplier.IntegerValue = Allow_applyMaxHealthMultiplier.IntegerValue -1;
+    if  (! allow_applymaxHealthMultiplier.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applymaxHealthMultiplier.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applymaxHealthMultiplier.IntegerValue = allow_applymaxHealthMultiplier.IntegerValue -1;
       }     
-      if (Allow_applyMaxHealthMultiplier.IntegerValue == 0) {//if the timer expired
-        Allow_applyMaxHealthMultiplier.BooleanValue = true;  //allow the function again
+      if (allow_applymaxHealthMultiplier.IntegerValue == 0) {//if the timer expired
+        allow_applymaxHealthMultiplier.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearMaxHealthMultipliers.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearMaxHealthMultipliers.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearMaxHealthMultipliers.IntegerValue = Allow_clearMaxHealthMultipliers.IntegerValue -1;
+    if  (! allow_clearmaxHealthMultipliers.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearmaxHealthMultipliers.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearmaxHealthMultipliers.IntegerValue = allow_clearmaxHealthMultipliers.IntegerValue -1;
       }     
-      if (Allow_clearMaxHealthMultipliers.IntegerValue == 0) {//if the timer expired
-        Allow_clearMaxHealthMultipliers.BooleanValue = true;  //allow the function again
+      if (allow_clearmaxHealthMultipliers.IntegerValue == 0) {//if the timer expired
+        allow_clearmaxHealthMultipliers.BooleanValue = true;  //allow the function again
       }
     }
   
-    if  (! Allow_applyHealthRegenerationReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyHealthRegenerationReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyHealthRegenerationReduction.IntegerValue = Allow_applyHealthRegenerationReduction.IntegerValue -1;
+    if  (! allow_applyhealthRegenerationReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applyhealthRegenerationReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applyhealthRegenerationReduction.IntegerValue = allow_applyhealthRegenerationReduction.IntegerValue -1;
       }     
-      if (Allow_applyHealthRegenerationReduction.IntegerValue == 0) {//if the timer expired
-        Allow_applyHealthRegenerationReduction.BooleanValue = true;  //allow the function again
+      if (allow_applyhealthRegenerationReduction.IntegerValue == 0) {//if the timer expired
+        allow_applyhealthRegenerationReduction.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearHealthRegenerationReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearHealthRegenerationReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearHealthRegenerationReductions.IntegerValue = Allow_clearHealthRegenerationReductions.IntegerValue -1;
+    if  (! allow_clearhealthRegenerationReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearhealthRegenerationReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearhealthRegenerationReductions.IntegerValue = allow_clearhealthRegenerationReductions.IntegerValue -1;
       }     
-      if (Allow_clearHealthRegenerationReductions.IntegerValue == 0) {//if the timer expired
-        Allow_clearHealthRegenerationReductions.BooleanValue = true;  //allow the function again
+      if (allow_clearhealthRegenerationReductions.IntegerValue == 0) {//if the timer expired
+        allow_clearhealthRegenerationReductions.BooleanValue = true;  //allow the function again
       }
     }
 
-    if  (! Allow_applyHealthRegenerationIncrease.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyHealthRegenerationIncrease.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyHealthRegenerationIncrease.IntegerValue = Allow_applyHealthRegenerationIncrease.IntegerValue -1;
+    if  (! allow_applyhealthRegenerationIncrease.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applyhealthRegenerationIncrease.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applyhealthRegenerationIncrease.IntegerValue = allow_applyhealthRegenerationIncrease.IntegerValue -1;
       }     
-      if (Allow_applyHealthRegenerationIncrease.IntegerValue == 0) {//if the timer expired
-        Allow_applyHealthRegenerationIncrease.BooleanValue = true;  //allow the function again
+      if (allow_applyhealthRegenerationIncrease.IntegerValue == 0) {//if the timer expired
+        allow_applyhealthRegenerationIncrease.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearHealthRegenerationIncreases.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearHealthRegenerationIncreases.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearHealthRegenerationIncreases.IntegerValue = Allow_clearHealthRegenerationIncreases.IntegerValue -1;
+    if  (! allow_clearhealthRegenerationIncreases.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearhealthRegenerationIncreases.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearhealthRegenerationIncreases.IntegerValue = allow_clearhealthRegenerationIncreases.IntegerValue -1;
       }     
-      if (Allow_clearHealthRegenerationIncreases.IntegerValue == 0) {//if the timer expired
-        Allow_clearHealthRegenerationIncreases.BooleanValue = true;  //allow the function again
+      if (allow_clearhealthRegenerationIncreases.IntegerValue == 0) {//if the timer expired
+        allow_clearhealthRegenerationIncreases.BooleanValue = true;  //allow the function again
       }
     }
     
-    if  (! Allow_applyHealthRegenerationReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_applyHealthRegenerationReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_applyHealthRegenerationReduction.IntegerValue = Allow_applyHealthRegenerationReduction.IntegerValue -1;
+    if  (! allow_applyhealthRegenerationReduction.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_applyhealthRegenerationReduction.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_applyhealthRegenerationReduction.IntegerValue = allow_applyhealthRegenerationReduction.IntegerValue -1;
       }     
-      if (Allow_applyHealthRegenerationReduction.IntegerValue == 0) {//if the timer expired
-        Allow_applyHealthRegenerationReduction.BooleanValue = true;  //allow the function again
+      if (allow_applyhealthRegenerationReduction.IntegerValue == 0) {//if the timer expired
+        allow_applyhealthRegenerationReduction.BooleanValue = true;  //allow the function again
       }
     }
-    if  (! Allow_clearHealthRegenerationReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
-      if (Allow_clearHealthRegenerationReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
-        Allow_clearHealthRegenerationReductions.IntegerValue = Allow_clearHealthRegenerationReductions.IntegerValue     -1;
+    if  (! allow_clearhealthRegenerationReductions.BooleanValue) {  //The Integer is the Timer until false becomes true again
+      if (allow_clearhealthRegenerationReductions.IntegerValue > 0) { //if the Tick count is > 0; reduce it by 1
+        allow_clearhealthRegenerationReductions.IntegerValue = allow_clearhealthRegenerationReductions.IntegerValue     -1;
       }     
-      if (Allow_clearHealthRegenerationReductions.IntegerValue == 0) {//if the timer expired
-        Allow_clearHealthRegenerationReductions.BooleanValue = true;  //allow the function again
+      if (allow_clearhealthRegenerationReductions.IntegerValue == 0) {//if the timer expired
+        allow_clearhealthRegenerationReductions.BooleanValue = true;  //allow the function again
       }
     }
 
-    if  (! Allow_applyHealthRegenerationMultiplier.BooleanValue) {
-      if (Allow_applyHealthRegenerationMultiplier.IntegerValue > 0) {
-        Allow_applyHealthRegenerationMultiplier.IntegerValue = Allow_applyHealthRegenerationMultiplier.IntegerValue -1;
+    if  (! allow_applyhealthRegenerationMultiplier.BooleanValue) {
+      if (allow_applyhealthRegenerationMultiplier.IntegerValue > 0) {
+        allow_applyhealthRegenerationMultiplier.IntegerValue = allow_applyhealthRegenerationMultiplier.IntegerValue -1;
       }
-      if (Allow_applyHealthRegenerationMultiplier.IntegerValue == 0) {
-        Allow_applyHealthRegenerationMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearHealthRegenerationMultipliers.BooleanValue) {
-      if (Allow_clearHealthRegenerationMultipliers.IntegerValue > 0) {
-        Allow_clearHealthRegenerationMultipliers.IntegerValue = Allow_clearHealthRegenerationMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearHealthRegenerationMultipliers.IntegerValue == 0) {
-        Allow_clearHealthRegenerationMultipliers.BooleanValue = true;
+      if (allow_applyhealthRegenerationMultiplier.IntegerValue == 0) {
+        allow_applyhealthRegenerationMultiplier.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyGeneralInvulnerability.BooleanValue) {
-      if (Allow_applyGeneralInvulnerability.IntegerValue > 0) {
-        Allow_applyGeneralInvulnerability.IntegerValue = Allow_applyGeneralInvulnerability.IntegerValue -1;
+    if  (! allow_clearhealthRegenerationMultipliers.BooleanValue) {
+      if (allow_clearhealthRegenerationMultipliers.IntegerValue > 0) {
+        allow_clearhealthRegenerationMultipliers.IntegerValue = allow_clearhealthRegenerationMultipliers.IntegerValue -1;
       }
-      if (Allow_applyGeneralInvulnerability.IntegerValue == 0) {
-        Allow_applyGeneralInvulnerability.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearGeneralInvulnerability.BooleanValue) {
-      if (Allow_clearGeneralInvulnerability.IntegerValue > 0) {
-        Allow_clearGeneralInvulnerability.IntegerValue = Allow_clearGeneralInvulnerability.IntegerValue -1;
-      }
-      if (Allow_clearGeneralInvulnerability.IntegerValue == 0) {
-        Allow_clearGeneralInvulnerability.BooleanValue = true;
+      if (allow_clearhealthRegenerationMultipliers.IntegerValue == 0) {
+        allow_clearhealthRegenerationMultipliers.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyInvulnerability.BooleanValue) {
-      if (Allow_applyInvulnerability.IntegerValue > 0) {
-        Allow_applyInvulnerability.IntegerValue = Allow_applyInvulnerability.IntegerValue -1;
+    if  (! allow_applyGeneralInvulnerability.BooleanValue) {
+      if (allow_applyGeneralInvulnerability.IntegerValue > 0) {
+        allow_applyGeneralInvulnerability.IntegerValue = allow_applyGeneralInvulnerability.IntegerValue -1;
       }
-      if (Allow_applyInvulnerability.IntegerValue == 0) {
-        Allow_applyInvulnerability.BooleanValue = true;
+      if (allow_applyGeneralInvulnerability.IntegerValue == 0) {
+        allow_applyGeneralInvulnerability.BooleanValue = true;
       }
     }
-    if  (! Allow_clearInvulnerabilities.BooleanValue) {
-      if (Allow_clearInvulnerabilities.IntegerValue > 0) {
-        Allow_clearInvulnerabilities.IntegerValue = Allow_clearInvulnerabilities.IntegerValue -1;
+    if  (! allow_clearGeneralInvulnerability.BooleanValue) {
+      if (allow_clearGeneralInvulnerability.IntegerValue > 0) {
+        allow_clearGeneralInvulnerability.IntegerValue = allow_clearGeneralInvulnerability.IntegerValue -1;
       }
-      if (Allow_clearInvulnerabilities.IntegerValue == 0) {
-        Allow_clearInvulnerabilities.BooleanValue = true;
+      if (allow_clearGeneralInvulnerability.IntegerValue == 0) {
+        allow_clearGeneralInvulnerability.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyInvulnerability.BooleanValue) {
+      if (allow_applyInvulnerability.IntegerValue > 0) {
+        allow_applyInvulnerability.IntegerValue = allow_applyInvulnerability.IntegerValue -1;
+      }
+      if (allow_applyInvulnerability.IntegerValue == 0) {
+        allow_applyInvulnerability.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearinvulnerabilities.BooleanValue) {
+      if (allow_clearinvulnerabilities.IntegerValue > 0) {
+        allow_clearinvulnerabilities.IntegerValue = allow_clearinvulnerabilities.IntegerValue -1;
+      }
+      if (allow_clearinvulnerabilities.IntegerValue == 0) {
+        allow_clearinvulnerabilities.BooleanValue = true;
       }
     }
 
   
-    if  (! Allow_applyResistanceReduction.BooleanValue) {
-      if (Allow_applyResistanceReduction.IntegerValue > 0) {
-        Allow_applyResistanceReduction.IntegerValue = Allow_applyResistanceReduction.IntegerValue -1;
+    if  (! allow_applyResistanceReduction.BooleanValue) {
+      if (allow_applyResistanceReduction.IntegerValue > 0) {
+        allow_applyResistanceReduction.IntegerValue = allow_applyResistanceReduction.IntegerValue -1;
       }
-      if (Allow_applyResistanceReduction.IntegerValue == 0) {
-        Allow_applyResistanceReduction.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearResistanceReductions.BooleanValue) {
-      if (Allow_clearResistanceReductions.IntegerValue > 0) {
-        Allow_clearResistanceReductions.IntegerValue = Allow_clearResistanceReductions.IntegerValue -1;
-      }
-      if (Allow_clearResistanceReductions.IntegerValue == 0) {
-        Allow_clearResistanceReductions.BooleanValue = true;
+      if (allow_applyResistanceReduction.IntegerValue == 0) {
+        allow_applyResistanceReduction.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyResistanceIncrease.BooleanValue) {
-      if (Allow_applyResistanceIncrease.IntegerValue > 0) {
-        Allow_applyResistanceIncrease.IntegerValue = Allow_applyResistanceIncrease.IntegerValue -1;
+    if  (! allow_clearResistanceReductions.BooleanValue) {
+      if (allow_clearResistanceReductions.IntegerValue > 0) {
+        allow_clearResistanceReductions.IntegerValue = allow_clearResistanceReductions.IntegerValue -1;
       }
-      if (Allow_applyResistanceIncrease.IntegerValue == 0) {
-        Allow_applyResistanceIncrease.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearResistanceIncreases.BooleanValue) {
-      if (Allow_clearResistanceIncreases.IntegerValue > 0) {
-        Allow_clearResistanceIncreases.IntegerValue = Allow_clearResistanceIncreases.IntegerValue -1;
-      }
-      if (Allow_clearResistanceIncreases.IntegerValue == 0) {
-        Allow_clearResistanceIncreases.BooleanValue = true;
+      if (allow_clearResistanceReductions.IntegerValue == 0) {
+        allow_clearResistanceReductions.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyResistanceMultiplier.BooleanValue) {
-      if (Allow_applyResistanceMultiplier.IntegerValue > 0) {
-        Allow_applyResistanceMultiplier.IntegerValue = Allow_applyResistanceMultiplier.IntegerValue -1;
+    if  (! allow_applyResistanceIncrease.BooleanValue) {
+      if (allow_applyResistanceIncrease.IntegerValue > 0) {
+        allow_applyResistanceIncrease.IntegerValue = allow_applyResistanceIncrease.IntegerValue -1;
       }
-      if (Allow_applyResistanceMultiplier.IntegerValue == 0) {
-        Allow_applyResistanceMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearResistanceMultipliers.BooleanValue) {
-      if (Allow_clearResistanceMultipliers.IntegerValue > 0) {
-        Allow_clearResistanceMultipliers.IntegerValue = Allow_clearResistanceMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearResistanceMultipliers.IntegerValue == 0) {
-        Allow_clearResistanceMultipliers.BooleanValue = true;
+      if (allow_applyResistanceIncrease.IntegerValue == 0) {
+        allow_applyResistanceIncrease.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyTakenDamageReduction.BooleanValue) {
-      if (Allow_applyTakenDamageReduction.IntegerValue > 0) {
-        Allow_applyTakenDamageReduction.IntegerValue = Allow_applyTakenDamageReduction.IntegerValue -1;
+    if  (! allow_clearResistanceIncreases.BooleanValue) {
+      if (allow_clearResistanceIncreases.IntegerValue > 0) {
+        allow_clearResistanceIncreases.IntegerValue = allow_clearResistanceIncreases.IntegerValue -1;
       }
-      if (Allow_applyTakenDamageReduction.IntegerValue == 0) {
-        Allow_applyTakenDamageReduction.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearTakenDamageReductions.BooleanValue) {
-      if (Allow_clearTakenDamageReductions.IntegerValue > 0) {
-        Allow_clearTakenDamageReductions.IntegerValue = Allow_clearTakenDamageReductions.IntegerValue -1;
-      }
-      if (Allow_clearTakenDamageReductions.IntegerValue == 0) {
-        Allow_clearTakenDamageReductions.BooleanValue = true;
+      if (allow_clearResistanceIncreases.IntegerValue == 0) {
+        allow_clearResistanceIncreases.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyTakenDamageIncrease.BooleanValue) {
-      if (Allow_applyTakenDamageIncrease.IntegerValue > 0) {
-        Allow_applyTakenDamageIncrease.IntegerValue = Allow_applyTakenDamageIncrease.IntegerValue -1;
+    if  (! allow_applyResistanceMultiplier.BooleanValue) {
+      if (allow_applyResistanceMultiplier.IntegerValue > 0) {
+        allow_applyResistanceMultiplier.IntegerValue = allow_applyResistanceMultiplier.IntegerValue -1;
       }
-      if (Allow_applyTakenDamageIncrease.IntegerValue == 0) {
-        Allow_applyTakenDamageIncrease.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearTakenDamageIncreases.BooleanValue) {
-      if (Allow_clearTakenDamageIncreases.IntegerValue > 0) {
-        Allow_clearTakenDamageIncreases.IntegerValue = Allow_clearTakenDamageIncreases.IntegerValue -1;
-      }
-      if (Allow_clearTakenDamageIncreases.IntegerValue == 0) {
-        Allow_clearTakenDamageIncreases.BooleanValue = true;
+      if (allow_applyResistanceMultiplier.IntegerValue == 0) {
+        allow_applyResistanceMultiplier.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyTakenDamageMultiplier.BooleanValue) {
-      if (Allow_applyTakenDamageMultiplier.IntegerValue > 0) {
-        Allow_applyTakenDamageMultiplier.IntegerValue = Allow_applyTakenDamageMultiplier.IntegerValue -1;
+    if  (! allow_clearresistanceMultipliers.BooleanValue) {
+      if (allow_clearresistanceMultipliers.IntegerValue > 0) {
+        allow_clearresistanceMultipliers.IntegerValue = allow_clearresistanceMultipliers.IntegerValue -1;
       }
-      if (Allow_applyTakenDamageMultiplier.IntegerValue == 0) {
-        Allow_applyTakenDamageMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearTakenDamageMultipliers.BooleanValue) {
-      if (Allow_clearTakenDamageMultipliers.IntegerValue > 0) {
-        Allow_clearTakenDamageMultipliers.IntegerValue = Allow_clearTakenDamageMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearTakenDamageMultipliers.IntegerValue == 0) {
-        Allow_clearTakenDamageMultipliers.BooleanValue = true;
+      if (allow_clearresistanceMultipliers.IntegerValue == 0) {
+        allow_clearresistanceMultipliers.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyDealedDamageReduction.BooleanValue) {
-      if (Allow_applyDealedDamageReduction.IntegerValue > 0) {
-        Allow_applyDealedDamageReduction.IntegerValue = Allow_applyDealedDamageReduction.IntegerValue -1;
+    if  (! allow_applyTakenDamageReduction.BooleanValue) {
+      if (allow_applyTakenDamageReduction.IntegerValue > 0) {
+        allow_applyTakenDamageReduction.IntegerValue = allow_applyTakenDamageReduction.IntegerValue -1;
       }
-      if (Allow_applyDealedDamageReduction.IntegerValue == 0) {
-        Allow_applyDealedDamageReduction.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearDealedDamageReductions.BooleanValue) {
-      if (Allow_clearDealedDamageReductions.IntegerValue > 0) {
-        Allow_clearDealedDamageReductions.IntegerValue = Allow_clearDealedDamageReductions.IntegerValue -1;
-      }
-      if (Allow_clearDealedDamageReductions.IntegerValue      == 0) {
-        Allow_clearDealedDamageReductions.BooleanValue = true;
+      if (allow_applyTakenDamageReduction.IntegerValue == 0) {
+        allow_applyTakenDamageReduction.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyDealedDamageIncrease.BooleanValue) {
-      if (Allow_applyDealedDamageIncrease.IntegerValue > 0) {
-        Allow_applyDealedDamageIncrease.IntegerValue = Allow_applyDealedDamageIncrease.IntegerValue -1;
+    if  (! allow_clearTakenDamageReductions.BooleanValue) {
+      if (allow_clearTakenDamageReductions.IntegerValue > 0) {
+        allow_clearTakenDamageReductions.IntegerValue = allow_clearTakenDamageReductions.IntegerValue -1;
       }
-      if (Allow_applyDealedDamageIncrease.IntegerValue == 0) {
-        Allow_applyDealedDamageIncrease.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearDealedDamageIncreases.BooleanValue) {
-      if (Allow_clearDealedDamageIncreases.IntegerValue > 0) {
-        Allow_clearDealedDamageIncreases.IntegerValue = Allow_clearDealedDamageIncreases.IntegerValue -1;
-      }
-      if (Allow_clearDealedDamageIncreases.IntegerValue == 0) {
-        Allow_clearDealedDamageIncreases.BooleanValue = true;
+      if (allow_clearTakenDamageReductions.IntegerValue == 0) {
+        allow_clearTakenDamageReductions.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyDealedDamageMultiplier.BooleanValue) {
-      if (Allow_applyDealedDamageMultiplier.IntegerValue > 0) {
-        Allow_applyDealedDamageMultiplier.IntegerValue = Allow_applyDealedDamageMultiplier.IntegerValue -1;
+    if  (! allow_applyTakenDamageIncrease.BooleanValue) {
+      if (allow_applyTakenDamageIncrease.IntegerValue > 0) {
+        allow_applyTakenDamageIncrease.IntegerValue = allow_applyTakenDamageIncrease.IntegerValue -1;
       }
-      if (Allow_applyDealedDamageMultiplier.IntegerValue == 0) {
-        Allow_applyDealedDamageMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearDealedDamageMultipliers.BooleanValue) {
-      if (Allow_clearDealedDamageMultipliers.IntegerValue > 0) {
-        Allow_clearDealedDamageMultipliers.IntegerValue = Allow_clearDealedDamageMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearDealedDamageMultipliers.IntegerValue == 0) {
-        Allow_clearDealedDamageMultipliers.BooleanValue = true;
+      if (allow_applyTakenDamageIncrease.IntegerValue == 0) {
+        allow_applyTakenDamageIncrease.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyKnockbackTakenMultiplier.BooleanValue) {
-      if (Allow_applyKnockbackTakenMultiplier.IntegerValue > 0) {
-        Allow_applyKnockbackTakenMultiplier.IntegerValue = Allow_applyKnockbackTakenMultiplier.IntegerValue -1;
+    if  (! allow_clearTakenDamageIncreases.BooleanValue) {
+      if (allow_clearTakenDamageIncreases.IntegerValue > 0) {
+        allow_clearTakenDamageIncreases.IntegerValue = allow_clearTakenDamageIncreases.IntegerValue -1;
       }
-      if (Allow_applyKnockbackTakenMultiplier.IntegerValue == 0) {
-        Allow_applyKnockbackTakenMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearKnockbackTakenMultipliers.BooleanValue) {
-      if (Allow_clearKnockbackTakenMultipliers.IntegerValue > 0) {
-        Allow_clearKnockbackTakenMultipliers.IntegerValue = Allow_clearKnockbackTakenMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearKnockbackTakenMultipliers.IntegerValue == 0) {
-        Allow_clearKnockbackTakenMultipliers.BooleanValue = true;
+      if (allow_clearTakenDamageIncreases.IntegerValue == 0) {
+        allow_clearTakenDamageIncreases.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyKnockbackTakenDirectionalMultiplier.BooleanValue) {
-      if (Allow_applyKnockbackTakenDirectionalMultiplier.IntegerValue > 0) {
-        Allow_applyKnockbackTakenDirectionalMultiplier.IntegerValue = Allow_applyKnockbackTakenDirectionalMultiplier.IntegerValue -1;
+    if  (! allow_applyTakenDamageMultiplier.BooleanValue) {
+      if (allow_applyTakenDamageMultiplier.IntegerValue > 0) {
+        allow_applyTakenDamageMultiplier.IntegerValue = allow_applyTakenDamageMultiplier.IntegerValue -1;
       }
-      if (Allow_applyKnockbackTakenDirectionalMultiplier.IntegerValue == 0) {
-        Allow_applyKnockbackTakenDirectionalMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearKnockbackTakenDirectionalMultipliers.BooleanValue) {
-      if (Allow_clearKnockbackTakenDirectionalMultipliers.IntegerValue > 0) {
-        Allow_clearKnockbackTakenDirectionalMultipliers.IntegerValue = Allow_clearKnockbackTakenDirectionalMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearKnockbackTakenDirectionalMultipliers.IntegerValue == 0) {
-        Allow_clearKnockbackTakenDirectionalMultipliers.BooleanValue = true;
+      if (allow_applyTakenDamageMultiplier.IntegerValue == 0) {
+        allow_applyTakenDamageMultiplier.BooleanValue = true;
       }
     }
-
-    if  (! Allow_applyKnockbackDealedDirectionalMultiplier.BooleanValue) {
-      if (Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue > 0) {
-        Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue = Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue -1;
+    if  (! allow_cleartakenDamageMultipliers.BooleanValue) {
+      if (allow_cleartakenDamageMultipliers.IntegerValue > 0) {
+        allow_cleartakenDamageMultipliers.IntegerValue = allow_cleartakenDamageMultipliers.IntegerValue -1;
       }
-      if (Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue == 0) {
-        Allow_applyKnockbackDealedDirectionalMultiplier.BooleanValue = true;
-      }
-    }
-    if  (! Allow_clearKnockbackDealedMultipliers.BooleanValue) {
-      if (Allow_clearKnockbackDealedMultipliers.IntegerValue > 0) {
-        Allow_clearKnockbackDealedMultipliers.IntegerValue = Allow_clearKnockbackDealedMultipliers.IntegerValue -1;
-      }
-      if (Allow_clearKnockbackDealedMultipliers.IntegerValue == 0) {
-        Allow_clearKnockbackDealedMultipliers.BooleanValue = true;
+      if (allow_cleartakenDamageMultipliers.IntegerValue == 0) {
+        allow_cleartakenDamageMultipliers.BooleanValue = true;
       }
     }
 
-    if  (! Allow_applyKnockbackDealedDirectionalMultiplier.BooleanValue) {
-      if (Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue > 0) {
-        Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue = Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue -1;
+    if  (! allow_applyDealedDamageReduction.BooleanValue) {
+      if (allow_applyDealedDamageReduction.IntegerValue > 0) {
+        allow_applyDealedDamageReduction.IntegerValue = allow_applyDealedDamageReduction.IntegerValue -1;
       }
-      if (Allow_applyKnockbackDealedDirectionalMultiplier.IntegerValue == 0) {
-        Allow_applyKnockbackDealedDirectionalMultiplier.BooleanValue = true;
+      if (allow_applyDealedDamageReduction.IntegerValue == 0) {
+        allow_applyDealedDamageReduction.BooleanValue = true;
       }
     }
-    if  (! Allow_clearKnockbackDealedDirectionalMultipliers.BooleanValue) {
-      if (Allow_clearKnockbackDealedDirectionalMultipliers.IntegerValue > 0) {
-        Allow_clearKnockbackDealedDirectionalMultipliers.IntegerValue = Allow_clearKnockbackDealedDirectionalMultipliers.IntegerValue -1;
+    if  (! allow_clearDealedDamageReductions.BooleanValue) {
+      if (allow_clearDealedDamageReductions.IntegerValue > 0) {
+        allow_clearDealedDamageReductions.IntegerValue = allow_clearDealedDamageReductions.IntegerValue -1;
       }
-      if (Allow_clearKnockbackDealedDirectionalMultipliers.IntegerValue == 0) {
-        Allow_clearKnockbackDealedDirectionalMultipliers.BooleanValue = true;
+      if (allow_clearDealedDamageReductions.IntegerValue      == 0) {
+        allow_clearDealedDamageReductions.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyDealedDamageIncrease.BooleanValue) {
+      if (allow_applyDealedDamageIncrease.IntegerValue > 0) {
+        allow_applyDealedDamageIncrease.IntegerValue = allow_applyDealedDamageIncrease.IntegerValue -1;
+      }
+      if (allow_applyDealedDamageIncrease.IntegerValue == 0) {
+        allow_applyDealedDamageIncrease.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearDealedDamageIncreases.BooleanValue) {
+      if (allow_clearDealedDamageIncreases.IntegerValue > 0) {
+        allow_clearDealedDamageIncreases.IntegerValue = allow_clearDealedDamageIncreases.IntegerValue -1;
+      }
+      if (allow_clearDealedDamageIncreases.IntegerValue == 0) {
+        allow_clearDealedDamageIncreases.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyDealedDamageMultiplier.BooleanValue) {
+      if (allow_applyDealedDamageMultiplier.IntegerValue > 0) {
+        allow_applyDealedDamageMultiplier.IntegerValue = allow_applyDealedDamageMultiplier.IntegerValue -1;
+      }
+      if (allow_applyDealedDamageMultiplier.IntegerValue == 0) {
+        allow_applyDealedDamageMultiplier.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearDealedDamageMultipliers.BooleanValue) {
+      if (allow_clearDealedDamageMultipliers.IntegerValue > 0) {
+        allow_clearDealedDamageMultipliers.IntegerValue = allow_clearDealedDamageMultipliers.IntegerValue -1;
+      }
+      if (allow_clearDealedDamageMultipliers.IntegerValue == 0) {
+        allow_clearDealedDamageMultipliers.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyknockbackTakenMultiplier.BooleanValue) {
+      if (allow_applyknockbackTakenMultiplier.IntegerValue > 0) {
+        allow_applyknockbackTakenMultiplier.IntegerValue = allow_applyknockbackTakenMultiplier.IntegerValue -1;
+      }
+      if (allow_applyknockbackTakenMultiplier.IntegerValue == 0) {
+        allow_applyknockbackTakenMultiplier.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearknockbackTakenMultipliers.BooleanValue) {
+      if (allow_clearknockbackTakenMultipliers.IntegerValue > 0) {
+        allow_clearknockbackTakenMultipliers.IntegerValue = allow_clearknockbackTakenMultipliers.IntegerValue -1;
+      }
+      if (allow_clearknockbackTakenMultipliers.IntegerValue == 0) {
+        allow_clearknockbackTakenMultipliers.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyknockbackTakenDirectionalMultiplier.BooleanValue) {
+      if (allow_applyknockbackTakenDirectionalMultiplier.IntegerValue > 0) {
+        allow_applyknockbackTakenDirectionalMultiplier.IntegerValue = allow_applyknockbackTakenDirectionalMultiplier.IntegerValue -1;
+      }
+      if (allow_applyknockbackTakenDirectionalMultiplier.IntegerValue == 0) {
+        allow_applyknockbackTakenDirectionalMultiplier.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearknockbackTakenDirectionalMultipliers.BooleanValue) {
+      if (allow_clearknockbackTakenDirectionalMultipliers.IntegerValue > 0) {
+        allow_clearknockbackTakenDirectionalMultipliers.IntegerValue = allow_clearknockbackTakenDirectionalMultipliers.IntegerValue -1;
+      }
+      if (allow_clearknockbackTakenDirectionalMultipliers.IntegerValue == 0) {
+        allow_clearknockbackTakenDirectionalMultipliers.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyknockbackDealedDirectionalMultiplier.BooleanValue) {
+      if (allow_applyknockbackDealedDirectionalMultiplier.IntegerValue > 0) {
+        allow_applyknockbackDealedDirectionalMultiplier.IntegerValue = allow_applyknockbackDealedDirectionalMultiplier.IntegerValue -1;
+      }
+      if (allow_applyknockbackDealedDirectionalMultiplier.IntegerValue == 0) {
+        allow_applyknockbackDealedDirectionalMultiplier.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearknockbackDealedMultipliers.BooleanValue) {
+      if (allow_clearknockbackDealedMultipliers.IntegerValue > 0) {
+        allow_clearknockbackDealedMultipliers.IntegerValue = allow_clearknockbackDealedMultipliers.IntegerValue -1;
+      }
+      if (allow_clearknockbackDealedMultipliers.IntegerValue == 0) {
+        allow_clearknockbackDealedMultipliers.BooleanValue = true;
+      }
+    }
+
+    if  (! allow_applyknockbackDealedDirectionalMultiplier.BooleanValue) {
+      if (allow_applyknockbackDealedDirectionalMultiplier.IntegerValue > 0) {
+        allow_applyknockbackDealedDirectionalMultiplier.IntegerValue = allow_applyknockbackDealedDirectionalMultiplier.IntegerValue -1;
+      }
+      if (allow_applyknockbackDealedDirectionalMultiplier.IntegerValue == 0) {
+        allow_applyknockbackDealedDirectionalMultiplier.BooleanValue = true;
+      }
+    }
+    if  (! allow_clearknockbackDealedDirectionalMultipliers.BooleanValue) {
+      if (allow_clearknockbackDealedDirectionalMultipliers.IntegerValue > 0) {
+        allow_clearknockbackDealedDirectionalMultipliers.IntegerValue = allow_clearknockbackDealedDirectionalMultipliers.IntegerValue -1;
+      }
+      if (allow_clearknockbackDealedDirectionalMultipliers.IntegerValue == 0) {
+        allow_clearknockbackDealedDirectionalMultipliers.BooleanValue = true;
       }
     }
     
     
-    if  (! Allow_EffectRemove.BooleanValue) {
-      if (Allow_EffectRemove.IntegerValue > 0) {
-        Allow_EffectRemove.IntegerValue = Allow_EffectRemove.IntegerValue -1;
+    if  (! allow_EffectRemove.BooleanValue) {
+      if (allow_EffectRemove.IntegerValue > 0) {
+        allow_EffectRemove.IntegerValue = allow_EffectRemove.IntegerValue -1;
       }
-      if (Allow_EffectRemove.IntegerValue == 0) {
-        Allow_EffectRemove.BooleanValue = true;
-      }
-    }
-    if  (! Allow_EffectExists.BooleanValue) {
-      if (Allow_EffectExists.IntegerValue > 0) {
-        Allow_EffectExists.IntegerValue = Allow_EffectExists.IntegerValue -1;
-      }
-      if (Allow_EffectExists.IntegerValue == 0) {
-        Allow_EffectExists.BooleanValue = true;
+      if (allow_EffectRemove.IntegerValue == 0) {
+        allow_EffectRemove.BooleanValue = true;
       }
     }
-    if  (! Allow_EffectApply.BooleanValue) {
-      if (Allow_EffectApply.IntegerValue > 0) {
-        Allow_EffectApply.IntegerValue = Allow_EffectApply.IntegerValue -1;
+    if  (! allow_EffectExists.BooleanValue) {
+      if (allow_EffectExists.IntegerValue > 0) {
+        allow_EffectExists.IntegerValue = allow_EffectExists.IntegerValue -1;
       }
-      if (Allow_EffectApply.IntegerValue == 0) {
-        Allow_EffectApply.BooleanValue = true;
+      if (allow_EffectExists.IntegerValue == 0) {
+        allow_EffectExists.BooleanValue = true;
+      }
+    }
+    if  (! allow_EffectApply.BooleanValue) {
+      if (allow_EffectApply.IntegerValue > 0) {
+        allow_EffectApply.IntegerValue = allow_EffectApply.IntegerValue -1;
+      }
+      if (allow_EffectApply.IntegerValue == 0) {
+        allow_EffectApply.BooleanValue = true;
       }
     }
 
 }
   
-  private Double calculateHealthRegeneration() {
-    Double ToReturn = HealthRegenerationPerTick;
+  private Double calculatehealthRegeneration() {
+    Double ToReturn = healthRegenerationPerTick;
 
-    for ( int i= 0 ;  i < HealthRegenerationIncreasesPreMult.size() ; i++ ) {
-      ToReturn = ToReturn + HealthRegenerationIncreasesPreMult.get(i).DoubleValue;
+    for ( int i= 0 ;  i < healthRegenerationIncreasesPreMult.size() ; i++ ) {
+      ToReturn = ToReturn + healthRegenerationIncreasesPreMult.get(i).DoubleValue;
     }
-    for ( int i= 0 ;  i < HealthRegenerationReductionsPreMult.size() ; i++ ) {
-      ToReturn = ToReturn - HealthRegenerationReductionsPreMult.get(i).DoubleValue;
+    for ( int i= 0 ;  i < healthRegenerationReductionsPreMult.size() ; i++ ) {
+      ToReturn = ToReturn - healthRegenerationReductionsPreMult.get(i).DoubleValue;
     }
-    for ( int i= 0 ;  i < HealthRegenerationMultipliers.size() ; i++ ) {
-      ToReturn = ToReturn * HealthRegenerationMultipliers.get(i).DoubleValue;
+    for ( int i= 0 ;  i < healthRegenerationMultipliers.size() ; i++ ) {
+      ToReturn = ToReturn * healthRegenerationMultipliers.get(i).DoubleValue;
     }
-    for ( int i= 0 ;  i < HealthRegenerationIncreasesPostMult.size() ; i++ ) {
-      ToReturn = ToReturn + HealthRegenerationIncreasesPostMult.get(i).DoubleValue;
+    for ( int i= 0 ;  i < healthRegenerationIncreasesPostMult.size() ; i++ ) {
+      ToReturn = ToReturn + healthRegenerationIncreasesPostMult.get(i).DoubleValue;
     }
-    for ( int i= 0 ;  i < HealthRegenerationReductionsPostMult.size() ; i++ ) {
-      ToReturn = ToReturn - HealthRegenerationReductionsPostMult.get(i).DoubleValue;
+    for ( int i= 0 ;  i < healthRegenerationReductionsPostMult.size() ; i++ ) {
+      ToReturn = ToReturn - healthRegenerationReductionsPostMult.get(i).DoubleValue;
     }
 
     return ToReturn;    
   }
   private void regenerate() {  //called by tick before refresh
-    if (AllowRegeneration.BooleanValue) {
-      IncreaseHealth(calculateHealthRegeneration());
+    if (allowRegeneration.BooleanValue) {
+      Increasehealth(calculatehealthRegeneration());
     }
   }
-  private int calculateHealthToBeShown() {
-    int ToReturn = (int)Math.round(20*(Health/MaxHealth));
+  private int calculatehealthToBeShown() {
+    int ToReturn = (int)Math.round(20*(health/maxHealth));
     if (ToReturn == 0) {
       ToReturn = 1;
     }
     return ToReturn;
   }
-  private void refreshHealth() { //called by refresh
-  //TODO: refresh the Players health bar(using Health and MaxHealth)
-    getPlayer().setHealth(calculateHealthToBeShown());
+  private void refreshhealth() { //called by refresh
+  //TODO: refresh the Players health bar(using health and maxHealth)
+    getPlayer().setHealth(calculatehealthToBeShown());
   }
-  private void refreshHunger() { //called by refresh
-  //Do nothing for now, until the Hunger bar gets a usage
+  private void refreshhunger() { //called by refresh
+  //Do nothing for now, until the hunger bar gets a usage
   }
-  private void refresh() { //refreshes Health Bar/Hunger Bar/etc  is called in tick
-    refreshHealth();
-    refreshHunger();
+  private void refresh() { //refreshes health Bar/hunger Bar/etc  is called in tick
+    refreshhealth();
+    refreshhunger();
   }
   
   private void tick() { //Is called every tick
@@ -1350,13 +1350,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
       
   }
 
-  protected Boolean addMaxHealthReductionMult(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyMaxHealthReduction.BooleanValue) {
+  protected Boolean addmaxHealthReductionMult(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult) {
+    if (allow_applymaxHealthReduction.BooleanValue) {
         if (preMult) {
-          MaxHealthReductionsPreMult.add(new IntegerDouble(DurationTicks, amount));
+          maxHealthReductionsPreMult.add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          MaxHealthReductionsPostMult.add(new IntegerDouble(DurationTicks, amount));
+          maxHealthReductionsPostMult.add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1364,13 +1364,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
       return false; 
     }
   }
-  protected Boolean clearMaxHealthReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearMaxHealthReductions.BooleanValue) {
+  protected Boolean clearmaxHealthReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearmaxHealthReductions.BooleanValue) {
       if (preMult) {
-        MaxHealthReductionsPreMult.clear();
+        maxHealthReductionsPreMult.clear();
       }
       else {
-        MaxHealthReductionsPostMult.clear();
+        maxHealthReductionsPostMult.clear();
       }
       return true;
     }
@@ -1379,13 +1379,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addMaxHealthIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult){
-    if (Allow_applyMaxHealthIncrease.BooleanValue) {
+  protected Boolean addmaxHealthIncrease(SuperSmashKit by, Double amount, int DurationTicks, Boolean preMult){
+    if (allow_applymaxHealthIncrease.BooleanValue) {
         if (preMult) {
-          MaxHealthIncreasesPreMult.add(new IntegerDouble(DurationTicks, amount));
+          maxHealthIncreasesPreMult.add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          MaxHealthIncreasesPostMult.add(new IntegerDouble(DurationTicks, amount));
+          maxHealthIncreasesPostMult.add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1393,13 +1393,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
       return false; 
     }
   }
-  protected Boolean clearMaxHealthIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-      if (Allow_clearMaxHealthIncreases.BooleanValue) {
+  protected Boolean clearmaxHealthIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+      if (allow_clearmaxHealthIncreases.BooleanValue) {
       if (preMult) {
-        MaxHealthIncreasesPreMult.clear();
+        maxHealthIncreasesPreMult.clear();
       }
       else {
-        MaxHealthIncreasesPostMult.clear();
+        maxHealthIncreasesPostMult.clear();
       }
       return true;
     }
@@ -1408,18 +1408,18 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addMaxHealthMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
-    if (Allow_applyMaxHealthMultiplier.BooleanValue) {
-      MaxHealthMultipliers.add(new IntegerDouble(DurationTicks, amount));
+  protected Boolean addmaxHealthMultiplier(SuperSmashKit by, Double amount, int DurationTicks) {
+    if (allow_applymaxHealthMultiplier.BooleanValue) {
+      maxHealthMultipliers.add(new IntegerDouble(DurationTicks, amount));
       return true;
     }
     else {
       return false; 
     }  
   }
-  protected Boolean clearMaxHealthMultipliers() { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearMaxHealthMultipliers.BooleanValue) {
-      MaxHealthMultipliers.clear();
+  protected Boolean clearmaxHealthMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearmaxHealthMultipliers.BooleanValue) {
+      maxHealthMultipliers.clear();
       return true;
     }
     else {
@@ -1428,11 +1428,11 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
 
   protected Boolean addGeneralInvulnerability(int DurationTicks) {
-   if (Allow_applyGeneralInvulnerability.BooleanValue && (DurationTicks > 0)) {
-      if (Invulnerable.IntegerValue > DurationTicks) {
-         Invulnerable.IntegerValue = DurationTicks;
+   if (allow_applyGeneralInvulnerability.BooleanValue && (DurationTicks > 0)) {
+      if (invulnerable.IntegerValue > DurationTicks) {
+         invulnerable.IntegerValue = DurationTicks;
       }   
-      Invulnerable.BooleanValue = true;
+      invulnerable.BooleanValue = true;
       return false;
     }
     else {
@@ -1440,9 +1440,9 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
   protected Boolean clearGeneralInvulnerability() { //-1 Ticks shouldnt be cleared but currently are
-   if (Allow_clearGeneralInvulnerability.BooleanValue) {
-      Invulnerable.IntegerValue = 0;
-      Invulnerable.BooleanValue = true;
+   if (allow_clearGeneralInvulnerability.BooleanValue) {
+      invulnerable.IntegerValue = 0;
+      invulnerable.BooleanValue = true;
       return false;
     }
     else {
@@ -1454,11 +1454,11 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addInvulnerability(by, stringDamageTypeToInt(DamageType), DurationTicks);
   }
   protected Boolean addInvulnerability(SuperSmashKit by, int DamageType, int DurationTicks) {
-  if (Allow_applyInvulnerability.BooleanValue && (DurationTicks > 0)) {
-      if (Invulnerabilities[DamageType].IntegerValue > DurationTicks) {
-         Invulnerabilities[DamageType].IntegerValue = DurationTicks;
+  if (allow_applyInvulnerability.BooleanValue && (DurationTicks > 0)) {
+      if (invulnerabilities[DamageType].IntegerValue > DurationTicks) {
+         invulnerabilities[DamageType].IntegerValue = DurationTicks;
       }   
-      Invulnerabilities[DamageType].BooleanValue = true;
+      invulnerabilities[DamageType].BooleanValue = true;
       return false;
     }
     else {
@@ -1469,9 +1469,9 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearInvulnerability(stringDamageTypeToInt(DamageType));
   }
   protected Boolean clearInvulnerability(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-  if (Allow_clearInvulnerabilities.BooleanValue) {
-      Invulnerabilities[DamageType].IntegerValue = 0;
-      Invulnerabilities[DamageType].BooleanValue = true;
+  if (allow_clearinvulnerabilities.BooleanValue) {
+      invulnerabilities[DamageType].IntegerValue = 0;
+      invulnerabilities[DamageType].BooleanValue = true;
       return false;
     }
     else {
@@ -1479,13 +1479,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
    }
 
-  protected Boolean addHealthRegenerationReduction(SuperSmashKit by, Double amountPerSecond, int DurationTicks, Boolean preMult) {
-    if (Allow_applyHealthRegenerationReduction.BooleanValue) {
+  protected Boolean addhealthRegenerationReduction(SuperSmashKit by, Double amountPerSecond, int DurationTicks, Boolean preMult) {
+    if (allow_applyhealthRegenerationReduction.BooleanValue) {
       if (preMult) {
-        HealthRegenerationReductionsPreMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
+        healthRegenerationReductionsPreMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
       }
       else {
-        HealthRegenerationReductionsPostMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
+        healthRegenerationReductionsPostMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
       }
       return true;
     }
@@ -1493,13 +1493,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
       return false; 
     }
   }
-  protected Boolean clearHealthRegenerationReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearHealthRegenerationReductions.BooleanValue) {
+  protected Boolean clearhealthRegenerationReductions(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearhealthRegenerationReductions.BooleanValue) {
       if (preMult) {
-        HealthRegenerationReductionsPreMult.clear();
+        healthRegenerationReductionsPreMult.clear();
       }
       else {
-        HealthRegenerationReductionsPostMult.clear();
+        healthRegenerationReductionsPostMult.clear();
       }
       return true;
     }
@@ -1508,13 +1508,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addHealthRegenerationIncrease(SuperSmashKit by, Double amountPerSecond, int DurationTicks, Boolean preMult) {
-      if (Allow_applyHealthRegenerationIncrease.BooleanValue) {
+  protected Boolean addhealthRegenerationIncrease(SuperSmashKit by, Double amountPerSecond, int DurationTicks, Boolean preMult) {
+      if (allow_applyhealthRegenerationIncrease.BooleanValue) {
         if (preMult) {
-          HealthRegenerationIncreasesPreMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
+          healthRegenerationIncreasesPreMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
         }
         else {
-          HealthRegenerationIncreasesPostMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
+          healthRegenerationIncreasesPostMult.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
         }
       return true;
     }
@@ -1522,13 +1522,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
       return false; 
     }
   }
-  protected Boolean clearHealthRegenerationIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearHealthRegenerationIncreases.BooleanValue) {
+  protected Boolean clearhealthRegenerationIncreases(Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearhealthRegenerationIncreases.BooleanValue) {
       if (preMult) {
-        HealthRegenerationIncreasesPreMult.clear();
+        healthRegenerationIncreasesPreMult.clear();
       }
       else {
-        HealthRegenerationIncreasesPostMult.clear();
+        healthRegenerationIncreasesPostMult.clear();
       }
       return true;
     }
@@ -1537,18 +1537,18 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addHealthRegenerationMultiplier(SuperSmashKit by, Double amountPerSecond, int DurationTicks) {
-    if (Allow_applyHealthRegenerationMultiplier.BooleanValue) {
-      HealthRegenerationMultipliers.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
+  protected Boolean addhealthRegenerationMultiplier(SuperSmashKit by, Double amountPerSecond, int DurationTicks) {
+    if (allow_applyhealthRegenerationMultiplier.BooleanValue) {
+      healthRegenerationMultipliers.add(new IntegerDouble(DurationTicks, (amountPerSecond / 20)));
       return true;
     }
     else {
       return false; 
     }  
   }
-  protected Boolean clearHealthRegenerationMultipliers() { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearHealthRegenerationMultipliers.BooleanValue) {
-      HealthRegenerationMultipliers.clear();
+  protected Boolean clearhealthRegenerationMultipliers() { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearhealthRegenerationMultipliers.BooleanValue) {
+      healthRegenerationMultipliers.clear();
       return true;
     }
     else {
@@ -1560,12 +1560,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addResistanceReduction(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addResistanceReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyResistanceReduction.BooleanValue) {
+    if (allow_applyResistanceReduction.BooleanValue) {
       if (preMult) {
-        ResistanceReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+        resistanceReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
       }
       else {
-        ResistanceReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+        resistanceReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
       }
       return true;
     }
@@ -1577,12 +1577,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearResistanceReductions(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearResistanceReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearResistanceReductions.BooleanValue) {
+    if (allow_clearResistanceReductions.BooleanValue) {
       if (preMult) {
-        ResistanceReductionsPreMult[DamageType].clear();
+        resistanceReductionsPreMult[DamageType].clear();
       }
       else {
-        ResistanceReductionsPostMult[DamageType].clear();
+        resistanceReductionsPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1595,12 +1595,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addResistanceIncrease(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addResistanceIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyResistanceIncrease.BooleanValue) {
+    if (allow_applyResistanceIncrease.BooleanValue) {
         if (preMult) {
-          ResistanceIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          resistanceIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          ResistanceIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          resistanceIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1612,12 +1612,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearResistanceIncreases(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearResistanceIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearResistanceIncreases.BooleanValue) {
+    if (allow_clearResistanceIncreases.BooleanValue) {
       if (preMult) {
-        ResistanceIncreasesPreMult[DamageType].clear();
+        resistanceIncreasesPreMult[DamageType].clear();
       }
       else {
-        ResistanceIncreasesPostMult[DamageType].clear();
+        resistanceIncreasesPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1630,19 +1630,19 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addResistanceMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
   }
   protected Boolean addResistanceMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-    if (Allow_applyResistanceMultiplier.BooleanValue) {
-      ResistanceMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
+    if (allow_applyResistanceMultiplier.BooleanValue) {
+      resistanceMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
       return true;
     }
     else {
       return false; 
     }    }
-  protected Boolean clearResistanceMultipliers(String DamageType) {
-    return clearResistanceMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearresistanceMultipliers(String DamageType) {
+    return clearresistanceMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearResistanceMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearResistanceMultipliers.BooleanValue) {
-      ResistanceMultipliers[DamageType].clear();
+  protected Boolean clearresistanceMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearresistanceMultipliers.BooleanValue) {
+      resistanceMultipliers[DamageType].clear();
       return true;
     }
     else {
@@ -1651,13 +1651,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
 
   protected Boolean disallowHealing(SuperSmashKit by, int DurationTicks) {
-    if (AllowHealing.BooleanValue) {
-      AllowHealing.BooleanValue = false;
-      AllowHealing.IntegerValue = DurationTicks;
+    if (allowHealing.BooleanValue) {
+      allowHealing.BooleanValue = false;
+      allowHealing.IntegerValue = DurationTicks;
     }
     else {
-      if (AllowHealing.IntegerValue < DurationTicks) {
-        AllowHealing.IntegerValue = DurationTicks;
+      if (allowHealing.IntegerValue < DurationTicks) {
+        allowHealing.IntegerValue = DurationTicks;
       }
     }
     
@@ -1665,13 +1665,13 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
 
   protected Boolean disableRegeneration(SuperSmashKit by, int DurationTicks ) {
-    if (AllowRegeneration.BooleanValue) {
-      AllowRegeneration.BooleanValue = false;
-      AllowRegeneration.IntegerValue = DurationTicks;
+    if (allowRegeneration.BooleanValue) {
+      allowRegeneration.BooleanValue = false;
+      allowRegeneration.IntegerValue = DurationTicks;
     }
     else {
-      if (AllowRegeneration.IntegerValue < DurationTicks) {
-        AllowRegeneration.IntegerValue = DurationTicks;
+      if (allowRegeneration.IntegerValue < DurationTicks) {
+        allowRegeneration.IntegerValue = DurationTicks;
       }
     }
     
@@ -1682,12 +1682,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addTakenDamageReduction(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addTakenDamageReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-      if (Allow_applyTakenDamageReduction.BooleanValue) {
+      if (allow_applyTakenDamageReduction.BooleanValue) {
         if (preMult) {
-          TakenDamageReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          takenDamageReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          TakenDamageReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          takenDamageReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1699,12 +1699,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearTakenDamageReductions(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearTakenDamageReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearTakenDamageReductions.BooleanValue) {
+    if (allow_clearTakenDamageReductions.BooleanValue) {
       if (preMult) {
-        TakenDamageReductionsPreMult[DamageType].clear();
+        takenDamageReductionsPreMult[DamageType].clear();
       }
       else {
-        TakenDamageReductionsPostMult[DamageType].clear();
+        takenDamageReductionsPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1717,12 +1717,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addTakenDamageIncrease(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addTakenDamageIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyTakenDamageIncrease.BooleanValue) {
+    if (allow_applyTakenDamageIncrease.BooleanValue) {
       if (preMult) {
-        TakenDamageIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+        takenDamageIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
       }
       else {
-        TakenDamageIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+        takenDamageIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
       }
       return true;
     }
@@ -1734,12 +1734,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearTakenDamageIncreases(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearTakenDamageIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearTakenDamageIncreases.BooleanValue) {
+    if (allow_clearTakenDamageIncreases.BooleanValue) {
       if (preMult) {
-        TakenDamageIncreasesPreMult[DamageType].clear();
+        takenDamageIncreasesPreMult[DamageType].clear();
       }
       else {
-        TakenDamageIncreasesPostMult[DamageType].clear();
+        takenDamageIncreasesPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1752,8 +1752,8 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addTakenDamageMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
   }
   protected Boolean addTakenDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-    if (Allow_applyTakenDamageMultiplier.BooleanValue) {
-      TakenDamageMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
+    if (allow_applyTakenDamageMultiplier.BooleanValue) {
+      takenDamageMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
       return true;
     }
     else {
@@ -1761,11 +1761,11 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }    
   }
   protected Boolean clearTakenDamageMultiplier(String DamageType) {
-    return clearTakenDamageMultipliers(stringDamageTypeToInt(DamageType));
+    return cleartakenDamageMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearTakenDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearTakenDamageMultipliers.BooleanValue) {
-      TakenDamageMultipliers[DamageType].clear();
+  protected Boolean cleartakenDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_cleartakenDamageMultipliers.BooleanValue) {
+      takenDamageMultipliers[DamageType].clear();
       return true;
     }
     else {
@@ -1777,12 +1777,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addInflictedDamageReduction(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addInflictedDamageReduction(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyDealedDamageReduction.BooleanValue) {
+    if (allow_applyDealedDamageReduction.BooleanValue) {
         if (preMult) {
-          InflictedDamageReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          inflictedDamageReductionsPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          InflictedDamageReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          inflictedDamageReductionsPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1794,12 +1794,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearInflictedDamageReductions(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearInflictedDamageReductions(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-      if (Allow_clearDealedDamageReductions.BooleanValue) {
+      if (allow_clearDealedDamageReductions.BooleanValue) {
       if (preMult) {
-        InflictedDamageReductionsPreMult[DamageType].clear();
+        inflictedDamageReductionsPreMult[DamageType].clear();
       }
       else {
-        InflictedDamageReductionsPostMult[DamageType].clear();
+        inflictedDamageReductionsPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1812,12 +1812,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addInflictedDamageIncrease(by, stringDamageTypeToInt(DamageType), amount, DurationTicks, preMult);
   }
   protected Boolean addInflictedDamageIncrease(SuperSmashKit by, int DamageType, Double amount, int DurationTicks, Boolean preMult) {
-    if (Allow_applyDealedDamageIncrease.BooleanValue) {
+    if (allow_applyDealedDamageIncrease.BooleanValue) {
         if (preMult) {
-          InflictedDamageIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          inflictedDamageIncreasesPreMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
         else {
-          InflictedDamageIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
+          inflictedDamageIncreasesPostMult[DamageType].add(new IntegerDouble(DurationTicks, amount));
         }
       return true;
     }
@@ -1829,12 +1829,12 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return clearInflictedDamageIncreases(stringDamageTypeToInt(DamageType), preMult);
   }
   protected Boolean clearInflictedDamageIncreases(int DamageType, Boolean preMult) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearDealedDamageIncreases.BooleanValue) {
+    if (allow_clearDealedDamageIncreases.BooleanValue) {
       if (preMult) {
-        InflictedDamageIncreasesPreMult[DamageType].clear();
+        inflictedDamageIncreasesPreMult[DamageType].clear();
       }
       else {
-        InflictedDamageIncreasesPostMult[DamageType].clear();
+        inflictedDamageIncreasesPostMult[DamageType].clear();
       }
       return true;
     }
@@ -1847,20 +1847,20 @@ public abstract class SuperSmashKit implements DoubleJumper {
     return addInflictedDamageMultiplier(by, DamageType, amount, DurationTicks);
   }
   protected Boolean addInflictedDamageMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-    if (Allow_applyDealedDamageMultiplier.BooleanValue) {
-      InflictedDamageMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
+    if (allow_applyDealedDamageMultiplier.BooleanValue) {
+      inflictedDamageMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
       return true;
     }
     else {
       return false; 
     }
   }
-  protected Boolean clearInflictedDamageMultipliers(String DamageType) {
-    return clearInflictedDamageMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearinflictedDamageMultipliers(String DamageType) {
+    return clearinflictedDamageMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearInflictedDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearDealedDamageMultipliers.BooleanValue) {
-      InflictedDamageMultipliers[DamageType].clear();
+  protected Boolean clearinflictedDamageMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearDealedDamageMultipliers.BooleanValue) {
+      inflictedDamageMultipliers[DamageType].clear();
       return true;
     }
     else {
@@ -1869,24 +1869,24 @@ public abstract class SuperSmashKit implements DoubleJumper {
   }
 
 
-  protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
-    return addKnockbackTakenMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
+  protected Boolean addknockbackTakenMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+    return addknockbackTakenMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
   }
-  protected Boolean addKnockbackTakenMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-    if (Allow_applyKnockbackTakenMultiplier.BooleanValue) {
-      KnockbackTakenMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
+  protected Boolean addknockbackTakenMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+    if (allow_applyknockbackTakenMultiplier.BooleanValue) {
+      knockbackTakenMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
       return false;
     }
     else {
       return false;
     }
   }
-  protected Boolean clearKnockbackTakenMultipliers(String DamageType) {
-    return clearKnockbackTakenMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearknockbackTakenMultipliers(String DamageType) {
+    return clearknockbackTakenMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearKnockbackTakenMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-    if (Allow_clearKnockbackTakenMultipliers.BooleanValue) {
-      KnockbackTakenMultipliers[DamageType].clear();
+  protected Boolean clearknockbackTakenMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+    if (allow_clearknockbackTakenMultipliers.BooleanValue) {
+      knockbackTakenMultipliers[DamageType].clear();
       return false;
     }
     else {
@@ -1894,24 +1894,24 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
-    return addKnockbackTakenDirectionalMultiplier(by, stringDamageTypeToInt(DamageType), multiplier, DurationTicks);
+  protected Boolean addknockbackTakenDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+    return addknockbackTakenDirectionalMultiplier(by, stringDamageTypeToInt(DamageType), multiplier, DurationTicks);
   }
-  protected Boolean addKnockbackTakenDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
-    if (Allow_applyKnockbackTakenDirectionalMultiplier.BooleanValue) {
-      KnockbackDealedDirectionalMultipliers[DamageType].add(new IntegerVector(DurationTicks, multiplier.clone()));
+  protected Boolean addknockbackTakenDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+    if (allow_applyknockbackTakenDirectionalMultiplier.BooleanValue) {
+      knockbackDealedDirectionalMultipliers[DamageType].add(new IntegerVector(DurationTicks, multiplier.clone()));
       return false;
     }
     else {
       return false;
     }
   }
-  protected Boolean clearKnockbackTakenDirectionalMultipliers(String DamageType) {
-    return clearKnockbackTakenDirectionalMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearknockbackTakenDirectionalMultipliers(String DamageType) {
+    return clearknockbackTakenDirectionalMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearKnockbackTakenDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-   if (Allow_clearKnockbackTakenDirectionalMultipliers.BooleanValue) {
-      KnockbackTakenDirectionalMultipliers[DamageType].clear();
+  protected Boolean clearknockbackTakenDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+   if (allow_clearknockbackTakenDirectionalMultipliers.BooleanValue) {
+      knockbackTakenDirectionalMultipliers[DamageType].clear();
       return false;
     }
     else {
@@ -1919,24 +1919,24 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
    }
 
-  protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
-    return addKnockbackDealedMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
+  protected Boolean addknockbackDealedMultiplier(SuperSmashKit by, String DamageType, Double amount, int DurationTicks) {
+    return addknockbackDealedMultiplier(by, stringDamageTypeToInt(DamageType), amount, DurationTicks);
   }
-  protected Boolean addKnockbackDealedMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
-    if (Allow_applyKnockbackDealedMultiplier.BooleanValue) {
-      KnockbackDealedMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
+  protected Boolean addknockbackDealedMultiplier(SuperSmashKit by, int DamageType, Double amount, int DurationTicks) {
+    if (allow_applyknockbackDealedMultiplier.BooleanValue) {
+      knockbackDealedMultipliers[DamageType].add(new IntegerDouble(DurationTicks, amount));
       return false;
     }
     else {
       return false;
     }
   }
-  protected Boolean clearKnockbackDealedMultipliers(String DamageType) {
-    return clearKnockbackDealedMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearknockbackDealedMultipliers(String DamageType) {
+    return clearknockbackDealedMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearKnockbackDealedMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-   if (Allow_clearKnockbackDealedMultipliers.BooleanValue) {
-      KnockbackDealedDirectionalMultipliers[DamageType].clear();
+  protected Boolean clearknockbackDealedMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+   if (allow_clearknockbackDealedMultipliers.BooleanValue) {
+      knockbackDealedDirectionalMultipliers[DamageType].clear();
       return false;
     }
     else {
@@ -1944,24 +1944,24 @@ public abstract class SuperSmashKit implements DoubleJumper {
     }
   }
 
-  protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
-    return addKnockbackDealedDirectionalMultiplier(by, stringDamageTypeToInt(DamageType), multiplier, DurationTicks);
+  protected Boolean addknockbackDealedDirectionalMultiplier(SuperSmashKit by, String DamageType, Vector multiplier, int DurationTicks) {
+    return addknockbackDealedDirectionalMultiplier(by, stringDamageTypeToInt(DamageType), multiplier, DurationTicks);
   }
-  protected Boolean addKnockbackDealedDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
-   if (Allow_applyKnockbackDealedDirectionalMultiplier.BooleanValue) {
-      KnockbackDealedDirectionalMultipliers[DamageType].add(new IntegerVector(DurationTicks, multiplier.clone()));
+  protected Boolean addknockbackDealedDirectionalMultiplier(SuperSmashKit by, int DamageType, Vector multiplier, int DurationTicks) {
+   if (allow_applyknockbackDealedDirectionalMultiplier.BooleanValue) {
+      knockbackDealedDirectionalMultipliers[DamageType].add(new IntegerVector(DurationTicks, multiplier.clone()));
       return false;
     }
     else {
       return false;
     }
    }
-  protected Boolean clearKnockbackDealedDirectionalMultipliers(String DamageType) {
-    return clearKnockbackDealedDirectionalMultipliers(stringDamageTypeToInt(DamageType));
+  protected Boolean clearknockbackDealedDirectionalMultipliers(String DamageType) {
+    return clearknockbackDealedDirectionalMultipliers(stringDamageTypeToInt(DamageType));
   }
-  protected Boolean clearKnockbackDealedDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
-   if (Allow_clearKnockbackDealedDirectionalMultipliers.BooleanValue) {
-      KnockbackDealedDirectionalMultipliers[DamageType].clear();
+  protected Boolean clearknockbackDealedDirectionalMultipliers(int DamageType) { //-1 Ticks shouldnt be cleared but currently are
+   if (allow_clearknockbackDealedDirectionalMultipliers.BooleanValue) {
+      knockbackDealedDirectionalMultipliers[DamageType].clear();
       return false;
     }
     else {
@@ -1970,36 +1970,87 @@ public abstract class SuperSmashKit implements DoubleJumper {
    }
 
 
-  protected Boolean effectRemove(String EffectName) {
+  protected Boolean effectRemove(String effectName) {
     return false;  
   }
-  protected Boolean effectRemove(String EffectName, SuperSmashKit by) { 
+  protected Boolean effectRemove(String effectName, SuperSmashKit by) { 
     return false;
   }
-  protected Boolean effectExists(String EffectName) {
+  protected Boolean effectExists(String effectName) {
     return false;
   }
-  protected Boolean effectExists(String EffectName, SuperSmashKit by) { 
+  protected Boolean effectExists(String effectName, SuperSmashKit by) { 
     return false;
   }
-  protected Boolean effectApply(String EffectName, SuperSmashKit by) {
+  protected EffectOverTime[] effectGet(String effectName) {
+    return null;
+  }
+  protected EffectOverTime[] effectGet(String effectName, SuperSmashKit by) {
+    return null;
+  }
+  protected Boolean effectApply(String effectName, SuperSmashKit by) {
     return false;
   }
 
 
   public String[] createBaseDescription() { //Creates a description, based on the const values, abilitys can be added by the specific kit
-    String[] ToReturn = new String[6];
+    String[] toReturn = new String[6];
   
-    ToReturn[0] = "Health: " + Double.toString(MaxHealth);
-    ToReturn[1] = "Regeneration per sec: " + Double.toString(Math.round(HealthRegenerationPerTick * 20 * 10)/10.0);
-    ToReturn[2] = "Damage: " + Double.toString(AttackDamage);
-    ToReturn[3] = "Armor: " + Double.toString(Resistances[1]);
-    ToReturn[4] = "KnockbackDealed: " + Double.toString(KnockbackDealed);
-    ToReturn[5] = "KnockbackTaken: " + Double.toString(KnockbackTaken);
+    toReturn[0] = "health: " + Double.toString(maxHealth);
+    toReturn[1] = "Regeneration per sec: " + Double.toString(Math.round(healthRegenerationPerTick * 20 * 10)/10.0);
+    toReturn[2] = "Damage: " + Double.toString(attackDamage);
+    toReturn[3] = "Armor: " + Double.toString(resistances[1]);
+    toReturn[4] = "knockbackDealed: " + Double.toString(knockbackDealed);
+    toReturn[5] = "knockbackTaken: " + Double.toString(knockbackTaken);
     
-    getPlayer().sendMessage(ToReturn[0]);
+    getPlayer().sendMessage(toReturn[0]);
     
-    return ToReturn;
+    return toReturn;
   }
-  
+  // /* For a help unit
+  public List<Vector> calculateLinePositions(Vector startingPosition, Vector facingDirection, Double length, int count, Boolean random) {
+    List<Vector> toReturn = new ArrayList(0);
+    Vector vec = facingDirection.clone().normalize().multiply(length);
+    Vector curPos = startingPosition.clone();
+    
+    if (count > 0) {
+      if (random) {
+        
+      }
+      else {
+        //not random so a smooth Line
+        toReturn.add(curPos.clone());
+        
+        for ( int i = 1 ; i < count ; i++ ) {
+          curPos.add(vec);
+          toReturn.add(curPos.clone());
+        }
+        
+      }
+    }
+    
+    return toReturn;
+  }
+  public List<Vector> calculateRectanglePositions(Vector facingDirection, Double horizontal, Double vertical, int count, Boolean surfaceOnly, Boolean random) {
+    List<Vector> toReturn = new ArrayList(0);
+    
+    return toReturn;
+  }
+  public List<Vector> calculateCirclePositions(Vector facingDirection, Double radius, int count, Boolean surfaceOnly, Boolean random) {
+    List<Vector> toReturn = new ArrayList(0);
+    
+    return toReturn;
+  }
+  public List<Vector> calculateCuboidPositions(Vector facingDirection, Double horizontalAway, Double horizontal2, Double vertical, int count, Boolean surfaceOnly, Boolean random) {
+    List<Vector> toReturn = new ArrayList(0);
+    
+    return toReturn;
+  }
+  //hardcoremode
+  public List<Vector> calculateSpherePositions(Double radius, int count, Boolean surfaceOnly, Boolean random) {
+    List<Vector> toReturn = new ArrayList(0);
+    
+    return toReturn;
+  }
+  // */
 }

@@ -360,10 +360,10 @@ public class SkeletonKit extends SuperSmashKit {
         public void run() {
           if (passive.getOwner().getPlayer().isDead()) {
             this.cancel();
-          } else if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getMaxHealth() - passive.healthPerSecond) {
+          } else if (passive.getOwner().getPlayer().getHealth() < passive.getOwner().getPlayer().getmaxHealth() - passive.healthPerSecond) {
             passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getHealth() + passive.healthPerSecond);
           } else {
-            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getMaxHealth());
+            passive.getOwner().getPlayer().setHealth(passive.getOwner().getPlayer().getmaxHealth());
           }
         }
       };
